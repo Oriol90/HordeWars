@@ -20,6 +20,8 @@ public static class GC
     // Valores del mapa (73,41)
     public const int MapWidth = 73;
     public const int MapHeight = 41;
+    public const float MAP_HEIGHT = 18f;
+    public const float MAP_BOT = -9f;
 
     //Enemigo, aliado o lo que sea
     public const string ENEMY = "Enemy";
@@ -46,16 +48,14 @@ public static class GC
     // --- Unidades --- \\
     //Humanos
     public const string UNIT_GIRL_KNIGHT = "girlKnight";
-    public const int GIRL_KNIGHT_INITIAL_ZONE = 15;
-    public const int GIRL_KNIGHT_INITIAL_RANGE_X = 5;
-    public const int GIRL_KNIGHT_INITIAL_RANGE_Y = 35;
+    public const int GIRL_KNIGHT_INITIAL_ZONE_X = -10;
+    public const int GIRL_KNIGHT_INITIAL_WIDTH = 8;
     public static float TIME_INTERVAL_GIRL_KNIGHT = 1.5f;
 
     //Undead
     public const string UNIT_LEAF_ARCHER = "leafArcher";
-    public const int LEAF_ARCHER_INITIAL_ZONE = 50;
-    public const int LEAF_ARCHER_INITIAL_RANGE_X = 5;
-    public const int LEAF_ARCHER_INITIAL_RANGE_Y = 35;
+    public const int LEAF_ARCHER_INITIAL_ZONE_X = 2;
+    public const int LEAF_ARCHER_INITIAL_WIDTH = 8;
     public static float TIME_INTERVAL_LEAF_ARCHER = 0.5f;
 
 

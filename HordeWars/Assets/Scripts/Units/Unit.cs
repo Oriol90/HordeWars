@@ -3,20 +3,20 @@ using System.Collections;
 
 public class Unit : MonoBehaviour
 {
-    public float speed = 2f; // Velocidad de la unidad
+    public float speed = 2f;
     public float attackRange = 1f;
     public float attackCooldown = 1.5f;
     public int damage = 10;
-    public float detectionRadius = 5f; // Añadido para la detección de enemigos
-    public int maxHealth = 100; // Salud máxima de la unidad
-    public GameObject healthBarCanvasPrefab; // Prefab del Canvas con la barra de salud
+    public float detectionRadius = 10f;
+    public int maxHealth = 100;
+    public GameObject healthBarPrefab;
 
     private int currentHealth;
     private Rigidbody2D rb;
     private Animator animator;
     private GameObject targetEnemy;
     private bool isAttacking = false;
-    private HealthBar healthBarInstance; // Instancia de la barra de salud
+    private HealthBar healthBarInstance;
 
     protected virtual void Start()
     {
@@ -24,30 +24,34 @@ public class Unit : MonoBehaviour
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
 
-        // Instanciar el Canvas con la barra de salud como hijo de la unidad
-        if (healthBarCanvasPrefab != null)
+        if (healthBarPrefab != null)
         {
-            GameObject healthBarCanvasObject = Instantiate(healthBarCanvasPrefab, transform);
-            healthBarInstance = healthBarCanvasObject.GetComponentInChildren<HealthBar>();
+            GameObject healthBarObject = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
+            healthBarInstance = healthBarObject.GetComponent<HealthBar>();
             healthBarInstance.SetMaxHealth(maxHealth);
 
-            // Ajustar la posición del Canvas
-            RectTransform healthBarCanvasRect = healthBarCanvasObject.GetComponent<RectTransform>();
-            healthBarCanvasRect.localPosition = new Vector3(0, 1, 0); // Ajusta la posición según sea necesario
-        }
+            Canvas canvas = healthBarObject.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+            canvasRect.sizeDelta = new Vector2(200, 100); // Ajustar el tamaño del canvas según sea necesario
 
-        // Iniciar la búsqueda de enemigos en intervalos
-        InvokeRepeating(nameof(FindClosestEnemy), Random.Range(0.1f, 1f), 1f); // Buscar enemigos cada 1 segundo
+            RectTransform healthBarRect = healthBarObject.GetComponent<RectTransform>();
+            healthBarRect.SetParent(canvasRect, false);
+            healthBarRect.localPosition = new Vector3(0, 1, 0);
+        }
     }
 
     protected virtual void Update()
     {
-        if (targetEnemy != null)
+        if (targetEnemy == null)
+        {
+            FindClosestEnemy();
+        }
+        else
         {
             MoveTowardsEnemy();
         }
 
-        // Actualizar la posición del Canvas de la barra de salud
         if (healthBarInstance != null)
         {
             healthBarInstance.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0));
@@ -98,13 +102,13 @@ public class Unit : MonoBehaviour
 
     void Die()
     {
-        // Implementar lógica de muerte (desactivar la unidad, reproducir animación, etc.)
         Destroy(gameObject);
     }
 
     void FindClosestEnemy()
     {
         Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
+        Debug.Log("Número de enemigos detectados: " + enemiesInRange.Length);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
@@ -113,6 +117,7 @@ public class Unit : MonoBehaviour
             if (!collider.CompareTag(tag))
             {
                 float distance = Vector2.Distance(transform.position, collider.transform.position);
+                Debug.Log("Enemigo detectado: " + collider.gameObject.name + " a una distancia de: " + distance);
                 if (distance < shortestDistance)
                 {
                     shortestDistance = distance;
