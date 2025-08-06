@@ -3,12 +3,18 @@ using System.Collections.Generic;
 
 public static class GC
 {
+    //Directorio de guardado
+    public const string SAVE_DIRECTORY = "Saves";
+    public const string SAVE_FILE_NAME = "steamId_save.json";
+
     //Scenes
+    public const string SCENE_MAIN_MENU = "MainMenu Scene";
+    public const string SCENE_TALENT_TREE = "TalentTree Scene";
     public const string SCENE_BATTLEGROUND = "BattleGround Scene";
     public const string SCENE_HEROE_SELECTION = "HeroeSelection Scene";
-    public const string SCENE_MAIN_MENU = "MainMenu Scene";
     public const string SCENE_RACE_SELECTION = "RaceSelection Scene";
     public const string SCENE_MAP = "Map Scene";
+    public const string SCENE_HEX_MAP = "HexMap Scene";
     public const string SCENE_CAMP = "Camp Scene";
 
     // Tamaño de la cuadrícula
@@ -80,4 +86,36 @@ public static class GC
             { UNIT_GIRL_KNIGHT, 8 },
             { UNIT_LEAF_ARCHER, 6 }
         };
+
+    //Nombre talentos
+    public const string TALENT_CASTLE = "castle";
+    public const string TALENT_CAULDRON = "cauldron";
+    public const string TALENT_CROWN = "crown";
+    public const string TALENT_CRYSTAL_1 = "crystal_1";
+    public const string TALENT_CRYSTAL_2 = "crystal_2";
+    public const string TALENT_CRYSTAL_ORB = "crystal_orb";
+    public const string TALENT_CRYSTALS = "crystals";
+    public const string TALENT_MAGIC_ESSENCE = "magic_essence";
+    public const string TALENT_MAGIC_HAT = "magic_hat";
+    public const string TALENT_MORTAR_AND_PESTLE = "mortar_and_pestle";
+    public const string TALENT_POTION_1 = "potion_1";
+    public const string TALENT_POTION_2 = "potion_2";
+    public const string TALENT_SPELLBOOK = "spellbook";
+    public const string TALENT_SWORDS = "swords";
+    public const string TALENT_WAND = "wand";
+
+    //Tiles
+
+    public const string TILE_SAND_1 = "sand_1";
+    public const string TILE_SAND_2 = "sand_2";
+    public const string TILE_GRASS_1 = "grass_1";
+    public const string TILE_GRASS_2 = "grass_2";
+    public const string TILE_GRASS_3 = "grass_3";
+    public const string TILE_GRASS_4 = "grass_4";
+    public const string TILE_MOUNTAIN_1 = "mountain_1";
+    public const string TILE_MOUNTAIN_2 = "mountain_2";
+    public const string TILE_MOUNTAIN_3 = "mountain_3";
+    public const string TILE_FORREST = "forrest";
+    public const string TILE_LAVA = "lava";
+    public const string TILE_WATER = "water";
 }

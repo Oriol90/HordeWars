@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Square
+  m_Name: Terrain_1_-_Flat_-_Black_Outline_1px_-_128x128-removebg-preview_8
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 7482667652216324306, guid: 506482c1db5f3a74cb1c4f4113088a4e, type: 3}
+  m_Sprite: {fileID: 915353997, guid: 9b758cfee06658d44a1b24eb5755acfe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -32,5 +32,5 @@ MonoBehaviour:
     e32: 0
     e33: 1
   m_InstancedGameObject: {fileID: 0}
-  m_Flags: 0
-  m_ColliderType: 2
+  m_Flags: 1
+  m_ColliderType: 1

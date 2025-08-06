@@ -18,22 +18,28 @@ public class HeroSelection : MonoBehaviour
 
         string selectedRace = PlayerPrefs.GetString(GC.PLAYER_PREFS_SELECTED_RACE); // Recupera la raza
 
-        switch(selectedRace){
+        switch (selectedRace)
+        {
             case GC.RACE_HUMAN:
                 backgroundImage.texture = humanBackground;
-            break;
+                break;
 
             case GC.RACE_ORC:
                 backgroundImage.texture = orcBackground;
-            break;
+                break;
 
             case GC.RACE_ELF:
                 backgroundImage.texture = elfBackground;
-            break;
+                break;
         }
     }
 
-    public void BackToRaceSelection(){
+    public void BackToRaceSelection()
+    {
         SceneManager.LoadScene(GC.SCENE_RACE_SELECTION);
+    }
+    
+    public void GoToCamp(){
+        SceneManager.LoadScene(GC.SCENE_CAMP);
     }
 }

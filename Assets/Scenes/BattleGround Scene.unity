@@ -165,9 +165,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   girlKnight: {fileID: 218653108612653247, guid: b4f3099472e674349a632783590e80c2, type: 3}
-  numGirlKnight: 50
+  numGirlKnight: 20
   leafArchers: {fileID: 4586396731574008119, guid: 3596c3ef410a4b7488506feda29b73e4, type: 3}
-  numLeafArchers: 50
+  numLeafArchers: 20
 --- !u!1 &260861399
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+
     public void StartGame()
     {
-        // Cambiar a la escena principal del juego
-        SceneManager.LoadScene(GC.SCENE_RACE_SELECTION); // Asegúrate de que "GameScene" sea el nombre de tu escena principal
+        SceneManager.LoadScene(GC.SCENE_RACE_SELECTION); 
+    }
+
+    public void TalentTree()
+    {
+        SceneManager.LoadScene(GC.SCENE_TALENT_TREE); 
     }
 
     public void OpenOptions()
@@ -17,7 +23,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void ExitGame()
     {
-        // Salir del juego
         Debug.Log("Exiting the game...");
         Application.Quit();
     }
