@@ -32,10 +32,8 @@ public class PathFinder
             if (actual == goalPos)
                 return ReconstruirRuta(from, actual);
 
-            // Recorremos todos los vecinos (posiciones adyacentes) de la posición actual
             foreach (var neightbor in GetNeighbors(actual))
             {
-                // Si la posición no es transitable, la ignoramos
                 if (!transitable(neightbor, tilemap)) continue;
 
                 // Calculamos el nuevo coste acumulado si vamos hasta ese vecino
@@ -44,7 +42,6 @@ public class PathFinder
                 // Si aún no tenemos un coste para este vecino o hemos encontrado uno mejor (más barato)
                 if (!costTo.ContainsKey(neightbor) || nuevoCoste < costTo[neightbor])
                 {
-                    // Guardamos el nuevo coste acumulado
                     costTo[neightbor] = nuevoCoste;
 
                     // Calculamos la prioridad (coste + heurística hacia el objetivo)
@@ -52,8 +49,6 @@ public class PathFinder
 
                     // Añadimos el vecino a la cola con su prioridad
                     open.Enqueue(neightbor, prioridad);
-
-                    // Guardamos de dónde venimos para reconstruir la ruta al final
                     from[neightbor] = actual;
                 }
             }

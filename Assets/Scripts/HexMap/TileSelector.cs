@@ -12,7 +12,6 @@ public class TileSelector : MonoBehaviour
     private bool unitSelected = false;
     private Vector3Int unitPos = new Vector3Int();
 
-
     void Start()
     {
         selectorInstance = Instantiate(selectorPrefab);

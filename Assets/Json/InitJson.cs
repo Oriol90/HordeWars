@@ -2,7 +2,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-public class JsonTest : MonoBehaviour
+public class InitJson : MonoBehaviour
 {
     void Start()
     {

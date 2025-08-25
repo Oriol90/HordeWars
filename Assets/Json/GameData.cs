@@ -8,8 +8,9 @@ public class GameData{
     public List<TokenData> tokenData;
     public List<ArmyData> armyData;
     public List<Talent> talents;
-    
-    public GameData(){
+
+    public GameData()
+    {
         playerData = new PlayerData();
         armyData = new List<ArmyData>();
         heroeData = new HeroeData();
@@ -48,8 +49,4 @@ public class Talent
     public Boolean locked { get; set; }
     public String require1;
     public String require2;
-
-    
 }
-
-

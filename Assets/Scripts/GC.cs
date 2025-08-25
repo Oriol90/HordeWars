@@ -6,6 +6,8 @@ public static class GC
     //Directorio de guardado
     public const string SAVE_DIRECTORY = "Saves";
     public const string SAVE_FILE_NAME = "steamId_save.json";
+    public const string MAP_DIRECTORY = "Maps";
+    public const string MAP_FILE_NAME = "Map";
 
     //Scenes
     public const string SCENE_MAIN_MENU = "MainMenu Scene";
