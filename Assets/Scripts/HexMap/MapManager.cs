@@ -10,6 +10,7 @@ public class MapManager : MonoBehaviour
     public List<TileBase> tileReferences;
     private Dictionary<string, TileBase> tileDict;
     private static string mapsDirectory => Path.Combine(Application.persistentDataPath, GC.MAP_DIRECTORY);
+    public static List<TileData> tileDataList;
 
     void Awake()
     {
@@ -22,7 +23,7 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
-        //SaveMap();
+        SaveMap();
         LoadMap();
     }
 
@@ -30,7 +31,7 @@ public class MapManager : MonoBehaviour
     {
         string path = Path.Combine(mapsDirectory, "Map");
         string json = File.ReadAllText(path);
-        List<TileData> data = JsonConvert.DeserializeObject<List<TileData>>(json);
+        tileDataList = JsonConvert.DeserializeObject<List<TileData>>(json);
 
         tilemap.ClearAllTiles();
 
@@ -40,7 +41,7 @@ public class MapManager : MonoBehaviour
             tileDict[tile.name] = tile;
         }
 
-        foreach (var tileData in data)
+        foreach (var tileData in tileDataList)
         {
             Vector3Int pos = new Vector3Int(tileData.x, tileData.y, tileData.z);
             if (tileDict.TryGetValue(tileData.tileName, out TileBase tile))
@@ -49,7 +50,7 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-    
+
     public void SaveMap()
     {
         List<TileData> data = new List<TileData>();
@@ -59,13 +60,7 @@ public class MapManager : MonoBehaviour
             if (tilemap.HasTile(pos))
             {
                 TileBase tile = tilemap.GetTile(pos);
-                data.Add(new TileData
-                {
-                    x = pos.x,
-                    y = pos.y,
-                    z = pos.z,
-                    tileName = tile.name
-                });
+                data.Add(Utils.TileNameToTileData(tile.name, pos));
             }
         }
 
@@ -77,5 +72,18 @@ public class MapManager : MonoBehaviour
 
         File.WriteAllText(fullPath, json);
         Debug.Log($"[SaveGame] Guardado en: {fullPath}");
+    }
+
+    public static TileData GetTileByCoords(Vector3Int coords)
+    {
+        foreach (var tile in tileDataList)
+        {
+            Vector3Int pos = new Vector3Int(tile.x, tile.y, tile.z);
+            if (coords == pos)
+            {
+                return tile;
+            } 
+        }
+        return null;
     }
 }

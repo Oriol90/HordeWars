@@ -6,7 +6,7 @@ public class UnitGenerator : MonoBehaviour
     private Dictionary<string, float> timers;
 
     private void Start(){
-        InitTimers();
+        InitTimers(); 
     }
 
     private void Update(){

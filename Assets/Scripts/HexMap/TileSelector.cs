@@ -44,7 +44,7 @@ public class TileSelector : MonoBehaviour
                 //     unitSelected = true;
                 // }
 
-                Debug.Log($"Has hecho click en la celda: {cellPos}, tile: {Utils.GetTileName(clickedTile.name)}");
+                Debug.Log($"Has hecho click en la celda: {cellPos}");
 
                 // Ejemplo: cambiar el color de ese tile
                 Vector3 center = tilemap.GetCellCenterWorld(cellPos);

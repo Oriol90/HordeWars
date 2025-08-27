@@ -37,7 +37,7 @@ public class PathFinder
                 if (!transitable(neightbor, tilemap)) continue;
 
                 // Calculamos el nuevo coste acumulado si vamos hasta ese vecino
-                int nuevoCoste = costTo[actual] + getCost(neightbor, tilemap);
+                int nuevoCoste = costTo[actual] + getCost(neightbor);
 
                 // Si aún no tenemos un coste para este vecino o hemos encontrado uno mejor (más barato)
                 if (!costTo.ContainsKey(neightbor) || nuevoCoste < costTo[neightbor])
@@ -107,8 +107,8 @@ public class PathFinder
         return tilemap.GetTile(cellPos) !=null;
     }
 
-    private static int getCost(Vector3Int tile, Tilemap tilemap)
+    private static int getCost(Vector3Int coords)
     {
-        return Utils.GetTileName(tilemap.GetTile(tile).name);
+        return MapManager.GetTileByCoords(coords).cost;
     }
 }

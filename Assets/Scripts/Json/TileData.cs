@@ -1,10 +1,13 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 [System.Serializable]
 public class TileData {
     public string tileName;
-    public string biome;
+    [JsonConverter(typeof(StringEnumConverter))] public Biome biome;
     public string feature;
     public bool isDiscovered;
-    public float cost;
+    public int cost;
     public int x;
     public int y;
     public int z;
