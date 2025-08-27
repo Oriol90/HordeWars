@@ -9,11 +9,13 @@ public class TileSelector : MonoBehaviour
     public GameObject selectorPrefab;
     public LineRenderer lineRenderer;
     private GameObject selectorInstance;
-    private bool unitSelected = false;
+    //private bool unitSelected = false;
     private Vector3Int unitPos = new Vector3Int();
+    public GameObject hero;
 
     void Start()
     {
+        hero.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(0, -3, 0));
         selectorInstance = Instantiate(selectorPrefab);
         selectorInstance.SetActive(false); // No visible hasta hacer clic
     }
@@ -31,16 +33,16 @@ public class TileSelector : MonoBehaviour
             if (clickedTile != null)
             {
 
-                if (UnitInside(cellPos))
-                {
-                    unitPos = cellPos;
-                    unitSelected = true;
-                }
-                else
-                {
-                    unitPos = cellPos;
-                    unitSelected = true;
-                }
+                // if (UnitInside(cellPos))
+                // {
+                //     unitPos = cellPos;
+                //     unitSelected = true;
+                // }
+                // else
+                // {
+                //     unitPos = cellPos;
+                //     unitSelected = true;
+                // }
 
                 Debug.Log($"Has hecho click en la celda: {cellPos}, tile: {Utils.GetTileName(clickedTile.name)}");
 
@@ -56,7 +58,7 @@ public class TileSelector : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1) && unitSelected) // Clic derecho
+        if (Input.GetMouseButtonDown(1) /*&& unitSelected*/) // Clic derecho
         {
 
             Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);

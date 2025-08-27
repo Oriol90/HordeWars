@@ -1,9 +1,31 @@
 
 
 using System;
+using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public static class Utils
 {
+
+
+    /// <summary>
+    /// Convierte un Vector3Int (coordenadas de celda) a Vector3 (posición en el mundo, centrada en el tile).
+    /// </summary>
+    public static Vector3 CellToWorld(Vector3Int cellPos, Tilemap tilemap)
+    {
+        Vector3 worldPos = tilemap.CellToWorld(cellPos);
+        worldPos += tilemap.cellSize / 2; // centra en el tile
+        return worldPos;
+    }
+
+    /// <summary>
+    /// Convierte un Vector3 (posición en el mundo) a Vector3Int (coordenadas de celda en el tilemap).
+    /// </summary>
+    public static Vector3Int WorldToCell(Vector3 worldPos, Tilemap tilemap)
+    {
+        return tilemap.WorldToCell(worldPos);
+    }
+
 
     public static int GetTileName(string longTileName)
     {
