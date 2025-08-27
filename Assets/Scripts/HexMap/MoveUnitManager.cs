@@ -4,9 +4,10 @@ using UnityEngine.Tilemaps;
 
 public static class MoveUnitManager
 {
-    public static void MoveUnit(Vector3Int unitPos, Vector3Int goalPos, Tilemap tilemap, LineRenderer lineRenderer)
+    public static void MoveUnit(Vector3Int goalPos, Tilemap tilemap, LineRenderer lineRenderer)
     {
-        List<Vector3Int> path = PathFinder.FindPath(HeroController.unitPos, goalPos, tilemap);
+        Vector3Int heroPos = GameSaveManager.LoadHeroPos();
+        List<Vector3Int> path = PathFinder.FindPath(heroPos, goalPos, tilemap);
         DrawPath(path, lineRenderer, tilemap);
         HeroController.SetPath(path, tilemap);
     }

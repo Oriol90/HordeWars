@@ -6,17 +6,18 @@ public class TileSelector : MonoBehaviour
 {
     public Tilemap tilemap; // arrástralo desde el inspector
     public Camera mainCamera;
-    public GameObject selectorPrefab;
+    public GameObject bordeArcoiris;
     public LineRenderer lineRenderer;
     private GameObject selectorInstance;
     //private bool unitSelected = false;
-    private Vector3Int unitPos = new Vector3Int();
+    //private Vector3Int unitPos = new Vector3Int();
     public GameObject hero;
 
     void Start()
     {
         hero.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(0, -3, 0));
-        selectorInstance = Instantiate(selectorPrefab);
+        GameSaveManager.SaveHeroPos(new Vector3Int(0, -3, 0)); 
+        selectorInstance = Instantiate(bordeArcoiris);
         selectorInstance.SetActive(false); // No visible hasta hacer clic
     }
 
@@ -32,7 +33,6 @@ public class TileSelector : MonoBehaviour
 
             if (clickedTile != null)
             {
-
                 // if (UnitInside(cellPos))
                 // {
                 //     unitPos = cellPos;
@@ -64,7 +64,7 @@ public class TileSelector : MonoBehaviour
             Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int cellPos = tilemap.WorldToCell(mouseWorldPos);
             cellPos.z = 0;
-            MoveUnitManager.MoveUnit(unitPos, cellPos, tilemap, lineRenderer);
+            MoveUnitManager.MoveUnit(cellPos, tilemap, lineRenderer);
 
             if (!tilemap.HasTile(cellPos)) return;
 

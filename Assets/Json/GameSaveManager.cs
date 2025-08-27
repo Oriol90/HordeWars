@@ -46,4 +46,19 @@ public static class GameSaveManager
         data.talents = listTalents;
         SaveGame(data);
     }
+
+    public static Vector3Int LoadHeroPos()
+    {
+        GameData gameData = LoadGame();
+        Debug.Log(gameData.heroPos);
+        return gameData.heroPos;
+    }
+
+    public static void SaveHeroPos(Vector3Int heroPos)
+    {
+        data = LoadGame();
+        data.heroPos = heroPos;
+        SaveGame(data);
+        Debug.Log(heroPos);
+    }
 }

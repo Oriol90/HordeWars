@@ -45,8 +45,8 @@ public class HeroController : MonoBehaviour {
         // Animaciones opcionales
         if (animator != null)
         {
-            animator.SetBool("isWalking", path.Count > 0);
+            //animator.SetBool("isWalking", path.Count > 0);
         }
-        unitPos = Utils.WorldToCell(transform.position, tilemap);
+        GameSaveManager.SaveHeroPos(Utils.WorldToCell(transform.position, tilemap));
     }
 }

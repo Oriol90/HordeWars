@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class GameData{
@@ -8,6 +9,7 @@ public class GameData{
     public List<TokenData> tokenData;
     public List<ArmyData> armyData;
     public List<Talent> talents;
+    public Vector3Int heroPos;
 
     public GameData()
     {
@@ -16,6 +18,7 @@ public class GameData{
         heroeData = new HeroeData();
         talents = new List<Talent>();
         tokenData = new List<TokenData>();
+        heroPos = new Vector3Int();
     }
 }
 
@@ -24,13 +27,15 @@ public class PlayerData {
     public int level;
 }
 
-public class HeroeData {
+public class HeroeData
+{
     public string heroeName;
     public int heroeLevel;
     public List<int> heroeSkills;
 }
 
-public class ArmyData{
+public class ArmyData
+{
     public string unitType;
     public int quantity;
 }
