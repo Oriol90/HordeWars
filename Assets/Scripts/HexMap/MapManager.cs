@@ -3,6 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
 using UnityEngine.Tilemaps;
+using Unity.VisualScripting;
 
 public class MapManager : MonoBehaviour
 {
@@ -24,7 +25,13 @@ public class MapManager : MonoBehaviour
     void Start()
     {
         SaveMap();
-        LoadMap();
+        //LoadMap();
+    }
+
+    void FixedUpdate()
+    {
+        //UpdateFog();
+        //LoadMap();
     }
 
     private void LoadMap()
@@ -41,17 +48,10 @@ public class MapManager : MonoBehaviour
             tileDict[tile.name] = tile;
         }
 
-        foreach (var tileData in tileDataList)
-        {
-            Vector3Int pos = new Vector3Int(tileData.x, tileData.y, tileData.z);
-            if (tileDict.TryGetValue(tileData.tileName, out TileBase tile))
-            {
-                tilemap.SetTile(pos, tile);
-            }
-        }
+        
     }
 
-    public void SaveMap()
+    private void SaveMap()
     {
         List<TileData> data = new List<TileData>();
 
@@ -64,14 +64,26 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        if (!Directory.Exists(mapsDirectory))
-            Directory.CreateDirectory(mapsDirectory);
+        if (!Directory.Exists(mapsDirectory)) Directory.CreateDirectory(mapsDirectory);
 
         string fullPath = Path.Combine(mapsDirectory, GC.MAP_FILE_NAME);
         string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
         File.WriteAllText(fullPath, json);
         Debug.Log($"[SaveGame] Guardado en: {fullPath}");
+        tileDataList = data;
+    }
+
+    public void SaveMap(List<TileData> data)
+    {
+        if (!Directory.Exists(mapsDirectory)) Directory.CreateDirectory(mapsDirectory);
+
+        string fullPath = Path.Combine(mapsDirectory, GC.MAP_FILE_NAME);
+        string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+
+        File.WriteAllText(fullPath, json);
+        Debug.Log($"[SaveGame] Guardado en: {fullPath}");
+        tileDataList = data;
     }
 
     public static TileData GetTileByCoords(Vector3Int coords)
@@ -82,8 +94,32 @@ public class MapManager : MonoBehaviour
             if (coords == pos)
             {
                 return tile;
-            } 
+            }
         }
         return null;
     }
+
+    // private void UpdateFog()
+    // {
+    //     Vector3Int heroPos = GameSaveManager.LoadHeroPos();
+    //     List<Vector3Int> posDiscoveredList = GetNeighborsThreeLayers(heroPos);
+    //     List<TileData> updatedTileList = new List<TileData>();
+
+    //     foreach (var tile in tileDataList)
+    //     {
+    //         if (tile.fogState == FogState.Visible) tile.fogState = FogState.Explored;
+    //         foreach (var posDiscovered in posDiscoveredList)
+    //         {
+    //             Vector3Int tilePos = new Vector3Int(tile.x, tile.y, tile.z);
+    //             if (posDiscovered == tilePos)
+    //             {
+    //                 tile.fogState = FogState.Visible;
+    //             }
+    //         }
+    //         updatedTileList.Add(tile);
+    //     }
+    //     SaveMap(updatedTileList);
+    // }
+
+    
 }

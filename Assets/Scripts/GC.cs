@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class GC
 {
@@ -105,19 +106,4 @@ public static class GC
     public const string TALENT_SPELLBOOK = "spellbook";
     public const string TALENT_SWORDS = "swords";
     public const string TALENT_WAND = "wand";
-
-    //Tiles
-
-    public const string TILE_SAND_1 = "sand_1";
-    public const string TILE_SAND_2 = "sand_2";
-    public const string TILE_GRASS_1 = "grass_1";
-    public const string TILE_GRASS_2 = "grass_2";
-    public const string TILE_GRASS_3 = "grass_3";
-    public const string TILE_GRASS_4 = "grass_4";
-    public const string TILE_MOUNTAIN_1 = "mountain_1";
-    public const string TILE_MOUNTAIN_2 = "mountain_2";
-    public const string TILE_MOUNTAIN_3 = "mountain_3";
-    public const string TILE_FORREST = "forrest";
-    public const string TILE_LAVA = "lava";
-    public const string TILE_WATER = "water";
 }

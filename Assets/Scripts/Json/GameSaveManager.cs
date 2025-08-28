@@ -50,7 +50,6 @@ public static class GameSaveManager
     public static Vector3Int LoadHeroPos()
     {
         GameData gameData = LoadGame();
-        Debug.Log(gameData.heroPos);
         return gameData.heroPos;
     }
 
@@ -59,6 +58,5 @@ public static class GameSaveManager
         data = LoadGame();
         data.heroPos = heroPos;
         SaveGame(data);
-        Debug.Log(heroPos);
     }
 }

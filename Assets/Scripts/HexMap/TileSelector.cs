@@ -12,6 +12,7 @@ public class TileSelector : MonoBehaviour
     //private bool unitSelected = false;
     //private Vector3Int unitPos = new Vector3Int();
     public GameObject hero;
+    //string posiciones = "";
 
     void Start()
     {
@@ -45,6 +46,8 @@ public class TileSelector : MonoBehaviour
                 // }
 
                 Debug.Log($"Has hecho click en la celda: {cellPos}");
+                //posiciones = $"{posiciones}new Vector3Int{cellPos}, ";
+                //Debug.Log(posiciones);
 
                 // Ejemplo: cambiar el color de ese tile
                 Vector3 center = tilemap.GetCellCenterWorld(cellPos);

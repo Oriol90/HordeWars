@@ -9,6 +9,8 @@ public class HeroController : MonoBehaviour {
     public Tilemap tilemap;
     public static Vector3Int unitPos;
     private Animator animator; // si tienes animaciones
+    protected Vector3Int heroPos = new Vector3Int(0, -3, 0);
+    
 
     private void Start() {
         transform.position = tilemap.GetCellCenterWorld(new Vector3Int(0, -3, 0));
@@ -47,6 +49,16 @@ public class HeroController : MonoBehaviour {
         {
             //animator.SetBool("isWalking", path.Count > 0);
         }
-        GameSaveManager.SaveHeroPos(Utils.WorldToCell(transform.position, tilemap));
+        if (heroPos != Utils.WorldToCell(transform.position, tilemap))
+        {
+            Vector3Int lastHeroPos = heroPos;
+            heroPos = Utils.WorldToCell(transform.position, tilemap);
+            if (lastHeroPos != heroPos) GameSaveManager.SaveHeroPos(heroPos);
+        }
+        
     }
 }
+
+        // Vector3Int lastHeroPos = heroPos;
+        // heroPos = GameSaveManager.LoadHeroPos();
+        // if (lastHeroPos != heroPos) UpdateFog();

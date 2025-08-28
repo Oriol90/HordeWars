@@ -6,7 +6,7 @@ public class TileData {
     public string tileName;
     [JsonConverter(typeof(StringEnumConverter))] public Biome biome;
     public string feature;
-    public bool isDiscovered;
+    [JsonConverter(typeof(StringEnumConverter))]public FogState fogState;
     public int cost;
     public int x;
     public int y;

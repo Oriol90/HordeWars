@@ -1,9 +1,8 @@
-public enum UnitType
+public enum FogState
 {
-    Soldier,
-    Archer,
-    Mage,
-    Knight
+    Unexplored,
+    Explored,
+    Visible
 }
 
 public enum Biome

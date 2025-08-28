@@ -32,6 +32,7 @@ public static class Utils
         TileData tileData = new TileData
                 {
                     tileName = longTileName,
+                    fogState = FogState.Unexplored,
                     x = pos.x,
                     y = pos.y,
                     z = pos.z
