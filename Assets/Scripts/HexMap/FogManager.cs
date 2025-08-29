@@ -5,16 +5,25 @@ using UnityEngine.Tilemaps;
 public class FogManager : MonoBehaviour
 {
     public Tilemap fogTilemap;
-    public Tilemap groundTilemap;
     public TileBase fogTile;
     public TileBase shadowTile;
+    private Dictionary<string, TileBase> tileDict;
     private Vector3Int heroPos = new Vector3Int();
+    private MapManager mapManager = new MapManager();
 
+
+    void Awake()
+    {
+        tileDict = new Dictionary<string, TileBase>();
+        tileDict[fogTile.name] = fogTile;
+        tileDict[shadowTile.name] = shadowTile;
+    }
 
     void Start()
     {
-        paintUnexplored();
         heroPos = GameSaveManager.LoadHeroPos();
+        paintUnexplored();
+        mapManager.LoadFogMap(tileDict, fogTilemap);
         UpdateFog();
     }
 
@@ -23,7 +32,7 @@ public class FogManager : MonoBehaviour
         Vector3Int lastHeroPos = heroPos;
         heroPos = GameSaveManager.LoadHeroPos();
         if (lastHeroPos != heroPos) UpdateFog();
-        
+
 
     }
 
@@ -32,20 +41,18 @@ public class FogManager : MonoBehaviour
 
         heroPos = GameSaveManager.LoadHeroPos();
         List<Vector3Int> posDiscoveredList = GetNeighborsThreeLayers(heroPos);
-        List<TileData> tileDataList = MapManager.tileDataList;
+        List<GroundTileData> tileDataList = MapManager.groundTileDataList;
 
-        List<TileData> updatedTileList = new List<TileData>();
+        List<GroundTileData> updatedTileList = new List<GroundTileData>();
         paintExplored(heroPos);
         paintVisible(posDiscoveredList, heroPos);
     }
 
-    private void paintUnexplored() {
-
-        BoundsInt bounds = groundTilemap.cellBounds;
-
-        for (int x = bounds.xMin; x < bounds.xMax; x++)
+    private void paintUnexplored()
+    {
+        for (int x = GC.TILEMAP_X_MIN; x < GC.TILEMAP_X_MAX; x++)
         {
-            for (int y = bounds.yMin; y < bounds.yMax; y++)
+            for (int y = GC.TILEMAP_Y_MIN; y < GC.TILEMAP_Y_MAX; y++)
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
                 fogTilemap.SetTile(pos, fogTile);
@@ -53,10 +60,8 @@ public class FogManager : MonoBehaviour
         }
     }
 
-    private void paintExplored(Vector3Int heroPos) {
-
-        //BoundsInt bounds = groundTilemap.cellBounds;
-
+    private void paintExplored(Vector3Int heroPos)
+    {
         for (int x = heroPos.x - 5; x < heroPos.x + 5; x++)
         {
             for (int y = heroPos.y - 5; y < heroPos.y + 5; y++)
@@ -67,20 +72,19 @@ public class FogManager : MonoBehaviour
         }
     }
 
-    private void paintVisible(List<Vector3Int> posDiscoveredList, Vector3Int heroPos) {
-
-        //BoundsInt bounds = groundTilemap.cellBounds;
-
+    private void paintVisible(List<Vector3Int> posDiscoveredList, Vector3Int heroPos)
+    {
         for (int x = heroPos.x - 4; x < heroPos.x + 4; x++)
         {
             for (int y = heroPos.y - 4; y < heroPos.y + 4; y++)
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
-                foreach (var tile in posDiscoveredList) {
+                foreach (var tile in posDiscoveredList)
+                {
                     Vector3Int tilePos = new Vector3Int(tile.x, tile.y, 0);
                     if (pos == tilePos) fogTilemap.SetTile(pos, null);
                 }
-                 
+
             }
         }
     }

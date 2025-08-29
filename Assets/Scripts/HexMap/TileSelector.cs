@@ -4,27 +4,22 @@ using UnityEngine.Tilemaps;
 
 public class TileSelector : MonoBehaviour
 {
-    public Tilemap tilemap; // arrástralo desde el inspector
+    public Tilemap tilemap; 
     public Camera mainCamera;
     public GameObject bordeArcoiris;
     public LineRenderer lineRenderer;
     private GameObject selectorInstance;
-    //private bool unitSelected = false;
-    //private Vector3Int unitPos = new Vector3Int();
     public GameObject hero;
-    //string posiciones = "";
 
     void Start()
     {
-        hero.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(0, -3, 0));
-        GameSaveManager.SaveHeroPos(new Vector3Int(0, -3, 0)); 
         selectorInstance = Instantiate(bordeArcoiris);
-        selectorInstance.SetActive(false); // No visible hasta hacer clic
+        selectorInstance.SetActive(false); 
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Click izquierdo
+        if (Input.GetMouseButtonDown(0)) 
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0f; // MUY IMPORTANTE para evitar errores con z
@@ -34,34 +29,15 @@ public class TileSelector : MonoBehaviour
 
             if (clickedTile != null)
             {
-                // if (UnitInside(cellPos))
-                // {
-                //     unitPos = cellPos;
-                //     unitSelected = true;
-                // }
-                // else
-                // {
-                //     unitPos = cellPos;
-                //     unitSelected = true;
-                // }
-
                 Debug.Log($"Has hecho click en la celda: {cellPos}");
-                //posiciones = $"{posiciones}new Vector3Int{cellPos}, ";
-                //Debug.Log(posiciones);
 
-                // Ejemplo: cambiar el color de ese tile
                 Vector3 center = tilemap.GetCellCenterWorld(cellPos);
                 selectorInstance.transform.position = center;
                 selectorInstance.SetActive(true);
-                tilemap.SetColor(cellPos, Color.red);
-                /* Sustitur el tile
-                    public TileBase highlightTile; // Asignado desde el Inspector
-                    tilemap.SetTile(cellPos, highlightTile);
-                */
             }
         }
 
-        if (Input.GetMouseButtonDown(1) /*&& unitSelected*/) // Clic derecho
+        if (Input.GetMouseButtonDown(1)) // Clic derecho
         {
 
             Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -73,19 +49,5 @@ public class TileSelector : MonoBehaviour
 
             
         }
-    }
-
-    bool UnitInside(Vector3Int cell)
-    {
-        Vector3 worldPos = tilemap.GetCellCenterWorld(cell);
-        Collider2D[] hits = Physics2D.OverlapCircleAll(worldPos, 0.1f);
-
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Unidad")) // Asegúrate de asignar esta tag a tus unidades
-                return true;
-        }
-
-        return false;
     }
 }

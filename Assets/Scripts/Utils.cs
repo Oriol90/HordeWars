@@ -27,16 +27,15 @@ public static class Utils
     }
 
 
-    public static TileData TileNameToTileData(string longTileName, Vector3Int pos)
+    public static GroundTileData GroundTileNameToGroundTileData(string longTileName, Vector3Int pos)
     {
-        TileData tileData = new TileData
-                {
-                    tileName = longTileName,
-                    fogState = FogState.Unexplored,
-                    x = pos.x,
-                    y = pos.y,
-                    z = pos.z
-                };
+        GroundTileData tileData = new GroundTileData
+        {
+            tileName = longTileName,
+            x = pos.x,
+            y = pos.y,
+            z = pos.z
+        };
 
         switch (longTileName)
         {
@@ -104,6 +103,35 @@ public static class Utils
             default:
                 tileData.biome = Biome.Grass;
                 tileData.cost = 1;
+                break;
+        }
+        return tileData;
+    }
+    
+    public static FogTileData FogTileVisibilityToFogTileData(String longTileName, Vector3Int pos)
+    {
+        FogTileData tileData = new FogTileData
+                {
+                    x = pos.x,
+                    y = pos.y,
+                    z = pos.z
+                };
+
+        switch (longTileName)
+        {
+
+            case GC.FOG_TILE_NAME:
+                tileData.tileName = longTileName;
+                tileData.fogState = FogState.Unexplored;
+                break;
+
+            case GC.SHADOW_TILE_NAME:
+                tileData.tileName = longTileName;
+                tileData.fogState = FogState.Explored;
+                break;
+
+            default:
+                tileData.fogState = FogState.Visible;
                 break;
         }
         return tileData;

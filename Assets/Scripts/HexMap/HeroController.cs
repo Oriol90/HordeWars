@@ -9,17 +9,22 @@ public class HeroController : MonoBehaviour {
     public Tilemap tilemap;
     public static Vector3Int unitPos;
     private Animator animator; // si tienes animaciones
-    protected Vector3Int heroPos = new Vector3Int(0, -3, 0);
+    protected Vector3Int heroPos;
+    Vector3Int lastHeroPos;
+    FogManager fogManager = new FogManager();
     
 
-    private void Start() {
-        transform.position = tilemap.GetCellCenterWorld(new Vector3Int(0, -3, 0));
+    private void Start()
+    {
+        transform.position = tilemap.GetCellCenterWorld(GameSaveManager.LoadHeroPos());
+        lastHeroPos = GameSaveManager.LoadHeroPos();
         unitPos = Utils.WorldToCell(transform.position, tilemap);
         animator = GetComponent<Animator>();
     }
 
     private void Update() {
-        if (path.Count > 0) {
+        if (path.Count > 0)
+        {
             MoveAlongPath();
         }
     }
@@ -38,6 +43,7 @@ public class HeroController : MonoBehaviour {
         Vector3 target = path.Peek(); // siguiente posición
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
 
+
         // Si llegamos al tile, lo quitamos de la cola
         if (Vector3.Distance(transform.position, target) < 0.01f)
         {
@@ -51,14 +57,10 @@ public class HeroController : MonoBehaviour {
         }
         if (heroPos != Utils.WorldToCell(transform.position, tilemap))
         {
-            Vector3Int lastHeroPos = heroPos;
             heroPos = Utils.WorldToCell(transform.position, tilemap);
             if (lastHeroPos != heroPos) GameSaveManager.SaveHeroPos(heroPos);
+            lastHeroPos = heroPos;
         }
         
     }
 }
-
-        // Vector3Int lastHeroPos = heroPos;
-        // heroPos = GameSaveManager.LoadHeroPos();
-        // if (lastHeroPos != heroPos) UpdateFog();

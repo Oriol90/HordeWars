@@ -9,6 +9,7 @@ public static class GC
     public const string SAVE_FILE_NAME = "steamId_save.json";
     public const string MAP_DIRECTORY = "Maps";
     public const string MAP_FILE_NAME = "Map";
+    public const string FOG_MAP_FILE_NAME = "FogMap";
 
     //Scenes
     public const string SCENE_MAIN_MENU = "MainMenu Scene";
@@ -22,6 +23,12 @@ public static class GC
 
     // Tamaño de la cuadrícula
     public const float CELL_SIZE = 0.5f;
+
+    //Tamaño tileMap
+    public const int TILEMAP_X_MIN = -100;
+    public const int TILEMAP_Y_MIN = -100;
+    public const int TILEMAP_X_MAX = 100;
+    public const int TILEMAP_Y_MAX = 100;
 
     //Velocidad del juego
     public const float TIME_SPEED = 0.2f;
@@ -106,4 +113,8 @@ public static class GC
     public const string TALENT_SPELLBOOK = "spellbook";
     public const string TALENT_SWORDS = "swords";
     public const string TALENT_WAND = "wand";
+
+    //Fog tiles
+    public const string FOG_TILE_NAME = "Niebla";
+    public const string SHADOW_TILE_NAME = "Sombra";
 }
