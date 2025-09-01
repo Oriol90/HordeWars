@@ -2,10 +2,10 @@ using UnityEngine.UI;
 
 public class TalentButton
 {
-    public Talent talent;
+    public TalentData talent;
     public Button button;
     
-    public TalentButton (Talent talent, Button button)
+    public TalentButton (TalentData talent, Button button)
     {
         this.talent = talent;
         this.button = button;

@@ -14,3 +14,15 @@ public enum Biome
     River,
     Sea
 }
+
+public enum DataType
+{
+    ArmyData,
+    FogTileData,
+    GameData,
+    GroundTileData,
+    HeroData,
+    PlayerData,
+    TalentData,
+    TokenData
+}

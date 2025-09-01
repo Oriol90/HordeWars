@@ -14,7 +14,7 @@ public class TalentTreeManager : MonoBehaviour
 
     public void Start()
     {
-        List<Talent> listTalents = GameSaveManager.LoadTalents();
+        List<TalentData> listTalents = GameSaveManager.LoadTalents();
         buttons.AddRange(buttonParent.GetComponentsInChildren<Button>());
 
         listTalentButtons = PairButtonsWithTalents(listTalents, buttons, listTalentButtons);
@@ -97,7 +97,7 @@ public class TalentTreeManager : MonoBehaviour
 
     }
 
-    public List<TalentButton> PairButtonsWithTalents(List<Talent> talents, List<Button> buttons, List<TalentButton> listTalentButtons)
+    public List<TalentButton> PairButtonsWithTalents(List<TalentData> talents, List<Button> buttons, List<TalentButton> listTalentButtons)
     {
         foreach (var talent in talents)
         {
@@ -115,7 +115,7 @@ public class TalentTreeManager : MonoBehaviour
 
     public void SaveDataToJSON()
     {
-        List<Talent> listTalents = new List<Talent>();
+        List<TalentData> listTalents = new List<TalentData>();
         foreach (var tb in listTalentButtons)
         {
             listTalents.Add(tb.talent);

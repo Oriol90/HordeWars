@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class HeroController : MonoBehaviour {
+public class HeroController : MonoBehaviour
+{
     public float moveSpeed = 3f; // Velocidad de movimiento
     private static Queue<Vector3> path = new Queue<Vector3>();
     public Tilemap tilemap;
@@ -11,8 +12,7 @@ public class HeroController : MonoBehaviour {
     private Animator animator; // si tienes animaciones
     protected Vector3Int heroPos;
     Vector3Int lastHeroPos;
-    FogManager fogManager = new FogManager();
-    
+    private bool toggleMove = false;
 
     private void Start()
     {
@@ -22,19 +22,26 @@ public class HeroController : MonoBehaviour {
         animator = GetComponent<Animator>();
     }
 
-    private void Update() {
-        if (path.Count > 0)
+    private void Update()
+    {
+        if (path.Count > 0 && toggleMove)
         {
             MoveAlongPath();
         }
+        else
+        {
+            toggleMove = false;
+        }
     }
 
-    public static void SetPath(List<Vector3Int> newPath, Tilemap tilemap) {
+    public static void SetPath(List<Vector3Int> newPath, Tilemap tilemap)
+    {
         path.Clear();
 
-        foreach (var pos in newPath) {
+        foreach (var pos in newPath)
+        {
             // Convertimos el Vector3Int (posición del tile) a mundo
-            path.Enqueue(tilemap.CellToWorld(pos)); 
+            path.Enqueue(tilemap.CellToWorld(pos));
         }
     }
 
@@ -61,6 +68,10 @@ public class HeroController : MonoBehaviour {
             if (lastHeroPos != heroPos) GameSaveManager.SaveHeroPos(heroPos);
             lastHeroPos = heroPos;
         }
-        
+    }
+
+    public void setToggleMove()
+    {
+        toggleMove = true;
     }
 }

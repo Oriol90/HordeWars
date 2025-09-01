@@ -24,14 +24,8 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
-        SaveGroundMap();
-        //LoadMap();
-    }
-
-    void FixedUpdate()
-    {
-        //UpdateFog();
-        //LoadMap();
+        //SaveGroundMap();
+        LoadGroundMap();
     }
 
     private void LoadGroundMap()

@@ -18,7 +18,7 @@ public class UnitGenerator : MonoBehaviour
 
     private void UpdateArmy(string unit, float timeInterval){
 
-    timers[unit] += GC.TIME_SPEED * Time.deltaTime;
+    timers[unit] += GC.TIME_SPEED * Time.deltaTime; 
         if (timers[unit] >= timeInterval)
         {
             GC.ARMY_UNITS[unit] ++; 

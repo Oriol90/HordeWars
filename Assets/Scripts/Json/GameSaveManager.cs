@@ -6,23 +6,22 @@ using System.Collections.Generic;
 public static class GameSaveManager
 {
     private static string saveDirectory => Path.Combine(Application.persistentDataPath, GC.SAVE_DIRECTORY);
-    private static GameData data = new GameData();
 
-    public static void SaveGame(GameData data)
+    public static void Save(object data, DataType dataType)
     {
         if (!Directory.Exists(saveDirectory))
             Directory.CreateDirectory(saveDirectory);
 
-        string fullPath = Path.Combine(saveDirectory, GC.SAVE_FILE_NAME);
+        string fullPath = Path.Combine(saveDirectory, dataType.ToString());
         string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
         File.WriteAllText(fullPath, json);
         Debug.Log($"[SaveGame] Guardado en: {fullPath}");
     }
 
-    public static GameData LoadGame()
+    public static T Load<T>(DataType dataType)
     {
-        string fullPath = Path.Combine(saveDirectory, GC.SAVE_FILE_NAME);
+        string fullPath = Path.Combine(saveDirectory, dataType.ToString());
 
         if (!File.Exists(fullPath))
         {
@@ -30,32 +29,31 @@ public static class GameSaveManager
         }
 
         string json = File.ReadAllText(fullPath);
-        return JsonConvert.DeserializeObject<GameData>(json);
+        return JsonConvert.DeserializeObject<T>(json);
     }
 
-    public static List<Talent> LoadTalents()
+    public static List<TalentData> LoadTalents()
     {
-        GameData gameData = LoadGame();
-        return gameData.talents;
+        List<TalentData> talentData = Load<List<TalentData>>(DataType.TalentData);
+        return talentData;
     }
 
-    public static void SaveTalents(List<Talent> listTalents)
+    public static void SaveTalents(List<TalentData> listTalents)
     {
-        data = LoadGame();
-        data.talents = listTalents;
-        SaveGame(data);
+        Save(listTalents, DataType.TalentData);
     }
 
     public static Vector3Int LoadHeroPos()
+
     {
-        GameData gameData = LoadGame();
-        return gameData.heroPos;
+        HeroData heroData = Load<HeroData>(DataType.HeroData);
+        return heroData.heroPos;
     }
 
     public static void SaveHeroPos(Vector3Int heroPos)
     {
-        data = LoadGame();
-        data.heroPos = heroPos;
-        SaveGame(data);
+        HeroData heroData = Load<HeroData>(DataType.HeroData);
+        heroData.heroPos = heroPos;
+        Save(heroData, DataType.HeroData);
     }
 }

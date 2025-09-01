@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 public class FogManager : MonoBehaviour
 {
     public Tilemap fogTilemap;
+    public Tilemap groundTilemap;
     public TileBase fogTile;
     public TileBase shadowTile;
     private Dictionary<string, TileBase> tileDict;
@@ -74,6 +75,7 @@ public class FogManager : MonoBehaviour
 
     private void paintVisible(List<Vector3Int> posDiscoveredList, Vector3Int heroPos)
     {
+
         for (int x = heroPos.x - 4; x < heroPos.x + 4; x++)
         {
             for (int y = heroPos.y - 4; y < heroPos.y + 4; y++)
@@ -135,5 +137,10 @@ public class FogManager : MonoBehaviour
             neighborsThreeLayers.Add(heroPos + offset);
         }
         return neighborsThreeLayers;
+    }
+
+    public void SaveFogMap()
+    {
+        //mapManager.SaveFogMap();
     }
 }
