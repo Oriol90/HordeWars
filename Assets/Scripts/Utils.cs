@@ -107,15 +107,15 @@ public static class Utils
         }
         return tileData;
     }
-    
+
     public static FogTileData FogTileVisibilityToFogTileData(String longTileName, Vector3Int pos)
     {
         FogTileData tileData = new FogTileData
-                {
-                    x = pos.x,
-                    y = pos.y,
-                    z = pos.z
-                };
+        {
+            x = pos.x,
+            y = pos.y,
+            z = pos.z
+        };
 
         switch (longTileName)
         {
@@ -135,6 +135,27 @@ public static class Utils
                 break;
         }
         return tileData;
+    }
+
+    public static Unit UnitTypeToUnit(UnitType unitType, GameObject go)
+    {
+        Unit unit;
+        switch (unitType)
+        {
+            case UnitType.GirlKnight:
+                unit = go.GetComponent<GirlKnight>();
+                break;
+            case UnitType.LeafArcher:
+                unit = go.GetComponent<LeafArcher>();
+                break;
+            case UnitType.Archer:
+                unit = go.GetComponent<Archer>();
+                break;
+            default:
+                unit = null;
+                break;
+        }
+        return unit;
     }
 
 }

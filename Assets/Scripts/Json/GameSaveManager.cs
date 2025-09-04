@@ -32,12 +32,6 @@ public static class GameSaveManager
         return JsonConvert.DeserializeObject<T>(json);
     }
 
-    public static List<TalentData> LoadTalents()
-    {
-        List<TalentData> talentData = Load<List<TalentData>>(DataType.TalentData);
-        return talentData;
-    }
-
     public static void SaveTalents(List<TalentData> listTalents)
     {
         Save(listTalents, DataType.TalentData);

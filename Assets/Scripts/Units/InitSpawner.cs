@@ -1,16 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InitSpawner : Spawner
 {
-    public GameObject girlKnight;
-    public int numGirlKnight;
+    void Start()
+    {
 
-    public GameObject leafArchers;
-    public int numLeafArchers;
+        List<UnitData> listUnitData = GameSaveManager.Load<List<UnitData>>(DataType.ArmyData);
+        Dictionary<UnitType, BaseStats> dictBaseStats = GameSaveManager.Load<Dictionary<UnitType, BaseStats>>(DataType.BaseStats);
 
-
-    void Start(){
-        if(girlKnight != null && numGirlKnight > 0) Spawn(girlKnight, numGirlKnight, GC.UNIT_GIRL_KNIGHT);
-        if(leafArchers != null && numLeafArchers > 0) Spawn(leafArchers, numLeafArchers, GC.UNIT_LEAF_ARCHER);
+        foreach (var unit in listUnitData)
+        {
+            Spawn(unit, dictBaseStats);
+        }
     }
 }

@@ -1,10 +1,9 @@
 using System;
-using UnityEngine;
 
 [Serializable]
-public class TalentData : ScriptableObject
+public class TalentData
 {
-    public new string name;
+    public string name;
     public string description;
     public Boolean enabled { get; set; }
     public Boolean locked { get; set; }

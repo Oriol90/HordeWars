@@ -128,7 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224914207}
+  - component: {fileID: 224914209}
   - component: {fileID: 224914208}
+  - component: {fileID: 224914210}
   m_Layer: 0
   m_Name: SpawnerManager
   m_TagString: Untagged
@@ -164,10 +166,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70392978ccb59ff4194302aec413c941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  girlKnight: {fileID: 218653108612653247, guid: b4f3099472e674349a632783590e80c2, type: 3}
-  numGirlKnight: 20
-  leafArchers: {fileID: 4586396731574008119, guid: 3596c3ef410a4b7488506feda29b73e4, type: 3}
-  numLeafArchers: 20
+  LeafArcherPrefab: {fileID: 4586396731574008119, guid: 3596c3ef410a4b7488506feda29b73e4, type: 3}
+  ArcherPrefab: {fileID: 4560551466128208960, guid: 34a913724f5a7e94c9de1443a55fcc6c, type: 3}
+  GirlKnightPrefab: {fileID: 218653108612653247, guid: b4f3099472e674349a632783590e80c2, type: 3}
+--- !u!114 &224914209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224914205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b90844c69b97649a4139006cdd9670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  archerPrefab: {fileID: 4586396731574008119, guid: 3596c3ef410a4b7488506feda29b73e4, type: 3}
+  girlKnightPrefab: {fileID: 218653108612653247, guid: b4f3099472e674349a632783590e80c2, type: 3}
+--- !u!114 &224914210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224914205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc3b80564a8c6a498d481336f111b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LeafArcherPrefab: {fileID: 4586396731574008119, guid: 3596c3ef410a4b7488506feda29b73e4, type: 3}
+  ArcherPrefab: {fileID: 4560551466128208960, guid: 34a913724f5a7e94c9de1443a55fcc6c, type: 3}
+  GirlKnightPrefab: {fileID: 218653108612653247, guid: b4f3099472e674349a632783590e80c2, type: 3}
 --- !u!1 &260861399
 GameObject:
   m_ObjectHideFlags: 0

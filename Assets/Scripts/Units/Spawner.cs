@@ -4,18 +4,20 @@ using System; // Necesario para usar listas
 
 public class Spawner : MonoBehaviour
 {
+    public GameObject LeafArcherPrefab;
+    public GameObject ArcherPrefab;
+    public GameObject GirlKnightPrefab;
     private HashSet<Vector2> usedPositions = new HashSet<Vector2>(); // Para rastrear las posiciones ya ocupadas
     private Rect spawnArea;
+    protected UnitFactory unitFactory = new UnitFactory();
 
-    public void Spawn(GameObject prefabUnit, int cantidad, string unit)
-    { 
-        InitSpawnArea(unit);
-        for(int i = 0; i < cantidad; i++) {
-             SpawnUnit(prefabUnit);
-         }
+    public void Spawn(UnitData unitData, Dictionary<UnitType, BaseStats> dictBaseStats)
+    {
+        InitSpawnArea(unitData.unitType);
+        SpawnUnit(AsignPrefab(unitData.unitType), unitData, dictBaseStats);
     }
 
-    private void SpawnUnit(GameObject prefabUnit)
+    private void SpawnUnit(GameObject prefabUnit, UnitData unitData, Dictionary<UnitType, BaseStats> dictBaseStats)
     {
         // Buscar una posición aleatoria disponible
         Vector2 randomPosition = GetRandomAvailablePosition();
@@ -23,7 +25,9 @@ public class Spawner : MonoBehaviour
         if (randomPosition != Vector2.zero) // Si hay una posición válida
         {
             // Instanciar la unidad en la posición calculada
-            Instantiate(prefabUnit, randomPosition, Quaternion.identity);
+            GameObject unit = Instantiate(prefabUnit, randomPosition, Quaternion.identity);
+
+            unit = unitFactory.SetUnitGO(unit, unitData, dictBaseStats);
 
             // Marcar la posición como ocupada
             usedPositions.Add(randomPosition);
@@ -54,17 +58,38 @@ public class Spawner : MonoBehaviour
         return Vector2.zero; // Si no se encuentra ninguna posición, devolver Vector2.zero
     }
 
-    void InitSpawnArea(string unit)
+    void InitSpawnArea(UnitType unitType)
     {
-        switch(unit)
+        switch (unitType)
         {
-            case GC.UNIT_GIRL_KNIGHT:
+            case UnitType.GirlKnight:
                 spawnArea = new Rect(GC.GIRL_KNIGHT_INITIAL_ZONE_X, GC.MAP_BOT, GC.GIRL_KNIGHT_INITIAL_WIDTH, GC.MAP_HEIGHT);
                 break;
 
-            case GC.UNIT_LEAF_ARCHER:
+            case UnitType.LeafArcher:
+                spawnArea = new Rect(GC.LEAF_ARCHER_INITIAL_ZONE_X, GC.MAP_BOT, GC.LEAF_ARCHER_INITIAL_WIDTH, GC.MAP_HEIGHT);
+                break;
+
+            case UnitType.Archer:
                 spawnArea = new Rect(GC.LEAF_ARCHER_INITIAL_ZONE_X, GC.MAP_BOT, GC.LEAF_ARCHER_INITIAL_WIDTH, GC.MAP_HEIGHT);
                 break;
         }
+    }
+    public GameObject AsignPrefab(UnitType unitType)
+    {
+        GameObject prefab = null;
+        switch (unitType)
+        {
+            case UnitType.Archer:
+                prefab = ArcherPrefab;
+                break;
+            case UnitType.GirlKnight:
+                prefab = GirlKnightPrefab;
+                break;
+            case UnitType.LeafArcher:
+                prefab = LeafArcherPrefab;
+                break;
+        }
+        return prefab;
     }
 }

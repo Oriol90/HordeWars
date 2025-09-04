@@ -2,12 +2,13 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class GirlKnight : Unit
+public class Archer : Unit
 {
-    public GirlKnight(float experience, BaseStats baseStats, GameObject prefab)
+
+    public Archer(float experience, BaseStats baseStats, GameObject prefab)
     {
         Race = Race.Human;
-        UnitType = UnitType.GirlKnight;
+        UnitType = UnitType.Archer;
 
         Experience = experience;
         Level = (int)Math.Floor(experience);
@@ -16,6 +17,8 @@ public class GirlKnight : Unit
         Stats = new UnitStats(baseStats, Level);
 
         this.prefab = prefab;
+        
+        CalcStats();
     }
 
     protected override void Start()

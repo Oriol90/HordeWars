@@ -3,16 +3,19 @@ using System.Collections;
 
 public class Unit : MonoBehaviour
 {
-    public float speed = 2f; // Velocidad de la unidad
+    public Race Race { get; set; }
+    public UnitType UnitType { get; set; }
+    public float Experience { get; set; }
+    public int Level { get; set; }
+    public BaseStats BaseStats { get; set; }
+    public UnitStats Stats { get; set; }
+
     public float attackRange = 1f;
-    public float attackCooldown = 1.5f;
-    public int damage = 10;
     public float detectionRadius = 5f; // Añadido para la detección de enemigos
-    public int maxHealth = 100; // Salud máxima de la unidad
     public GameObject healthBarCanvasPrefab; // Prefab del Canvas con la barra de salud
 
+    protected GameObject prefab;
     private int currentHealth;
-    private Rigidbody2D rb;
     private Animator animator;
     private GameObject targetEnemy;
     private bool isAttacking = false;
@@ -20,16 +23,15 @@ public class Unit : MonoBehaviour
 
     protected virtual void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        currentHealth = maxHealth;
+        currentHealth = Stats.Life;
 
         // Instanciar el Canvas con la barra de salud como hijo de la unidad
         if (healthBarCanvasPrefab != null)
         {
             GameObject healthBarCanvasObject = Instantiate(healthBarCanvasPrefab, transform);
             healthBarInstance = healthBarCanvasObject.GetComponentInChildren<HealthBar>();
-            healthBarInstance.SetMaxHealth(maxHealth);
+            healthBarInstance.SetMaxHealth(Stats.Life);
 
             // Ajustar la posición del Canvas
             RectTransform healthBarCanvasRect = healthBarCanvasObject.GetComponent<RectTransform>();
@@ -59,9 +61,9 @@ public class Unit : MonoBehaviour
         if (targetEnemy == null || isAttacking) return;
 
         Debug.Log("Moviendo hacia el enemigo: " + targetEnemy.name);
-        
+
         Vector2 direction = (targetEnemy.transform.position - transform.position).normalized;
-        transform.position = Vector2.MoveTowards(transform.position, targetEnemy.transform.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, targetEnemy.transform.position, Stats.MoveSpeed * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, targetEnemy.transform.position) <= attackRange)
         {
@@ -73,10 +75,10 @@ public class Unit : MonoBehaviour
     {
         isAttacking = true;
         animator.SetBool(GC.ANIM_ATTACK, true);
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(Stats.AttackSpeed);
         if (targetEnemy != null)
         {
-            targetEnemy.GetComponent<Unit>().TakeDamage(damage);
+            targetEnemy.GetComponent<Unit>().TakeDamage(Stats.Attack);
         }
         animator.SetBool(GC.ANIM_ATTACK, false);
         isAttacking = false;

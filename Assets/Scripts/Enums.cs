@@ -18,6 +18,7 @@ public enum Biome
 public enum DataType
 {
     ArmyData,
+    BaseStats,
     FogTileData,
     GameData,
     GroundTileData,
@@ -25,4 +26,19 @@ public enum DataType
     PlayerData,
     TalentData,
     TokenData
+}
+
+public enum UnitType
+{
+    GirlKnight,
+    LeafArcher,
+    Archer,
+    Felipe
+}
+
+public enum Race
+{
+    Human,
+    Undead,
+    Beast
 }

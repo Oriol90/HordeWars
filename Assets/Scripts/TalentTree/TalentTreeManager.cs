@@ -14,7 +14,7 @@ public class TalentTreeManager : MonoBehaviour
 
     public void Start()
     {
-        List<TalentData> listTalents = GameSaveManager.LoadTalents();
+        List<TalentData> listTalents = GameSaveManager.Load<List<TalentData>>(DataType.TalentData);
         buttons.AddRange(buttonParent.GetComponentsInChildren<Button>());
 
         listTalentButtons = PairButtonsWithTalents(listTalents, buttons, listTalentButtons);
