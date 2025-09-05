@@ -21,7 +21,7 @@ public class UnitGenerator : MonoBehaviour
     timers[unit] += GC.TIME_SPEED * Time.deltaTime; 
         if (timers[unit] >= timeInterval)
         {
-            GC.ARMY_UNITS[unit] ++; 
+            //GC.ARMY_UNITS[unit] ++;
             timers[unit] = 0f;
         }
     }

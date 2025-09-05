@@ -40,5 +40,7 @@ public enum Race
 {
     Human,
     Undead,
-    Beast
+    Beast,
+    Orc,
+    Elf
 }

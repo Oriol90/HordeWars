@@ -4,10 +4,6 @@ using System.Collections.Generic;
 
 public class InitJson : MonoBehaviour
 {
-
-    public GameObject archerPrefab;
-    public GameObject girlKnightPrefab;
-
     void Awake()
     {
         HeroData heroData = new HeroData()
@@ -48,7 +44,7 @@ public class InitJson : MonoBehaviour
             {
                 UnitType.LeafArcher,
                 new BaseStats {
-                    life = new int[5] {300, 400, 500, 600, 700},
+                    health = new int[5] {300, 400, 500, 600, 700},
                     attack = new int[5] {150, 160, 170, 180, 200 },
                     attackSpeed = new float[5] {0.60f, 0.60f, 0.70f, 0.70f, 0.80f},
                     defense = new int[5] {10, 10, 12, 15, 20},
@@ -62,7 +58,7 @@ public class InitJson : MonoBehaviour
             {
                 UnitType.Archer,
                 new BaseStats {
-                    life = new int[5] {300, 400, 500, 600, 700},
+                    health = new int[5] {300, 400, 500, 600, 700},
                     attack = new int[5] {150, 160, 170, 180, 200 },
                     attackSpeed = new float[5] {0.60f, 0.60f, 0.70f, 0.70f, 0.80f},
                     defense = new int[5] {10, 10, 12, 15, 20},
@@ -76,7 +72,7 @@ public class InitJson : MonoBehaviour
             {
                 UnitType.GirlKnight,
                 new BaseStats {
-                    life = new int[5] {700, 750, 800, 850, 900},
+                    health = new int[5] {700, 750, 800, 850, 900},
                     attack = new int[5] {130, 130, 135, 140, 150},
                     attackSpeed = new float[5] {0.50f, 0.50f, 0.50f, 0.50f, 0.50f},
                     defense = new int[5] {60, 60, 60, 60, 70},
@@ -92,6 +88,20 @@ public class InitJson : MonoBehaviour
 
         List<UnitData> army = new List<UnitData>
         {
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
+            new UnitData(Race.Human, 4.8f, UnitType.Archer),
             new UnitData(Race.Human, 4.8f, UnitType.LeafArcher),
             new UnitData(Race.Human, 1f, UnitType.GirlKnight),
             new UnitData(Race.Human, 2.4f, UnitType.GirlKnight),

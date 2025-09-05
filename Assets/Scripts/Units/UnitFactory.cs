@@ -1,44 +1,36 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class UnitFactory
 {
-    public GameObject LeafArcherPrefab;//NO FUNCIONA
-    public GameObject ArcherPrefab;    //NO FUNCIONA
-    public GameObject GirlKnightPrefab;//NO FUNCIONA
-
-    public List<Unit> LoadArmy()
+    public List<UnitPO> LoadArmy()
     {
         List<UnitData> listUnitData = GameSaveManager.Load<List<UnitData>>(DataType.ArmyData);
         Dictionary<UnitType, BaseStats> dictBaseStats = GameSaveManager.Load<Dictionary<UnitType, BaseStats>>(DataType.BaseStats);
         return UnitDataToUnit(listUnitData, dictBaseStats);
     }
 
-    public List<Unit> UnitDataToUnit(List<UnitData> listUnitData, Dictionary<UnitType, BaseStats> dictBaseStats)
+    public List<UnitPO> UnitDataToUnit(List<UnitData> listUnitData, Dictionary<UnitType, BaseStats> dictBaseStats)
     {
-        List<Unit> army = new List<Unit>();
+        List<UnitPO> army = new List<UnitPO>();
         foreach (var unitData in listUnitData)
         {
-            Unit unit = null;
-
+            UnitPO unit = null;
             switch (unitData.unitType)
             {
                 case UnitType.Archer:
-                    unit = new Archer(unitData.experience, dictBaseStats[UnitType.Archer], ArcherPrefab);
+                    unit = new ArcherPO(unitData.experience, dictBaseStats[UnitType.Archer]);
                     break;
                 case UnitType.GirlKnight:
-                    unit = new GirlKnight(unitData.experience, dictBaseStats[UnitType.GirlKnight], GirlKnightPrefab);
+                    unit = new GirlKnightPO(unitData.experience, dictBaseStats[UnitType.GirlKnight]);
                     break;
                 case UnitType.LeafArcher:
-                    unit = new LeafArcher(unitData.experience, dictBaseStats[UnitType.LeafArcher], LeafArcherPrefab);
+                    unit = new LeafArcherPO(unitData.experience, dictBaseStats[UnitType.LeafArcher]);
                     break;
             }
             army.Add(unit);
         }
-
         return army;
     }
 
@@ -54,7 +46,7 @@ public class UnitFactory
         return unitGO;
     }
 
-    public Dictionary<UnitType, int> CountUnitsArmy(List<Unit> army)
+    public Dictionary<UnitType, int> CountUnitsArmy(List<UnitPO> army)
     {
         Dictionary<UnitType, int> numUnitsArmy = new Dictionary<UnitType, int>
          {
@@ -68,25 +60,17 @@ public class UnitFactory
         {
             switch (unitData)
             {
-                case Archer:
+                case ArcherPO:
                     numUnitsArmy[UnitType.Archer]++;
                     break;
-                case LeafArcher:
+                case LeafArcherPO:
                     numUnitsArmy[UnitType.LeafArcher]++;
                     break;
-                case GirlKnight:
+                case GirlKnightPO:
                     numUnitsArmy[UnitType.GirlKnight]++;
                     break;
             }
         }
-
         return numUnitsArmy;
     }
-
-    // public static UnitStats CalculateUnitStats(BaseStats baseStats)
-    // {
-    //     UnitStats unitStats = new UnitStats();
-
-    //     return unitStats;
-    // }
 }

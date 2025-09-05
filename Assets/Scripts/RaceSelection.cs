@@ -9,7 +9,7 @@ public class RaceSelection : MonoBehaviour
     public Texture elfBackground;
     public Texture orcBackground;
 
-    private string selectedRace = "Human"; // Valor por defecto
+    private Race race = Race.Human;
 
     void Start()
     {
@@ -36,24 +36,24 @@ public class RaceSelection : MonoBehaviour
     public void SelectHuman()
     {
         backgroundImage.texture = humanBackground;
-        selectedRace = GC.RACE_HUMAN;
+        race = Race.Human;
     }
 
     public void SelectElf()
     {
         backgroundImage.texture = elfBackground;
-        selectedRace = GC.RACE_ELF;
+        race = Race.Elf;
     }
 
     public void SelectOrc()
     {
         backgroundImage.texture = orcBackground;
-        selectedRace = GC.RACE_ORC;
+        race = Race.Orc;
     }
 
     public void GoToHeroSelection()
     {
-        PlayerPrefs.SetString(GC.PLAYER_PREFS_SELECTED_RACE, selectedRace);
+        PlayerPrefs.SetString(GC.PLAYER_PREFS_SELECTED_RACE, race.ToString());
         PlayerPrefs.Save();
         SceneManager.LoadScene(GC.SCENE_HEROE_SELECTION); // Asegúrate de que la escena exista en Build Settings
     }

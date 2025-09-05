@@ -1,6 +1,6 @@
 public class UnitStats
 {
-    public int Life { get; set; }
+    public int Health { get; set; }
     public int Attack { get; set; }
     public float AttackSpeed { get; set; }
     public int Defense { get; set; }
@@ -12,7 +12,7 @@ public class UnitStats
 
     public UnitStats(BaseStats baseStats, int level)
     {
-        Life = baseStats.life[level - 1];
+        Health = baseStats.health[level - 1];
         Attack = baseStats.attack[level - 1];
         AttackSpeed = baseStats.attackSpeed[level - 1];
         Defense = baseStats.defense[level - 1];

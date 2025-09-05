@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2497282925897219785}
   - component: {fileID: 7515630821013081172}
   - component: {fileID: 7399803367112932829}
+  - component: {fileID: -6476536494733079474}
   m_Layer: 0
   m_Name: Felipe
-  m_TagString: Untagged
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,3 +111,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-6476536494733079474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4560551466128208960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7341947f95e106f43879c73f7b5ff996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 5
+  detectionRadius: 100000
+  healthBarCanvasPrefab: {fileID: 0}

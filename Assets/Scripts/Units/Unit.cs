@@ -24,14 +24,14 @@ public class Unit : MonoBehaviour
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
-        currentHealth = Stats.Life;
+        currentHealth = Stats.Health;
 
         // Instanciar el Canvas con la barra de salud como hijo de la unidad
         if (healthBarCanvasPrefab != null)
         {
             GameObject healthBarCanvasObject = Instantiate(healthBarCanvasPrefab, transform);
             healthBarInstance = healthBarCanvasObject.GetComponentInChildren<HealthBar>();
-            healthBarInstance.SetMaxHealth(Stats.Life);
+            healthBarInstance.SetMaxHealth(Stats.Health);
 
             // Ajustar la posición del Canvas
             RectTransform healthBarCanvasRect = healthBarCanvasObject.GetComponent<RectTransform>();

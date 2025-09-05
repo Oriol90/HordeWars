@@ -3,7 +3,7 @@ using System;
 [Serializable]
 public class BaseStats
 {
-    public int[] life;
+    public int[] health;
     public int[] attack;
     public float[] attackSpeed; 
     public int[] defense;

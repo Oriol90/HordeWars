@@ -7,12 +7,13 @@ public class ArmyPanelManager : MonoBehaviour
 {
     public GameObject unitPrefab; // Prefab que contiene la miniatura y el texto de cantidad
     public Transform armyPanel; // Panel donde se mostrarán las unidades
-    private Dictionary<string, int> armyUnits = GC.ARMY_UNITS;
     private float yOffset;
-    
-    private void Start(){
-        armyUnits ??= GC.INITIAL_ARMY_2;
-        GC.ARMY_UNITS = armyUnits;
+    public List<UnitPO> army = new List<UnitPO>();
+    public UnitFactory unitFactory = new UnitFactory();
+
+    private void Start()
+    {
+        army = unitFactory.LoadArmy();
         yOffset = 450;
     }
 
@@ -24,38 +25,52 @@ public class ArmyPanelManager : MonoBehaviour
     public void UpdateArmyPanel()
     {
         bool unitExist = false;
-        armyUnits = GC.ARMY_UNITS;
-        foreach (var unit in armyUnits)
+        //Convierto la lista de unidades a un diccionario que contiene cuantas unidades hay de cada tipo de unidad
+        Dictionary<UnitType, int> numUnitsArmy = unitFactory.CountUnitsArmy(army);
+        foreach (var numUnit in numUnitsArmy)
         {
-            foreach (Transform child in armyPanel){
-                if(child.name == unit.Key){
+            foreach (Transform child in armyPanel)
+            {
+                if (child.name == numUnit.Key.ToString())
+                {
                     unitExist = true;
-                    child.Find("Quantity").GetComponent<TextMeshProUGUI>().text = unit.Value.ToString();
-                } 
+                    child.Find("Quantity").GetComponent<TextMeshProUGUI>().text = numUnit.Value.ToString();
+                }
             }
-            if(!unitExist && unit.Value != 0){
-                CreateUnitEntry(unit.Key, unit.Value);
+            if (!unitExist && numUnit.Value != 0)
+            {
+                CreateUnitEntry(numUnit.Key, numUnit.Value);
                 yOffset -= 120;
             }
             unitExist = false;
         }
     }
-    
-    private void CreateUnitEntry(string unitName, int quantity)
+
+    private void CreateUnitEntry(UnitType unitType, int quantity)
     {
         GameObject newUnit = Instantiate(unitPrefab, armyPanel);
 
-        newUnit.name = unitName;
+        newUnit.name = unitType.ToString();
         newUnit.transform.Find("Quantity").GetComponent<TextMeshProUGUI>().text = quantity.ToString();
-        newUnit.transform.Find("Miniature").GetComponent<Image>().sprite = GetUnitSprite(unitName);
-        
+        newUnit.transform.Find("Miniature").GetComponent<Image>().sprite = AsignUnitSprite(unitType);
+
         RectTransform rectTransform = newUnit.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(0, yOffset);
     }
-
-    private Sprite GetUnitSprite(string unitName)
+    
+    private Sprite AsignUnitSprite(UnitType unitType)
     {
-        // Aquí deberías obtener el sprite correspondiente a la unidad
-        return Resources.Load<Sprite>($"Unit Icons/{unitName}");
+        switch (unitType)
+        {
+            case UnitType.Archer:
+                return Resources.Load<Sprite>($"Unit Icons/Felipe");
+            case UnitType.GirlKnight:
+                return Resources.Load<Sprite>($"Unit Icons/girlKnight");
+            case UnitType.LeafArcher:
+                return Resources.Load<Sprite>($"Unit Icons/LeafRanger");
+            default:
+                break;
+        }
+        return null;
     }
 }
