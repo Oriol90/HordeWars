@@ -34,6 +34,17 @@ public class UnitFactory
         return army;
     }
 
+    public List<UnitData> UnitToUnitData(List<UnitPO> listUnitPO)
+    {
+        List<UnitData> listUnitData = new List<UnitData>();
+        foreach (var unitPO in listUnitPO)
+        {
+            UnitData unitData = new UnitData(unitPO.Race, unitPO.Experience, unitPO.UnitType);
+            listUnitData.Add(unitData);
+        }
+        return listUnitData;
+    }
+
     public GameObject SetUnitGO(GameObject unitGO, UnitData unitData, Dictionary<UnitType, BaseStats> dictBaseStats)
     {
         Unit unit = unitGO.GetComponent<Unit>();
@@ -44,6 +55,23 @@ public class UnitFactory
         unit.BaseStats = dictBaseStats[unitData.unitType];
         unit.Stats = new UnitStats(unit.BaseStats, unit.Level);
         return unitGO;
+    }
+
+    public UnitPO CreateNewUnitPO(UnitType unitType)
+    {
+        Dictionary<UnitType, BaseStats> dictBaseStats = GameSaveManager.Load<Dictionary<UnitType, BaseStats>>(DataType.BaseStats);
+
+        switch (unitType)
+        {
+            case UnitType.Archer:
+                return new ArcherPO(1f, dictBaseStats[UnitType.Archer]);
+            case UnitType.GirlKnight:
+                return new GirlKnightPO(1f, dictBaseStats[UnitType.GirlKnight]);
+            case UnitType.LeafArcher:
+                return new LeafArcherPO(1f, dictBaseStats[UnitType.LeafArcher]);
+            default:
+                return null;
+        }
     }
 
     public Dictionary<UnitType, int> CountUnitsArmy(List<UnitPO> army)

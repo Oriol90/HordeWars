@@ -6,15 +6,16 @@ using UnityEngine.UI;
 public class ArmyPanelManager : MonoBehaviour
 {
     public GameObject unitPrefab; // Prefab que contiene la miniatura y el texto de cantidad
+    public GameObject unitIconPrefab; 
     public Transform armyPanel; // Panel donde se mostrarán las unidades
-    private float yOffset;
-    public List<UnitPO> army = new List<UnitPO>();
+    public Transform bottomPanel;
+    public static List<UnitPO> army = new List<UnitPO>();
     public UnitFactory unitFactory = new UnitFactory();
-
+    public UnitType newUnitType;
+    
     private void Start()
     {
         army = unitFactory.LoadArmy();
-        yOffset = 450;
     }
 
     private void Update()
@@ -40,12 +41,11 @@ public class ArmyPanelManager : MonoBehaviour
             if (!unitExist && numUnit.Value != 0)
             {
                 CreateUnitEntry(numUnit.Key, numUnit.Value);
-                yOffset -= 120;
             }
             unitExist = false;
         }
     }
-
+    
     private void CreateUnitEntry(UnitType unitType, int quantity)
     {
         GameObject newUnit = Instantiate(unitPrefab, armyPanel);
@@ -54,10 +54,55 @@ public class ArmyPanelManager : MonoBehaviour
         newUnit.transform.Find("Quantity").GetComponent<TextMeshProUGUI>().text = quantity.ToString();
         newUnit.transform.Find("Miniature").GetComponent<Image>().sprite = AsignUnitSprite(unitType);
 
-        RectTransform rectTransform = newUnit.GetComponent<RectTransform>();
-        rectTransform.anchoredPosition = new Vector2(0, yOffset);
+        newUnit.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            OnUnitClicked(unitType);
+        });
     }
     
+    public void OnUnitClicked(UnitType unitType)
+    {
+        // 1. Limpiar el panel inferior
+        foreach (Transform child in bottomPanel)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 2. Crear iconos para cada unidad del tipo seleccionado
+        foreach (var unit in army)
+        {
+            if (unit.UnitType == unitType)
+            {
+                CreateUnitIcon(unit);
+            }
+        }
+    }
+
+    public void CreateUnitIcon(UnitPO unit)
+    {
+        GameObject icon = Instantiate(unitIconPrefab, bottomPanel);
+        UnitIcon unitIcon = icon.GetComponent<UnitIcon>();
+        if (unitIcon == null)
+        {
+            unitIcon = icon.AddComponent<UnitIcon>();
+        }
+        unitIcon.SetUnitData(unit);
+        
+        // Configurar el sprite del icono
+        Image iconImage = icon.GetComponent<Image>();
+        if (iconImage != null)
+        {
+            iconImage.sprite = AsignUnitSprite(unit.UnitType);
+        }
+    }
+
+    public void AddNewUnit()
+    {
+        army.Add(unitFactory.CreateNewUnitPO(newUnitType));
+        OnUnitClicked(newUnitType);
+        GameSaveManager.Save(unitFactory.UnitToUnitData(army), DataType.ArmyData);
+    }
+
     private Sprite AsignUnitSprite(UnitType unitType)
     {
         switch (unitType)
