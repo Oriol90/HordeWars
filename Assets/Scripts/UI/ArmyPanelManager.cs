@@ -88,11 +88,22 @@ public class ArmyPanelManager : MonoBehaviour
         }
         unitIcon.SetUnitData(unit);
         
-        // Configurar el sprite del icono
+        // Configurar la imagen principal
         Image iconImage = icon.GetComponent<Image>();
         if (iconImage != null)
         {
             iconImage.sprite = AsignUnitSprite(unit.UnitType);
+        }
+
+        // Configurar el borde
+        Image borderImage = icon.transform.GetChild(0).GetComponent<Image>();
+        if (borderImage != null)
+        {
+            borderImage.sprite = AsignUnitSprite(unit.UnitType);
+            borderImage.color = Color.black; // Color del borde
+            // Hacer la imagen del borde ligeramente más grande
+            RectTransform borderRect = borderImage.GetComponent<RectTransform>();
+            borderRect.sizeDelta = new Vector2(4, 4); // 2 píxeles extra por cada lado
         }
     }
 
@@ -108,11 +119,11 @@ public class ArmyPanelManager : MonoBehaviour
         switch (unitType)
         {
             case UnitType.Archer:
-                return Resources.Load<Sprite>($"Unit Icons/Felipe");
+                return Resources.Load<Sprite>($"Unit Icons/IconFelipe");
             case UnitType.GirlKnight:
-                return Resources.Load<Sprite>($"Unit Icons/girlKnight");
+                return Resources.Load<Sprite>($"Unit Icons/IconGirlKnight");
             case UnitType.LeafArcher:
-                return Resources.Load<Sprite>($"Unit Icons/LeafRanger");
+                return Resources.Load<Sprite>($"Unit Icons/IconLeafArcher");
             default:
                 break;
         }

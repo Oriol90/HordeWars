@@ -1,11 +1,14 @@
-public enum FogState
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+[JsonConverter(typeof(StringEnumConverter))] public enum FogState
 {
     Unexplored,
     Explored,
     Visible
 }
 
-public enum Biome
+[JsonConverter(typeof(StringEnumConverter))] public enum Biome
 {
     Beach,
     Forrest,
@@ -15,7 +18,7 @@ public enum Biome
     Sea
 }
 
-public enum DataType
+[JsonConverter(typeof(StringEnumConverter))] public enum DataType
 {
     ArmyData,
     BaseStats,
@@ -25,10 +28,11 @@ public enum DataType
     HeroData,
     PlayerData,
     TalentData,
-    TokenData
+    TokenData,
+    InstructorData
 }
 
-public enum UnitType
+[JsonConverter(typeof(StringEnumConverter))] public enum UnitType
 {
     GirlKnight,
     LeafArcher,
@@ -36,11 +40,46 @@ public enum UnitType
     Felipe
 }
 
-public enum Race
+[JsonConverter(typeof(StringEnumConverter))] public enum Race
 {
     Human,
     Undead,
     Beast,
     Orc,
     Elf
+}
+
+[JsonConverter(typeof(StringEnumConverter))] public enum Rarity
+{
+    Common,
+    Uncommon,
+    Superior,
+    Rare,
+    Epic,
+    Celestial
+}
+
+[JsonConverter(typeof(StringEnumConverter))] public enum Mastery
+{
+    None,
+    FireArrows,
+    DefenseAura,
+    Healing,
+    SwiftStrike,
+    PoisonedBlades,
+    FrostArrows,
+    ShieldBash,
+    Whirlwind,
+    Snipe,
+    Taunt,
+    Cleave,
+    PiercingShot,
+    Enrage,
+    Regeneration,
+    Vampirism,
+    Evasion,
+    Counterattack,
+    StunningBlow,
+    FrostArmor,
+    Fireball
 }

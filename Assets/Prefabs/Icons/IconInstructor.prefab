@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1933017134786064276}
   - component: {fileID: 5438810549489510362}
   - component: {fileID: -7047567676501492603}
-  - component: {fileID: -5891555468845530461}
+  - component: {fileID: -4367347362048845038}
   m_Layer: 5
-  m_Name: LittleUnit
+  m_Name: IconInstructor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &-5891555468845530461
+--- !u!114 &-4367347362048845038
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,6 +130,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3985394365959906338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f84353fad083be24fbce403d5d870fa8, type: 3}
+  m_Script: {fileID: 11500000, guid: 30e01a35607f03a4fa09e28e8d62f7e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 0}

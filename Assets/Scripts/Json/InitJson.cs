@@ -1,11 +1,19 @@
 using UnityEngine;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 public class InitJson : MonoBehaviour
 {
     void Awake()
     {
+        // InitBaseStats();
+        // InitArmy();
+        // InitHero();
+        // InitPlayerData();
+        // InitTalents();
+        // InitInstructorData();
+    }
+
+    private void InitHero() {
         HeroData heroData = new HeroData()
         {
             heroeName = "Melyn",
@@ -14,7 +22,9 @@ public class InitJson : MonoBehaviour
             heroPos = new Vector3Int(0, 3, 0)
         };
         GameSaveManager.Save(heroData, DataType.HeroData);
+    }
 
+    private void InitPlayerData() {
         PlayerData playerData = new PlayerData { playerName = "Oriol", level = 5 };
         GameSaveManager.Save(playerData, DataType.PlayerData);
 
@@ -24,21 +34,34 @@ public class InitJson : MonoBehaviour
             new TokenData { tokenName = "Silver", tokenValue = 50 }
         };
         GameSaveManager.Save(tokenDataList, DataType.TokenData);
+    }
 
-        /*PLANTILLA
-        UnitType.LeafArcher,
-        new BaseStats{
-                life = new int[5] {, , , , },
-                attack = new int[5] {, , , ,  },
-                attackSpeed = new float[5] {f, f, f, f, f},
-                defense = new int[5] {, , , , },
-                darkResist = new int[5] {, , , , },
-                moveSpeed = new int[5] {, , , , },
-                boneCost = ,
-                lightCost = ,
-                faith = 
-            },*/
+    private void InitInstructorData() {
+        List<InstructorData> instructors = new List<InstructorData>
+        {
+            new InstructorData("Gorim", UnitType.GirlKnight, Rarity.Common, new StatsInstructor(20, 10, 0, 0, 0, 0, 0), new List<Mastery> { Mastery.ShieldBash }, 100, 3),
+            new InstructorData("Elrion", UnitType.LeafArcher, Rarity.Uncommon, new StatsInstructor(0, 10, 40, 0, 0, 0, 0), new List<Mastery> { Mastery.FireArrows }, 150, 2),
+            new InstructorData("Thrag", UnitType.Archer, Rarity.Rare, new StatsInstructor(20, 10, 0, -20, 0, 50, 10), new List<Mastery> { Mastery.PoisonedBlades }, 200, 4)
+        };
+        GameSaveManager.Save(instructors, DataType.InstructorData);
+    }
 
+    /*PLANTILLA
+    UnitType.LeafArcher,
+    new BaseStats{
+        life = new int[5] {, , , , },
+        attack = new int[5] {, , , ,  },
+        attackSpeed = new float[5] {f, f, f, f, f},
+        defense = new int[5] {, , , , },
+        darkResist = new int[5] {, , , , },
+        moveSpeed = new int[5] {, , , , },
+        boneCost = ,
+        lightCost = ,
+        faith = 
+    },*/
+
+    private void InitBaseStats()
+    {
         Dictionary<UnitType, BaseStats> dictBaseStats = new Dictionary<UnitType, BaseStats>
         {
             {
@@ -85,7 +108,9 @@ public class InitJson : MonoBehaviour
             }
         };
         GameSaveManager.Save(dictBaseStats, DataType.BaseStats);
+    }
 
+    private void InitArmy() {
         List<UnitData> army = new List<UnitData>
         {
             new UnitData(Race.Human, 4.8f, UnitType.Archer),
@@ -204,6 +229,9 @@ public class InitJson : MonoBehaviour
             new UnitData(Race.Human, 2.1f, UnitType.LeafArcher)
         };
         GameSaveManager.Save(army, DataType.ArmyData);
+    }
+
+    private void InitTalents() {
         List<TalentData> talentList = new List<TalentData>
         {
             new TalentData {
@@ -310,14 +338,5 @@ public class InitJson : MonoBehaviour
             },
         };
         GameSaveManager.Save(talentList, DataType.TalentData);
-    }
-    
-    // void AddUnit(GameObject prefab, float exp, UnitType unitType)
-    // {
-    //     GameObject go = Instantiate(prefab);
-    //     Unit unit = Utils.UnitTypeToUnit(unitType, go);
-    //     unit.SetExp(exp);
-    //     army.Add(unit);
-    // }
-
+    }        
 }
