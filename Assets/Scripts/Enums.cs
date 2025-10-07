@@ -1,14 +1,16 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-[JsonConverter(typeof(StringEnumConverter))] public enum FogState
+[JsonConverter(typeof(StringEnumConverter))] 
+public enum FogState
 {
     Unexplored,
     Explored,
     Visible
 }
 
-[JsonConverter(typeof(StringEnumConverter))] public enum Biome
+[JsonConverter(typeof(StringEnumConverter))] 
+public enum Biome
 {
     Beach,
     Forrest,
@@ -18,10 +20,13 @@ using Newtonsoft.Json.Converters;
     Sea
 }
 
-[JsonConverter(typeof(StringEnumConverter))] public enum DataType
+[JsonConverter(typeof(StringEnumConverter))] 
+public enum DataType
 {
     ArmyData,
+    ArmoryData,
     BaseStats,
+    ItemData,
     FogTileData,
     GameData,
     GroundTileData,
@@ -32,7 +37,8 @@ using Newtonsoft.Json.Converters;
     InstructorData
 }
 
-[JsonConverter(typeof(StringEnumConverter))] public enum UnitType
+[JsonConverter(typeof(StringEnumConverter))] 
+public enum UnitType
 {
     GirlKnight,
     LeafArcher,
@@ -40,7 +46,8 @@ using Newtonsoft.Json.Converters;
     Felipe
 }
 
-[JsonConverter(typeof(StringEnumConverter))] public enum Race
+[JsonConverter(typeof(StringEnumConverter))] 
+public enum Race
 {
     Human,
     Undead,
@@ -49,17 +56,19 @@ using Newtonsoft.Json.Converters;
     Elf
 }
 
-[JsonConverter(typeof(StringEnumConverter))] public enum Rarity
+[JsonConverter(typeof(StringEnumConverter))] 
+public enum Rarity
 {
     Common,
     Uncommon,
-    Superior,
     Rare,
     Epic,
+    Mythic,
     Celestial
 }
 
-[JsonConverter(typeof(StringEnumConverter))] public enum Mastery
+[JsonConverter(typeof(StringEnumConverter))]
+public enum Mastery
 {
     None,
     FireArrows,
@@ -82,4 +91,55 @@ using Newtonsoft.Json.Converters;
     StunningBlow,
     FrostArmor,
     Fireball
+}
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum Stat
+{
+    Health,
+    Attack,
+    AttackSpeed,
+    Defense,
+    DarkResist,
+    MoveSpeed,
+    BoneCost,
+    LightCost,
+    Faith
+}
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum Effect
+{
+    None,
+    Burn,
+    Freeze,
+    Poison,
+    Stun,
+    HealOverTime,
+    DamageOverTime,
+    IncreaseStat,
+    DecreaseStat,
+    DefenseBoost,
+    AttackBoost,
+    HealthBoost,
+    ManaBoost,
+    SpellPowerBoost
+}
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum Item
+{
+    None,
+    WoodenSword,
+    IronShield,
+    MagicWand,
+    Sword,
+    Bow,
+    Staff,
+    Shield,
+    Helmet,
+    Armor,
+    Boots,
+    Ring,
+    Amulet
 }

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      wallpaperElfs_0: 3634579588112845013
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

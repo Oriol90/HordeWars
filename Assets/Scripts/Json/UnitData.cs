@@ -6,6 +6,7 @@ public class UnitData
     public Race race;
     public UnitType unitType;
     public float experience;
+    public ItemData Item;
 
     public UnitData(Race race, float experience, UnitType unitType)
     {
@@ -13,4 +14,6 @@ public class UnitData
         this.unitType = unitType;
         this.experience = experience;
     }
+
+    
 }

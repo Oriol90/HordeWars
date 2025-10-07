@@ -16,7 +16,8 @@ public static class GameSaveManager
         string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
         File.WriteAllText(fullPath, json);
-        Debug.Log($"[SaveGame] Guardado en: {fullPath}");
+        //Debug.Log($"[SaveGame] Guardado en: {fullPath}");
+        Debug.Log($"{dataType} saved");
     }
 
     public static T Load<T>(DataType dataType)
