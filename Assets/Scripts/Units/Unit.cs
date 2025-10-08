@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
     public int Level { get; set; }
     public BaseStats BaseStats { get; set; }
     public UnitStats Stats { get; set; }
+    public Item EquippedItem { get; set; }
 
     public float attackRange = 1f;
     public float detectionRadius = 5f; // Añadido para la detección de enemigos

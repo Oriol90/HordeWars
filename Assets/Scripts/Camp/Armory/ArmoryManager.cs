@@ -13,10 +13,6 @@ public class Armory : MonoBehaviour
     public GameObject itemIconPrefab;
     public Transform itemGrid;
 
-    private Rarity selectedRarity;
-    private UnitType selectedUnit;
-
-
     private void Start()
     {
         PopulateDropdowns();
@@ -67,32 +63,31 @@ public class Armory : MonoBehaviour
         ItemTooltip.Instance.ClearTooltip();
 
         Dictionary<Item, int> itemQuantityDict = GameSaveManager.Load<Dictionary<Item, int>>(DataType.ArmoryData);
-        Dictionary<Item, ItemData> itemDataDict = new(GameSaveManager.Load<Dictionary<Item, ItemData>>(DataType.ItemData));
-        Dictionary<Item, int> filteredDict = FilterItemsBySelection(itemQuantityDict, itemDataDict);
-
+        //Dictionary<Item, ItemData> itemDataDict = new(GameSaveManager.Load<Dictionary<Item, ItemData>>(DataType.ItemData));
+        Dictionary<Item, int> filteredDict = FilterItemsBySelection(itemQuantityDict);
 
         foreach (var item in filteredDict)
         {
-            CreateUnitEntry(item.Key, item.Value, itemDataDict);
+            CreateUnitEntry(item.Key, item.Value);
         }
     }
 
-    private void CreateUnitEntry(Item item, int quantity, Dictionary<Item, ItemData> itemDataDict)
+    private void CreateUnitEntry(Item item, int quantity)
     {
         GameObject itemIconGO = Instantiate(itemIconPrefab, itemGrid);
         ItemIcon itemIcon = itemIconGO.GetComponent<ItemIcon>();
 
-        itemIcon.SetUp(itemDataDict[item], quantity);
+        itemIcon.SetUp(ItemDBStatic.Get(item), quantity);
     }
 
-    private Dictionary<Item, int> FilterItemsBySelection(Dictionary<Item, int> itemQuantityDict, Dictionary<Item, ItemData> itemDataDict)
+    private Dictionary<Item, int> FilterItemsBySelection(Dictionary<Item, int> itemQuantityDict)
     {
         Dictionary<Item, int> filteredDict = new();
 
         foreach (var item in itemQuantityDict)
         {
-            if ((GC.ARMORY_SELECTED_RARITY == 0 || itemDataDict[item.Key].Rarity == (Rarity)(GC.ARMORY_SELECTED_RARITY - 1)) &&
-                (GC.ARMORY_SELECTED_UNIT == 0 || itemDataDict[item.Key].UnitType == (UnitType)(GC.ARMORY_SELECTED_UNIT - 1)))
+            if ((GC.ARMORY_SELECTED_RARITY == 0 || ItemDBStatic.Get(item.Key).Rarity == (Rarity)(GC.ARMORY_SELECTED_RARITY - 1)) &&
+                (GC.ARMORY_SELECTED_UNIT == 0 || ItemDBStatic.Get(item.Key).UnitType == (UnitType)(GC.ARMORY_SELECTED_UNIT - 1)))
             {
                 filteredDict[item.Key] = item.Value;
             }
