@@ -380,7 +380,8 @@ MonoBehaviour:
   unitImage: {fileID: 4899508639476671881}
   arrowUpImage: {fileID: 2130587661922045240}
   arrowDownImage: {fileID: 2299585828519701518}
-  isInCourtyard: 0
+  unitTooltipPanel: {fileID: 0}
+  itemTooltipPanel: {fileID: 0}
 --- !u!1 &4818370396065499693
 GameObject:
   m_ObjectHideFlags: 0

@@ -137,3 +137,13 @@ public enum Item
     Staff,
     Ring
 }
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum TooltipType
+{
+    UnitCourtyard,
+    ItemCourtyard,
+    UnitArmyHexmap,
+    Instructor,
+    ItemArmory
+}

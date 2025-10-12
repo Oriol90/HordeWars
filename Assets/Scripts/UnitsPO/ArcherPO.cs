@@ -6,7 +6,5 @@ public class ArcherPO : UnitPO
     {
         Race = Race.Human;
         UnitType = UnitType.Archer;
-        ImageIcon = Resources.Load<Sprite>(ResourcePathDBStatic.Get(UnitType));
-
     }
 }

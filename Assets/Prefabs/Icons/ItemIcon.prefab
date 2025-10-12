@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 1933017134786064276}
   - component: {fileID: 5438810549489510362}
   - component: {fileID: -7047567676501492603}
-  - component: {fileID: 4705234051338754778}
+  - component: {fileID: 7435419754687222998}
   m_Layer: 5
   m_Name: ItemIcon
   m_TagString: Untagged
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4705234051338754778
+--- !u!114 &7435419754687222998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,6 +274,7 @@ MonoBehaviour:
   background: {fileID: -7047567676501492603}
   iconImage: {fileID: 4899508639476671881}
   quantityText: {fileID: 5704350185207204388}
+  itemTooltipPanel: {fileID: 0}
 --- !u!1 &4818370396065499693
 GameObject:
   m_ObjectHideFlags: 0

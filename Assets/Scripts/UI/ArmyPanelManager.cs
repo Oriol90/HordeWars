@@ -86,7 +86,7 @@ public class ArmyPanelManager : MonoBehaviour
         {
             unitIcon = icon.AddComponent<UnitIcon>();
         }
-        unitIcon.SetUnitData(unit);
+        //unitIcon.SetUnitData(unit);  -------- IMPORTANTE ARREGLAR ESTO ---------
         
         // Configurar la imagen principal
         Image iconImage = icon.GetComponent<Image>();

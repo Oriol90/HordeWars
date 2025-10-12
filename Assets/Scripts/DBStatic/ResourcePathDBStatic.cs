@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class ResourcePathDBStatic
 {
@@ -20,13 +21,13 @@ public static class ResourcePathDBStatic
         { UnitType.LeafArcher, "Unit Icons/icon094" }
     };
 
-    public static string Get(Item item)
+    public static Sprite Get(Item item)
     {
-        return itemIconPath[item];
+        return Resources.Load<Sprite>(itemIconPath[item]);
     }
 
-    public static string Get(UnitType unitType)
+    public static Sprite Get(UnitType unitType)
     {
-        return unitIconPath[unitType];
+        return Resources.Load<Sprite>(unitIconPath[unitType]);
     }
 }

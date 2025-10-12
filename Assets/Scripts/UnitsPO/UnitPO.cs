@@ -9,7 +9,6 @@ public class UnitPO
     public BaseStats BaseStats { get; set; }
     public UnitStats Stats { get; set; }
     public Item EquippedItem { get; set; }    
-    public Sprite ImageIcon { get; set; }
 
     protected UnitPO(int experience, BaseStats baseStats, int level, Item equippedItem)
     {

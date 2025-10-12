@@ -9,9 +9,11 @@ public class ItemIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Image background;
     public Image iconImage;
     public TMP_Text quantityText;
+    public PanelTooltip itemTooltipPanel;
 
     private ItemData itemData;
     private bool isPointerOver;
+    public TooltipObj tooltipItem;
 
 
     public void SetUp(ItemData data, int quantity)
@@ -21,7 +23,7 @@ public class ItemIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         // Cambiar color del marco según rareza
         background.color = Utils.GetColorByRarity(data.Rarity);
-        iconImage.sprite = Resources.Load<Sprite>(ResourcePathDBStatic.Get(data.Item));
+        iconImage.sprite = ResourcePathDBStatic.Get(data.Item);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -29,17 +31,14 @@ public class ItemIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (itemData != null && !isPointerOver)
         {
             isPointerOver = true;
-            Vector2 position = transform.position;
-            position.y += 130;
-            position.x += 100;
-            ItemTooltip.Instance.ShowTooltip(itemData, position);
+            tooltipItem = new TooltipObj(itemData.Name, itemData.GetInfo(), TooltipType.ItemArmory, transform.position);
+            itemTooltipPanel.ShowTooltip(tooltipItem);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         isPointerOver = false;
-        ItemTooltip.Instance.HideTooltip();
+        itemTooltipPanel.HideTooltip();
     }
-
 }

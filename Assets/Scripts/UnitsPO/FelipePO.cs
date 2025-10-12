@@ -6,7 +6,5 @@ public class FelipePO : UnitPO
     {
         Race = Race.Human;
         UnitType = UnitType.Felipe; 
-        ImageIcon = Resources.Load<Sprite>(ResourcePathDBStatic.Get(UnitType));
-
     }
 }

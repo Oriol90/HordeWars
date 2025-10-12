@@ -112,7 +112,7 @@ public class CourtyardManager : MonoBehaviour
     private void CreateCourtyardUnitEntry(UnitPO unit)
     {
         GameObject unitIconGO = Instantiate(unitIconPrefab, unitCourtyardGrid);
-        CourtyardUnitIcon courtyardUnitIcon = unitIconGO.GetComponent<CourtyardUnitIcon>();
+        UnitIcon courtyardUnitIcon = unitIconGO.GetComponent<UnitIcon>();
 
         courtyardUnitIcon.SetUp(unit, true);
     }
@@ -120,7 +120,7 @@ public class CourtyardManager : MonoBehaviour
     private void CreateArmyUnitEntry(UnitPO unit)
     {
         GameObject unitIconGO = Instantiate(unitIconPrefab, armyGrid);
-        CourtyardUnitIcon courtyardUnitIcon = unitIconGO.GetComponent<CourtyardUnitIcon>();
+        UnitIcon courtyardUnitIcon = unitIconGO.GetComponent<UnitIcon>();
 
         courtyardUnitIcon.SetUp(unit, false);
     }
@@ -130,7 +130,7 @@ public class CourtyardManager : MonoBehaviour
 
         foreach (Transform child in grid)
         {
-            UnitPO unit = child.GetComponent<CourtyardUnitIcon>().unitPO;
+            UnitPO unit = child.GetComponent<UnitIcon>().unitPO;
             ItemData itemData = ItemDBStatic.Get(unit.EquippedItem);
             if ((GC.COURTYARD_SELECTED_RARITY == 0 || itemData.Rarity == (Rarity)(GC.COURTYARD_SELECTED_RARITY - 1)) &&
                 (GC.COURTYARD_SELECTED_UNIT == 0 || unit.UnitType == (UnitType)(GC.COURTYARD_SELECTED_UNIT - 1)) &&
@@ -144,41 +144,48 @@ public class CourtyardManager : MonoBehaviour
             }
         }
     }
-    
+
     public void SwitchUnits()
     {
         bool marked;
         List<UnitPO> newCourtyardUnits = new List<UnitPO>();
         List<UnitPO> newArmy = new List<UnitPO>();
 
-        foreach(Transform child in unitCourtyardGrid)
+        foreach (Transform child in unitCourtyardGrid)
         {
-            marked = child.GetComponent<CourtyardUnitIcon>().arrowDownImage.gameObject.activeSelf;
-            if(marked)            {
-                newArmy.Add(child.GetComponent<CourtyardUnitIcon>().unitPO);
-            } else {
-                newCourtyardUnits.Add(child.GetComponent<CourtyardUnitIcon>().unitPO);
-            }           
-            
+            marked = child.GetComponent<UnitIcon>().arrowDownImage.gameObject.activeSelf;
+            if (marked)
+            {
+                newArmy.Add(child.GetComponent<UnitIcon>().unitPO);
+            }
+            else
+            {
+                newCourtyardUnits.Add(child.GetComponent<UnitIcon>().unitPO);
+            }
+
         }
 
         foreach (Transform child in armyGrid)
         {
-            marked = child.GetComponent<CourtyardUnitIcon>().arrowUpImage.gameObject.activeSelf;
-            if (marked)            {
-                newCourtyardUnits.Add(child.GetComponent<CourtyardUnitIcon>().unitPO);
-            } else{
-                newArmy.Add(child.GetComponent<CourtyardUnitIcon>().unitPO);
+            marked = child.GetComponent<UnitIcon>().arrowUpImage.gameObject.activeSelf;
+            if (marked)
+            {
+                newCourtyardUnits.Add(child.GetComponent<UnitIcon>().unitPO);
+            }
+            else
+            {
+                newArmy.Add(child.GetComponent<UnitIcon>().unitPO);
             }
         }
-        
+
         courtyardUnits = newCourtyardUnits;
         army = newArmy;
-        PopulateUnitList();
 
         GameSaveManager.Save(courtyardUnits, DataType.CourtyardUnitsData);
         GameSaveManager.Save(army, DataType.ArmyData);
 
+        PopulateUnitList();
+        FilterItemsBySelection(unitCourtyardGrid);
+        FilterItemsBySelection(armyGrid);
     }
-
 }
