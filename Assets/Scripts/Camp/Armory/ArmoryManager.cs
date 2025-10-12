@@ -3,7 +3,7 @@ using TMPro;
 using System;
 using System.Collections.Generic;
 
-public class Armory : MonoBehaviour
+public class ArmoryManager : MonoBehaviour
 {
     [Header("Dropdowns")]
     public TMP_Dropdown rarityDropdown;
@@ -60,10 +60,8 @@ public class Armory : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        ItemTooltip.Instance.ClearTooltip();
 
         Dictionary<Item, int> itemQuantityDict = GameSaveManager.Load<Dictionary<Item, int>>(DataType.ArmoryData);
-        //Dictionary<Item, ItemData> itemDataDict = new(GameSaveManager.Load<Dictionary<Item, ItemData>>(DataType.ItemData));
         Dictionary<Item, int> filteredDict = FilterItemsBySelection(itemQuantityDict);
 
         foreach (var item in filteredDict)

@@ -118,23 +118,19 @@ public static class GC
     public const string FOG_TILE_NAME = "Niebla";
     public const string SHADOW_TILE_NAME = "Sombra";
 
-    //Ruta images items
-    public static readonly Dictionary<Item, string> ITEM_SPRITE_PATHS = new Dictionary<Item, string>
-    {
-        { Item.WoodenSword, $"Item Icons/fc1448" },
-        { Item.IronShield, $"Item Icons/fc1811" },
-        { Item.MagicWand, $"Item Icons/fc1489" },
-        { Item.Sword, "Icons/sword" },
-        { Item.Bow, $"Item Icons/fc1515" },
-        { Item.Staff, $"Item Icons/fc1710" },
-        { Item.Armor, "Icons/armor" },
-        { Item.Helmet, "Icons/helmet" },
-        { Item.Shield, $"" },
-        { Item.Ring, $"Item Icons/fc2185" },
-        { Item.Amulet, "Icons/amulet" }
-    };
-
     //Selected options armory
     public static int ARMORY_SELECTED_RARITY = 0;
     public static int ARMORY_SELECTED_UNIT = 0;
+
+    //Selected options courtyard
+    public static int COURTYARD_SELECTED_RARITY = 0;    
+    public static int COURTYARD_SELECTED_UNIT = 0;
+    public static int COURTYARD_SELECTED_LEVEL = 0;
+
+    //Experience required for each level
+    public static int EXPERIENCE_REQ_LEVEL_2 = 100;
+    public static int EXPERIENCE_REQ_LEVEL_3 = 300;
+    public static int EXPERIENCE_REQ_LEVEL_4 = 600;
+    public static int EXPERIENCE_REQ_LEVEL_5 = 1000;
+    public static int EXPERIENCE_REQ_LEVEL_6 = 1500;
 }

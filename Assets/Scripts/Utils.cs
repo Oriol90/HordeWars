@@ -6,8 +6,6 @@ using UnityEngine.Tilemaps;
 
 public static class Utils
 {
-
-
     /// <summary>
     /// Convierte un Vector3Int (coordenadas de celda) a Vector3 (posición en el mundo, centrada en el tile).
     /// </summary>
@@ -158,4 +156,42 @@ public static class Utils
         return unit;
     }
 
+    public static Color GetColorByRarity(Rarity rarity)
+    {
+        switch (rarity)
+        {
+            case Rarity.Common: return new Color32(255, 255, 255, 255);     // blanco
+            case Rarity.Uncommon: return new Color32(76, 175, 80, 255);     // verde
+            case Rarity.Rare: return new Color32(33, 150, 243, 255);        // azul
+            case Rarity.Epic: return new Color32(156, 39, 176, 255);        // morado
+            case Rarity.Mythic: return new Color32(255, 99, 71, 255);       // rojo claro
+            case Rarity.Celestial: return new Color32(255, 215, 0, 255);    // dorado
+            default: return Color.gray;
+        }
+    }
+
+    public static Color GetColorByLevel(int exp)
+    {
+        switch (exp)
+        {
+            case 1: return new Color32(255, 255, 255, 255);    // blanco
+            case 2: return new Color32(76, 175, 80, 255);       // verde
+            case 3: return new Color32(33, 150, 243, 255);      // azul
+            case 4: return new Color32(156, 39, 176, 255);      // morado
+            case 5: return new Color32(255, 99, 71, 255);       // rojo claro
+            case 6: return new Color32(255, 215, 0, 255);       // dorado
+            default: return Color.gray;
+        }
+    }
+
+    public static int CreateRandomNumber(int min, int max)
+    {
+        return UnityEngine.Random.Range(min, max);
+    }
+    
+public static T GetRandomEnumValue<T>() where T : Enum
+{
+    Array values = System.Enum.GetValues(typeof(T));
+    return (T)values.GetValue(UnityEngine.Random.Range(0, values.Length));
+}
 }

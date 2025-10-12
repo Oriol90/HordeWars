@@ -26,6 +26,7 @@ public enum DataType
     ArmyData,
     ArmoryData,
     BaseStats,
+    CourtyardUnitsData,
     ItemData,
     FogTileData,
     GameData,
@@ -129,17 +130,10 @@ public enum Effect
 [JsonConverter(typeof(StringEnumConverter))]
 public enum Item
 {
-    None,
     WoodenSword,
     IronShield,
     MagicWand,
-    Sword,
     Bow,
     Staff,
-    Shield,
-    Helmet,
-    Armor,
-    Boots,
-    Ring,
-    Amulet
+    Ring
 }

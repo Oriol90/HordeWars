@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class ItemDBStatic
 {
-    public static readonly Dictionary <Item, ItemData> Items = new Dictionary<Item, ItemData>
+    private static readonly Dictionary <Item, ItemData> Items = new Dictionary<Item, ItemData>
         {
             { Item.WoodenSword, new ItemData {
                 Name = "Wooden Sword",
@@ -26,7 +25,7 @@ public static class ItemDBStatic
                     new EffectModifier { effect = Effect.DefenseBoost, value = 10 },
                     new EffectModifier { effect = Effect.HealthBoost, value = 20 }
                 }
-            } },
+            }},
             { Item.Bow, new ItemData {
                 Name = "Bow",
                 UnitType = UnitType.LeafArcher,

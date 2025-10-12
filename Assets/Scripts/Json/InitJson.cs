@@ -5,13 +5,14 @@ public class InitJson : MonoBehaviour
 {
     void Awake()
     {
-        // InitBaseStats();
-        // InitArmy();
+         InitBaseStats();
+         InitArmy(50);
         // InitHero();
         // InitPlayerData();
         // InitTalents();
         // InitInstructorData();
         // InitArmory();
+         InitCourtyardUnits(50);
     }
 
     private void InitHero()
@@ -70,12 +71,12 @@ public class InitJson : MonoBehaviour
             {
                 UnitType.LeafArcher,
                 new BaseStats {
-                    health = new int[5] {300, 400, 500, 600, 700},
-                    attack = new int[5] {150, 160, 170, 180, 200 },
-                    attackSpeed = new float[5] {0.60f, 0.60f, 0.70f, 0.70f, 0.80f},
-                    defense = new int[5] {10, 10, 12, 15, 20},
-                    darkResist = new int[5] {15, 15, 15, 15, 15},
-                    moveSpeed = new float[5] {2f, 2f, 2f, 2f, 2f},
+                    health = new int[6] {300, 400, 500, 600, 700, 800},
+                    attack = new int[6] {150, 160, 170, 180, 200, 220 },
+                    attackSpeed = new float[6] {0.60f, 0.60f, 0.70f, 0.70f, 0.80f, 0.80f},
+                    defense = new int[6] {10, 10, 12, 15, 20, 25},
+                    darkResist = new int[6] {15, 15, 15, 15, 15, 15},
+                    moveSpeed = new float[6] {2f, 2f, 2f, 2f, 2f, 2f},
                     boneCost = 25,
                     lightCost = 0,
                     faith = 5
@@ -84,12 +85,12 @@ public class InitJson : MonoBehaviour
             {
                 UnitType.Archer,
                 new BaseStats {
-                    health = new int[5] {300, 400, 500, 600, 700},
-                    attack = new int[5] {150, 160, 170, 180, 200 },
-                    attackSpeed = new float[5] {0.60f, 0.60f, 0.70f, 0.70f, 0.80f},
-                    defense = new int[5] {10, 10, 12, 15, 20},
-                    darkResist = new int[5] {15, 15, 15, 15, 15},
-                    moveSpeed = new float[5] {2f, 2f, 2f, 2f, 2f},
+                    health = new int[6] {300, 400, 500, 600, 700, 800},
+                    attack = new int[6] {150, 160, 170, 180, 200, 220},
+                    attackSpeed = new float[6] {0.60f, 0.60f, 0.70f, 0.70f, 0.80f, 0.80f},
+                    defense = new int[6] {10, 10, 12, 15, 20, 25},
+                    darkResist = new int[6] {15, 15, 15, 15, 15, 15},
+                    moveSpeed = new float[6] {2f, 2f, 2f, 2f, 2f, 2f},
                     boneCost = 25,
                     lightCost = 0,
                     faith = 5
@@ -98,15 +99,29 @@ public class InitJson : MonoBehaviour
             {
                 UnitType.GirlKnight,
                 new BaseStats {
-                    health = new int[5] {700, 750, 800, 850, 900},
-                    attack = new int[5] {130, 130, 135, 140, 150},
-                    attackSpeed = new float[5] {0.50f, 0.50f, 0.50f, 0.50f, 0.50f},
-                    defense = new int[5] {60, 60, 60, 60, 70},
-                    darkResist = new int[5] {25, 25, 25, 25, 25},
-                    moveSpeed = new float[5] {1.8f, 1.8f, 1.8f, 1.85f, 1.9f},
+                    health = new int[6] {700, 750, 800, 850, 900, 950},
+                    attack = new int[6] {130, 130, 135, 140, 150, 160},
+                    attackSpeed = new float[6] {0.50f, 0.50f, 0.50f, 0.50f, 0.50f, 0.50f},
+                    defense = new int[6] {60, 60, 60, 60, 70, 80},
+                    darkResist = new int[6] {25, 25, 25, 25, 25, 25},
+                    moveSpeed = new float[6] {1.8f, 1.8f, 1.8f, 1.85f, 1.9f, 1.95f},
                     boneCost = 70,
                     lightCost = 0,
                     faith = 15
+                }
+            },
+            {
+                UnitType.Felipe,
+                new BaseStats {
+                    health = new int[6] {1000, 1100, 1200, 1300, 1400, 1500},
+                    attack = new int[6] {200, 220, 240, 260, 280, 300},
+                    attackSpeed = new float[6] {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+                    defense = new int[6] {80, 85, 90, 95, 100, 110},
+                    darkResist = new int[6] {30, 30, 30, 30, 30, 30},
+                    moveSpeed = new float[6] {1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f},
+                    boneCost = 150,
+                    lightCost = 0,
+                    faith = 50
                 }
             }
         };
@@ -127,124 +142,22 @@ public class InitJson : MonoBehaviour
         GameSaveManager.Save(armory, DataType.ArmoryData);
     }
 
-    private void InitArmy()
+     private void InitCourtyardUnits(int numUnits)
     {
-        List<UnitData> army = new List<UnitData>
-        {
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.Archer),
-            new UnitData(Race.Human, 4.8f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 2.4f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 5f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 3.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2.9f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.4f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.8f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 2.4f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 5f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 3.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2.9f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.4f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.8f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 2.4f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 5f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 3.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2.9f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.4f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.8f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 2.4f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 5f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 3.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2.9f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.4f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.8f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 2.4f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 5f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 3.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2.9f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.4f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.8f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 2.4f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 5f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 3.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2.9f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.4f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.8f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 2.4f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 5f, UnitType.GirlKnight),
-            new UnitData(Race.Human, 3.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2.9f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 5f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 1f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 3.4f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 4.8f, UnitType.LeafArcher),
-            new UnitData(Race.Human, 2.1f, UnitType.LeafArcher)
+        List<UnitData> courtyardUnits = new List<UnitData>();
+
+        for(int i = 0; i < numUnits; i++){
+            courtyardUnits.Add(new UnitData(Race.Human, Utils.CreateRandomNumber(0, 2000), Utils.GetRandomEnumValue<UnitType>(), Utils.GetRandomEnumValue<Item>()));           
+        };
+        GameSaveManager.Save(courtyardUnits, DataType.CourtyardUnitsData);
+    }
+
+    private void InitArmy(int numUnits)
+    {
+        List<UnitData> army = new List<UnitData>();
+
+        for(int i = 0; i < numUnits; i++){
+            army.Add(new UnitData(Race.Human, Utils.CreateRandomNumber(0, 2000), Utils.GetRandomEnumValue<UnitType>(), Utils.GetRandomEnumValue<Item>()));           
         };
         GameSaveManager.Save(army, DataType.ArmyData);
     }

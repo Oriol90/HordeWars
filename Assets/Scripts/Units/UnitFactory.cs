@@ -11,27 +11,51 @@ public class UnitFactory
         return UnitDataToUnit(listUnitData, dictBaseStats);
     }
 
+    public List<UnitPO> CourtYardUnits()
+    {
+        List<UnitData> listUnitData = GameSaveManager.Load<List<UnitData>>(DataType.CourtyardUnitsData);
+        Dictionary<UnitType, BaseStats> dictBaseStats = GameSaveManager.Load<Dictionary<UnitType, BaseStats>>(DataType.BaseStats);
+        return UnitDataToUnit(listUnitData, dictBaseStats);
+    }
+
     public List<UnitPO> UnitDataToUnit(List<UnitData> listUnitData, Dictionary<UnitType, BaseStats> dictBaseStats)
     {
-        List<UnitPO> army = new List<UnitPO>();
+        List<UnitPO> listUnits = new List<UnitPO>();
         foreach (var unitData in listUnitData)
         {
             UnitPO unit = null;
             switch (unitData.unitType)
             {
                 case UnitType.Archer:
-                    unit = new ArcherPO(unitData.experience, dictBaseStats[UnitType.Archer]);
+                    unit = new ArcherPO(unitData.experience, dictBaseStats[UnitType.Archer], ExperienceToLevel(unitData.experience), unitData.item);
                     break;
                 case UnitType.GirlKnight:
-                    unit = new GirlKnightPO(unitData.experience, dictBaseStats[UnitType.GirlKnight]);
+                    unit = new GirlKnightPO(unitData.experience, dictBaseStats[UnitType.GirlKnight], ExperienceToLevel(unitData.experience), unitData.item);
                     break;
                 case UnitType.LeafArcher:
-                    unit = new LeafArcherPO(unitData.experience, dictBaseStats[UnitType.LeafArcher]);
+                    unit = new LeafArcherPO(unitData.experience, dictBaseStats[UnitType.LeafArcher], ExperienceToLevel(unitData.experience), unitData.item);
+                    break;
+                case UnitType.Felipe:
+                    unit = new FelipePO(unitData.experience, dictBaseStats[UnitType.Felipe], ExperienceToLevel(unitData.experience), unitData.item);
                     break;
             }
-            army.Add(unit);
+            listUnits.Add(unit);
         }
-        return army;
+        return listUnits;
+    }
+
+    private int ExperienceToLevel(int exp)
+    {
+        switch (exp)
+        {
+            case int n when n < 100: return 1;
+            case int n when n < 300: return 2;
+            case int n when n < 600: return 3;
+            case int n when n < 1000: return 4;
+            case int n when n < 1500: return 5;
+            case int n when n >= 1500: return 6;
+            default: return 0;
+        }
     }
 
     public List<UnitData> UnitToUnitData(List<UnitPO> listUnitPO)
@@ -51,7 +75,7 @@ public class UnitFactory
         unit.Race = unitData.race;
         unit.UnitType = unitData.unitType;
         unit.Experience = unitData.experience;
-        unit.Level = (int)Math.Floor(unitData.experience);
+        unit.Level = ExperienceToLevel(unitData.experience);
         unit.BaseStats = dictBaseStats[unitData.unitType];
         unit.Stats = new UnitStats(unit.BaseStats, unit.Level);
         return unitGO;
@@ -64,11 +88,11 @@ public class UnitFactory
         switch (unitType)
         {
             case UnitType.Archer:
-                return new ArcherPO(1f, dictBaseStats[UnitType.Archer]);
+                return new ArcherPO(0, dictBaseStats[UnitType.Archer], 0, Item.Bow);
             case UnitType.GirlKnight:
-                return new GirlKnightPO(1f, dictBaseStats[UnitType.GirlKnight]);
+                return new GirlKnightPO(0, dictBaseStats[UnitType.GirlKnight], 0, Item.IronShield);
             case UnitType.LeafArcher:
-                return new LeafArcherPO(1f, dictBaseStats[UnitType.LeafArcher]);
+                return new LeafArcherPO(0, dictBaseStats[UnitType.LeafArcher], 0, Item.Bow);
             default:
                 return null;
         }

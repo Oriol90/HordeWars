@@ -5,14 +5,24 @@ public class UnitData
 {
     public Race race;
     public UnitType unitType;
-    public float experience;
-    public ItemData Item;
+    public int experience;
+    public Item item;
 
-    public UnitData(Race race, float experience, UnitType unitType)
+    public UnitData() { }
+
+    public UnitData(Race race, int experience, UnitType unitType)
     {
         this.race = race;
         this.unitType = unitType;
         this.experience = experience;
+    }
+
+    public UnitData(Race race, int experience, UnitType unitType, Item item)
+    {
+        this.race = race;
+        this.unitType = unitType;
+        this.experience = experience;
+        this.item = item;
     }
 
     

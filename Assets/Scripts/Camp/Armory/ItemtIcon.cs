@@ -1,8 +1,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ItemIcon : MonoBehaviour
+public class ItemIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
     public Image background;
@@ -10,6 +11,8 @@ public class ItemIcon : MonoBehaviour
     public TMP_Text quantityText;
 
     private ItemData itemData;
+    private bool isPointerOver;
+
 
     public void SetUp(ItemData data, int quantity)
     {
@@ -17,26 +20,26 @@ public class ItemIcon : MonoBehaviour
         quantityText.text = quantity.ToString();
 
         // Cambiar color del marco según rareza
-        background.color = GetColorByRarity(data.Rarity);
-        iconImage.sprite = Resources.Load<Sprite>(GC.ITEM_SPRITE_PATHS[data.Item]);
+        background.color = Utils.GetColorByRarity(data.Rarity);
+        iconImage.sprite = Resources.Load<Sprite>(ResourcePathDBStatic.Get(data.Item));
     }
 
-    private Color GetColorByRarity(Rarity rarity)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        switch (rarity)
+        if (itemData != null && !isPointerOver)
         {
-            case Rarity.Common: return new Color32(255, 255, 255, 255);     // blanco
-            case Rarity.Uncommon: return new Color32(76, 175, 80, 255);     // verde
-            case Rarity.Rare: return new Color32(33, 150, 243, 255);        // azul
-            case Rarity.Epic: return new Color32(156, 39, 176, 255);        // morado
-            case Rarity.Mythic: return new Color32(255, 99, 71, 255);       // rojo claro
-            case Rarity.Celestial: return new Color32(255, 215, 0, 255);    // dorado
-            default: return Color.white;
+            isPointerOver = true;
+            Vector2 position = transform.position;
+            position.y += 130;
+            position.x += 100;
+            ItemTooltip.Instance.ShowTooltip(itemData, position);
         }
     }
 
-    public void FillInfoItem()
+    public void OnPointerExit(PointerEventData eventData)
     {
-        ItemTooltip.Instance.FillTooltip(itemData);
+        isPointerOver = false;
+        ItemTooltip.Instance.HideTooltip();
     }
+
 }

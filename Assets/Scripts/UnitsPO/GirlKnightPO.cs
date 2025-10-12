@@ -1,7 +1,11 @@
+using UnityEngine;
+
 public class GirlKnightPO : UnitPO
 {
-    public GirlKnightPO(float experience, BaseStats baseStats) : base(experience, baseStats){
+    public GirlKnightPO(int experience, BaseStats baseStats, int level, Item item) : base(experience, baseStats, level, item){
         Race = Race.Human;
         UnitType = UnitType.GirlKnight; 
+        ImageIcon = Resources.Load<Sprite>(ResourcePathDBStatic.Get(UnitType));
+
     }
 }

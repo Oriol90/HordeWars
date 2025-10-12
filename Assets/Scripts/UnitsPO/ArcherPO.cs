@@ -1,8 +1,12 @@
+using UnityEngine;
+
 public class ArcherPO : UnitPO
 {
-    public ArcherPO(float experience, BaseStats baseStats) : base(experience, baseStats)
+    public ArcherPO(int experience, BaseStats baseStats, int level, Item item) : base(experience, baseStats, level, item)
     {
         Race = Race.Human;
         UnitType = UnitType.Archer;
+        ImageIcon = Resources.Load<Sprite>(ResourcePathDBStatic.Get(UnitType));
+
     }
 }

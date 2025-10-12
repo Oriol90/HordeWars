@@ -7,34 +7,26 @@ public class ItemTooltip : MonoBehaviour
     
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI statsText;
+    private RectTransform tooltipRect;
     
     void Awake()
     {
         Instance = this;
+        tooltipRect = GetComponent<RectTransform>();
+        gameObject.SetActive(false);
     }
 
-    public void FillTooltip(ItemData item)
+    public void ShowTooltip(ItemData item, Vector2 position)
     {
         nameText.text = item.Name;
-        statsText.text = $"Rarity: {item.Rarity}\n" +
-                        $"Unit type: {item.UnitType}\n\n" +
-                        $"EFFECTS\n" +
-                        EffectsToText(item);
+        statsText.text = item.GetInfo();
+
+        tooltipRect.position = position;
+        gameObject.SetActive(true);
     }
 
-    public void ClearTooltip()
+    public void HideTooltip()
     {
-        nameText.text = "";
-        statsText.text = "";
-    }
-
-    private string EffectsToText(ItemData item)
-    {
-        string effectsText = "";
-        foreach (var effect in item.ListEffects)
-        {
-            effectsText += $" {effect.value}% {effect.effect}\n";
-        }
-        return effectsText;
+        gameObject.SetActive(false);
     }
 }
