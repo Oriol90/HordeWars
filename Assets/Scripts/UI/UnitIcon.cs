@@ -48,7 +48,7 @@ public class UnitIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             isPointerOver = true;
             ItemData item = ItemDBStatic.Get(unitPO.EquippedItem);
 
-            tooltipUnit = new TooltipObj(unitPO.UnitType.ToString(), unitPO.GetInfo(), TooltipType.UnitCourtyard, transform.position);
+            tooltipUnit = new TooltipObj(unitPO.UnitName, unitPO.GetInfo(), TooltipType.UnitCourtyard, transform.position);
             tooltipItem = new TooltipObj(item.Name, item.GetInfo(), TooltipType.ItemCourtyard, transform.position);
 
             unitTooltipPanel.ShowTooltip(tooltipUnit);

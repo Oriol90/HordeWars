@@ -5,14 +5,15 @@ public class InitJson : MonoBehaviour
 {
     void Awake()
     {
-         InitBaseStats();
-         InitArmy(50);
+        // InitBaseStats();
+        // InitArmy(50);
         // InitHero();
         // InitPlayerData();
+        // InitTokenData();
         // InitTalents();
-        // InitInstructorData();
+        InitInstructorData(50);
         // InitArmory();
-         InitCourtyardUnits(50);
+        // InitCourtyardUnits(50);
     }
 
     private void InitHero()
@@ -28,26 +29,42 @@ public class InitJson : MonoBehaviour
         
     }
 
-    private void InitPlayerData() {
-        PlayerData playerData = new PlayerData { playerName = "Oriol", level = 5 };
-        GameSaveManager.Save(playerData, DataType.PlayerData);
-
-        List<TokenData> tokenDataList = new List<TokenData>
+    private void InitTokenData() {
+        Dictionary<Token, int> tokenDict = new Dictionary<Token, int>
         {
-            new TokenData { tokenName = "Gold", tokenValue = 100 },
-            new TokenData { tokenName = "Silver", tokenValue = 50 }
+            { Token.Bones, 500 },
+            { Token.CurrentTime, 0 },
+            { Token.Gold, 1000 }
+            
         };
-        GameSaveManager.Save(tokenDataList, DataType.TokenData);
+        GameSaveManager.Save(tokenDict, DataType.TokenData);
     }
 
-    private void InitInstructorData() {
-        List<InstructorData> instructors = new List<InstructorData>
+    private void InitInstructorData(int numInstructors) {
+
+        List<InstructorData> instructorList = new List<InstructorData>();
+
+        for(int i = 0; i < numInstructors; i++)
         {
-            new InstructorData("Gorim", UnitType.GirlKnight, Rarity.Common, new StatsInstructor(20, 10, 0, 0, 0, 0, 0), new List<Mastery> { Mastery.ShieldBash }, 100, 3),
-            new InstructorData("Elrion", UnitType.LeafArcher, Rarity.Uncommon, new StatsInstructor(0, 10, 40, 0, 0, 0, 0), new List<Mastery> { Mastery.FireArrows }, 150, 2),
-            new InstructorData("Thrag", UnitType.Archer, Rarity.Rare, new StatsInstructor(20, 10, 0, -20, 0, 50, 10), new List<Mastery> { Mastery.PoisonedBlades }, 200, 4)
+            Gender gender = Utils.GetRandomEnumValue<Gender>();
+            Rarity rarity = Utils.GetRandomEnumValue<Rarity>();
+            UnitType trainableUnit = Utils.GetRandomEnumValue<UnitType>();
+            
+            List<Mastery> masteries = new List<Mastery>();
+            for (int k = 0; k < Utils.CreateRandomNumber(1, 3); k++) {
+                Mastery mastery = Utils.GetRandomEnumValue<Mastery>();
+                if (!masteries.Contains(mastery)) {
+                    masteries.Add(mastery);
+                }
+            }
+
+            int trainingCost = Utils.CreateRandomNumber(15, 90);
+            int trainingTime = Utils.CreateRandomNumber(8, 72);
+
+            instructorList.Add(new InstructorData(NamesDBStatic.GetRandomNameByGender(gender), gender, trainableUnit, rarity, masteries, trainingCost, trainingTime, ResourcePathDBStatic.GetRandomInstructorPath(gender)));
         };
-        GameSaveManager.Save(instructors, DataType.InstructorData);
+
+        GameSaveManager.Save(instructorList, DataType.InstructorData);
     }
 
     /*PLANTILLA
@@ -147,7 +164,8 @@ public class InitJson : MonoBehaviour
         List<UnitData> courtyardUnits = new List<UnitData>();
 
         for(int i = 0; i < numUnits; i++){
-            courtyardUnits.Add(new UnitData(Race.Human, Utils.CreateRandomNumber(0, 2000), Utils.GetRandomEnumValue<UnitType>(), Utils.GetRandomEnumValue<Item>()));           
+            UnitType unitType = Utils.GetRandomEnumValue<UnitType>();
+            courtyardUnits.Add(new UnitData(NamesDBStatic.GetRandomNameByUnitType(unitType), Race.Human, Utils.CreateRandomNumber(0, 2000), unitType, Utils.GetRandomEnumValue<Item>()));           
         };
         GameSaveManager.Save(courtyardUnits, DataType.CourtyardUnitsData);
     }
@@ -157,7 +175,8 @@ public class InitJson : MonoBehaviour
         List<UnitData> army = new List<UnitData>();
 
         for(int i = 0; i < numUnits; i++){
-            army.Add(new UnitData(Race.Human, Utils.CreateRandomNumber(0, 2000), Utils.GetRandomEnumValue<UnitType>(), Utils.GetRandomEnumValue<Item>()));           
+            UnitType unitType = Utils.GetRandomEnumValue<UnitType>();
+            army.Add(new UnitData(NamesDBStatic.GetRandomNameByUnitType(unitType), Race.Human, Utils.CreateRandomNumber(0, 2000), unitType, Utils.GetRandomEnumValue<Item>()));           
         };
         GameSaveManager.Save(army, DataType.ArmyData);
     }

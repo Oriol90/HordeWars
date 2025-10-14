@@ -112,17 +112,17 @@ public class CourtyardManager : MonoBehaviour
     private void CreateCourtyardUnitEntry(UnitPO unit)
     {
         GameObject unitIconGO = Instantiate(unitIconPrefab, unitCourtyardGrid);
-        UnitIcon courtyardUnitIcon = unitIconGO.GetComponent<UnitIcon>();
+        UnitIcon unitIcon = unitIconGO.GetComponent<UnitIcon>();
 
-        courtyardUnitIcon.SetUp(unit, true);
+        unitIcon.SetUp(unit, true);
     }
 
     private void CreateArmyUnitEntry(UnitPO unit)
     {
         GameObject unitIconGO = Instantiate(unitIconPrefab, armyGrid);
-        UnitIcon courtyardUnitIcon = unitIconGO.GetComponent<UnitIcon>();
+        UnitIcon unitIcon = unitIconGO.GetComponent<UnitIcon>();
 
-        courtyardUnitIcon.SetUp(unit, false);
+        unitIcon.SetUp(unit, false);
     }
 
     private void FilterItemsBySelection(Transform grid)

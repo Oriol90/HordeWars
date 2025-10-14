@@ -22,20 +22,20 @@ public class InstructorPanel : MonoBehaviour
         Instance = this;  // Singleton simple
     }
 
-    public void ShowInstructor(InstructorData instructor)
-    {
-        SetValueText(health, instructor.stats.health);
-        SetValueText(defense, instructor.stats.defense);
-        SetValueText(darkResist, instructor.stats.darkResist);
-        SetValueText(faith, instructor.stats.faith);
-        SetValueText(attack, instructor.stats.attack);
-        SetValueText(attackSpeed, instructor.stats.attackSpeed);
-        SetValueText(moveSpeed, instructor.stats.moveSpeed);
-        if (instructor.mastery.Count > 0)
-            mastery1.text = instructor.mastery[0].ToString();
-        if (instructor.mastery.Count > 1)
-            mastery2.text = instructor.mastery[1].ToString();
-    }
+    // public void ShowInstructor(InstructorData instructor)
+    // {
+    //     SetValueText(health, instructor.stats.health);
+    //     SetValueText(defense, instructor.stats.defense);
+    //     SetValueText(darkResist, instructor.stats.darkResist);
+    //     SetValueText(faith, instructor.stats.faith);
+    //     SetValueText(attack, instructor.stats.attack);
+    //     SetValueText(attackSpeed, instructor.stats.attackSpeed);
+    //     SetValueText(moveSpeed, instructor.stats.moveSpeed);
+    //     if (instructor.mastery.Count > 0)
+    //         mastery1.text = instructor.mastery[0].ToString();
+    //     if (instructor.mastery.Count > 1)
+    //         mastery2.text = instructor.mastery[1].ToString();
+    // }
 
     private void SetValueText(TextMeshProUGUI textComponent, float value)
     {

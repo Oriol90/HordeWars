@@ -20,7 +20,7 @@ public enum Biome
     Sea
 }
 
-[JsonConverter(typeof(StringEnumConverter))] 
+[JsonConverter(typeof(StringEnumConverter))]
 public enum DataType
 {
     ArmyData,
@@ -35,16 +35,27 @@ public enum DataType
     PlayerData,
     TalentData,
     TokenData,
-    InstructorData
+    InstructorData,
+    TrainingUnitData,
+    ScheduledEventData
 }
 
-[JsonConverter(typeof(StringEnumConverter))] 
+[JsonConverter(typeof(StringEnumConverter))]
 public enum UnitType
 {
     GirlKnight,
     LeafArcher,
     Archer,
     Felipe
+}
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum Token
+{
+    Gold,
+    Silver,
+    Bones,
+    CurrentTime
 }
 
 [JsonConverter(typeof(StringEnumConverter))] 
@@ -146,4 +157,18 @@ public enum TooltipType
     UnitArmyHexmap,
     Instructor,
     ItemArmory
+}
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum Gender
+{
+    Female,
+    Male
+}
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum EventType
+{
+    FinishTraining,
+    RandomEvent
 }

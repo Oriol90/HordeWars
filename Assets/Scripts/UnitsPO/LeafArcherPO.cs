@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LeafArcherPO : UnitPO
 {
-    public LeafArcherPO(int experience, BaseStats baseStats, int level, Item item) : base(experience, baseStats, level, item){
+    public LeafArcherPO(string unitName, int experience, BaseStats baseStats, int level, Item item) : base(unitName, experience, baseStats, level, item, Gender.Male){
         Race = Race.Undead;
         UnitType = UnitType.LeafArcher; 
     }

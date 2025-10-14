@@ -21,22 +21,24 @@ public class UnitFactory
     public List<UnitPO> UnitDataToUnit(List<UnitData> listUnitData, Dictionary<UnitType, BaseStats> dictBaseStats)
     {
         List<UnitPO> listUnits = new List<UnitPO>();
+        if (listUnitData == null) return listUnits;
+
         foreach (var unitData in listUnitData)
         {
             UnitPO unit = null;
             switch (unitData.unitType)
             {
                 case UnitType.Archer:
-                    unit = new ArcherPO(unitData.experience, dictBaseStats[UnitType.Archer], ExperienceToLevel(unitData.experience), unitData.item);
+                    unit = new ArcherPO(unitData.unitName, unitData.experience, dictBaseStats[UnitType.Archer], ExperienceToLevel(unitData.experience), unitData.item);
                     break;
                 case UnitType.GirlKnight:
-                    unit = new GirlKnightPO(unitData.experience, dictBaseStats[UnitType.GirlKnight], ExperienceToLevel(unitData.experience), unitData.item);
+                    unit = new GirlKnightPO(unitData.unitName, unitData.experience, dictBaseStats[UnitType.GirlKnight], ExperienceToLevel(unitData.experience), unitData.item);
                     break;
                 case UnitType.LeafArcher:
-                    unit = new LeafArcherPO(unitData.experience, dictBaseStats[UnitType.LeafArcher], ExperienceToLevel(unitData.experience), unitData.item);
+                    unit = new LeafArcherPO(unitData.unitName, unitData.experience, dictBaseStats[UnitType.LeafArcher], ExperienceToLevel(unitData.experience), unitData.item);
                     break;
                 case UnitType.Felipe:
-                    unit = new FelipePO(unitData.experience, dictBaseStats[UnitType.Felipe], ExperienceToLevel(unitData.experience), unitData.item);
+                    unit = new FelipePO(unitData.unitName, unitData.experience, dictBaseStats[UnitType.Felipe], ExperienceToLevel(unitData.experience), unitData.item);
                     break;
             }
             listUnits.Add(unit);
@@ -63,7 +65,7 @@ public class UnitFactory
         List<UnitData> listUnitData = new List<UnitData>();
         foreach (var unitPO in listUnitPO)
         {
-            UnitData unitData = new UnitData(unitPO.Race, unitPO.Experience, unitPO.UnitType);
+            UnitData unitData = new UnitData(unitPO.UnitName, unitPO.Race, unitPO.Experience, unitPO.UnitType);
             listUnitData.Add(unitData);
         }
         return listUnitData;
@@ -88,11 +90,13 @@ public class UnitFactory
         switch (unitType)
         {
             case UnitType.Archer:
-                return new ArcherPO(0, dictBaseStats[UnitType.Archer], 0, Item.Bow);
+                return new ArcherPO(NamesDBStatic.GetRandomNameByGender(Gender.Female), 0, dictBaseStats[UnitType.Archer], 1, Item.Bow);
             case UnitType.GirlKnight:
-                return new GirlKnightPO(0, dictBaseStats[UnitType.GirlKnight], 0, Item.IronShield);
+                return new GirlKnightPO(NamesDBStatic.GetRandomNameByGender(Gender.Female), 0, dictBaseStats[UnitType.GirlKnight], 1, Item.IronShield);
             case UnitType.LeafArcher:
-                return new LeafArcherPO(0, dictBaseStats[UnitType.LeafArcher], 0, Item.Bow);
+                return new LeafArcherPO(NamesDBStatic.GetRandomNameByGender(Gender.Male), 0, dictBaseStats[UnitType.LeafArcher], 1, Item.Bow);
+            case UnitType.Felipe:
+                return new FelipePO(NamesDBStatic.GetRandomNameByGender(Gender.Male), 0, dictBaseStats[UnitType.Felipe], 1, Item.Staff);
             default:
                 return null;
         }

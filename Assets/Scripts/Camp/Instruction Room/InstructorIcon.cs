@@ -1,35 +1,44 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InstructorIcon : MonoBehaviour
+public class InstructorIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public InstructorData instructor;   // Los datos de este instructor
-    public Button button;         // El botón asociado
+    public Image background;
+    public Image instructorImage;
+    public PanelTooltip instructorTooltipPanel;
 
-    private void Awake()
+    private InstructorData instructorData;
+    private TooltipObj tooltipUnit;
+    private bool isPointerOver;
+
+    public void SetUp(InstructorData instructorData)
     {
-        // Asignar listener
-        if (button == null) button = GetComponent<Button>();
-        button.onClick.AddListener(OnClick);
+        this.instructorData = instructorData;
+        background.color = Utils.GetColorByRarity(instructorData.rarity);
+        instructorImage.sprite = Resources.Load<Sprite>(instructorData.spritePath);
     }
 
-    public void Initialize(InstructorData instructor)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        this.instructor = instructor;
+        if (instructorData != null && !isPointerOver)
+        {
+            isPointerOver = true;
 
-        // if (portraitImage != null && data.Stats != null) 
-        // {
-        //     // Ejemplo: si dentro de Stats tienes un sprite
-        //     portraitImage.sprite = data.Stats.Portrait;
-        // }
-
-        button = GetComponent<Button>();
-        button.onClick.AddListener(OnClick);
+            tooltipUnit = new TooltipObj(instructorData.instructorName, instructorData.GetInfo(), TooltipType.UnitCourtyard, transform.position);
+            instructorTooltipPanel.ShowTooltip(tooltipUnit);
+        }
     }
 
-    private void OnClick()
+    public void OnPointerExit(PointerEventData eventData)
     {
-        // Avisar al panel para que se actualice
-        InstructorPanel.Instance.ShowInstructor(instructor);
+        isPointerOver = false;
+        instructorTooltipPanel.HideTooltip();
+    }
+    
+    public InstructorData GetInstructorData()
+    {
+        return instructorData;
     }
 }

@@ -17,7 +17,7 @@ public static class GameSaveManager
 
         File.WriteAllText(fullPath, json);
         //Debug.Log($"[SaveGame] Guardado en: {fullPath}");
-        Debug.Log($"{dataType} saved");
+        Debug.Log($"{dataType} saved.");
     }
 
     public static T Load<T>(DataType dataType)
@@ -30,6 +30,7 @@ public static class GameSaveManager
         }
 
         string json = File.ReadAllText(fullPath);
+        Debug.Log($"{dataType} loaded.");
         return JsonConvert.DeserializeObject<T>(json);
     }
 

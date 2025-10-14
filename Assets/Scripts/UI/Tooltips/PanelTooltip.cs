@@ -13,7 +13,6 @@ public class PanelTooltip : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        tooltipRect = GetComponent<RectTransform>();
         gameObject.SetActive(false);
     }
 
@@ -22,6 +21,7 @@ public class PanelTooltip : MonoBehaviour
         nameText.text = tooltipObj.title;
         statsText.text = tooltipObj.body;
 
+        tooltipRect = GetComponent<RectTransform>();
         tooltipRect.position = tooltipObj.finalPosition;
         gameObject.SetActive(true);
     }

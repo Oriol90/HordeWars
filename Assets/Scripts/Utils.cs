@@ -1,6 +1,7 @@
 
 
 using System;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -188,10 +189,37 @@ public static class Utils
     {
         return UnityEngine.Random.Range(min, max);
     }
-    
-public static T GetRandomEnumValue<T>() where T : Enum
-{
-    Array values = System.Enum.GetValues(typeof(T));
-    return (T)values.GetValue(UnityEngine.Random.Range(0, values.Length));
-}
+
+    public static T GetRandomEnumValue<T>() where T : Enum
+    {
+        Array values = Enum.GetValues(typeof(T));
+        return (T)values.GetValue(UnityEngine.Random.Range(0, values.Length));
+    }
+
+    public static string ShowTime(int timeInHours)
+    {
+        int day = timeInHours / 24;
+        int hour = timeInHours % 24;
+        StringBuilder sb = new StringBuilder();
+        sb.Append($"Day {day + 1}, ");
+        if (hour < 10) sb.Append("0");
+        sb.Append($"{hour}:00");
+
+        return sb.ToString();
+    }
+
+    public static string BeautifyTime(int timeInHours)
+    {
+        int day = timeInHours / 24;
+        int hour = timeInHours % 24;
+        StringBuilder sb = new StringBuilder();
+        
+        if (day > 0) sb.Append($"{day} day{(day > 1 ? "s" : "")}");
+        if (hour > 0)   
+        {
+            if (sb.Length > 0) sb.Append(" and ");
+            sb.Append($"{hour} hour{(hour > 1 ? "s" : "")}");
+        }   
+        return sb.ToString();
+    }
 }
