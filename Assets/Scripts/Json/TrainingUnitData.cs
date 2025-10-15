@@ -1,6 +1,8 @@
-public class TrainingUnitData
+using System;
+
+public class TrainingUnitData : IElementDB
 {
-    public string id;
+    public Guid id { get; set; }
     public int totalCost;
     public InstructorData instructorData;
     public int numUnitsToTrain;
@@ -14,7 +16,7 @@ public class TrainingUnitData
     public TrainingUnitData(InstructorData instructorData, int numUnitsToTrain, int trainingCost, int trainingTime)
     {
         int currentTime = GameTimeManager.GTM.CurrentTimeInHours;
-        id = System.Guid.NewGuid().ToString();
+        id = Guid.NewGuid();
         this.instructorData = instructorData;
         this.numUnitsToTrain = numUnitsToTrain;
 

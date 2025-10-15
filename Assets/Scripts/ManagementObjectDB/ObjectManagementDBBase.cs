@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LiteDB;
 
-public abstract class ObjectManagementDBBase<T> : IObjectManagementDB<T>
+public abstract class ObjectManagementDBBase<T> : IObjectManagementDB where T : IElementDB
 {
     public DataType dataType { get; set; }
     public ICollection<T> objects { get; set; }
@@ -17,15 +17,15 @@ public abstract class ObjectManagementDBBase<T> : IObjectManagementDB<T>
 
     }
 
-    public void Delete(Func<T, bool> predicate)
+    public void Delete(Guid id)
     {
-        objects.Where(predicate);
-        ICollection<T> deletedObjects = objects.Where(predicate).ToList();
-        foreach(var obj in deletedObjects)
+
+        var deletedObjects = objects.Where(obj => obj.id == id).ToList();
+        foreach (var obj in deletedObjects)
         {
             objects.Remove(obj);
         }
-        GameSaveManager.Save(objects, dataType); 
+        GameSaveManager.Save(objects, dataType);
     }
     
 }

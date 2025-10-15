@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public static class EventExecutor
 {
@@ -13,7 +15,12 @@ public static class EventExecutor
         {
             courtyardUnits.Add(unitFactory.CreateNewUnitPO(trainingUnitData.instructorData.trainableUnit));
         }
-        trainingUnitDataList.RemoveAll(t => t.id == trainingUnitData.id);
+
+        //TrainingUnitDataList trainingUnitDataListInstance = new TrainingUnitDataList();
+        ListsAndDictsStatic.GetList(DataType.TrainingUnitData).Delete(trainingUnitData.id);
+        //var A = trainingUnitDataListInstance.objects.Where(t => t.id == trainingUnitData.id).ToList();
+
+        //trainingUnitDataList.RemoveAll(t => t.id == trainingUnitData.id);
 
         GameSaveManager.Save(courtyardUnits, DataType.CourtyardUnitsData);
         GameSaveManager.Save(trainingUnitDataList, DataType.TrainingUnitData);

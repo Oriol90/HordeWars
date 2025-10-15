@@ -57,6 +57,7 @@ public class InstructionRoomManager : MonoBehaviour
     private void PopulateTrainingUnits()
     {
         trainingUnitDataList = GameSaveManager.Load<List<TrainingUnitData>>(DataType.TrainingUnitData);
+        trainingUnitDataList ??= new List<TrainingUnitData>();
 
         foreach (Transform child in trainingUnitsGrid)
         {
@@ -121,9 +122,9 @@ public class InstructionRoomManager : MonoBehaviour
         CreateTrainingUnitEntry(trainingUnitData, instructorData);
         trainingUnitDataList.Add(trainingUnitData);
         Clear();
-        PopulateTrainingUnits();
         
         GameTimeManager.GTM.ScheduleFinishTraining(() => EventExecutor.FinishTraining(trainingUnitData), trainingUnitData, trainingUnitData.finishAT);
         GameSaveManager.Save(trainingUnitDataList, DataType.TrainingUnitData);
+        PopulateTrainingUnits();
     }
 }
