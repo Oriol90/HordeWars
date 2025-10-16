@@ -5,9 +5,7 @@ public interface IObjectManagementDB
 {
     DataType dataType { get; set; }
 
-    void Update();
-    void Get();
-    void Save();
-    void Create();
+    void Add(object obj);
+    void AddList(List<object> objList);
     void Delete(Guid id);
 }

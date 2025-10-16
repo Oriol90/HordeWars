@@ -32,7 +32,6 @@ public class GameTimeManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         tokenDict = GameSaveManager.Load<Dictionary<Token, int>>(DataType.TokenData);
         CurrentTimeInHours = tokenDict[Token.CurrentTime];
-        LoadEventsFromJSON();
     }
 
     // --- MÉTODOS PRINCIPALES ---
@@ -60,16 +59,11 @@ public class GameTimeManager : MonoBehaviour
     {
         ScheduledEventData scheduledEventData = new ScheduledEventData();
         scheduledEventData.SetFinishTraining(executeAtHour, instructor);
+        Collections.GetList(DataType.ScheduledEventData).Add(scheduledEventData);
+
         ScheduledAction scheduledAction = new ScheduledAction(action, executeAtHour, scheduledEventData);
         listScheduledAction.Add(scheduledAction);
-        SaveEventsToJSON();
     }
-
-    // public void ScheduleAt(Action action, int targetHour, EventType eventType)
-    // {
-    //     listScheduledAction.Add(new ScheduledAction(action, targetHour, new ScheduledEventData(eventType, "", CurrentTimeInHours + targetHour)));
-    //     SaveEventsToJSON();
-    // }
 
     private void ProcessScheduledActions()
     {
@@ -80,7 +74,7 @@ public class GameTimeManager : MonoBehaviour
             {
                 scheduledAction.action?.Invoke();
                 listScheduledAction.RemoveAt(i);
-                SaveEventsToJSON();
+                Collections.GetList(DataType.ScheduledEventData).Delete(scheduledAction.scheduledEventData.id);
             }
         }
     }
@@ -96,25 +90,10 @@ public class GameTimeManager : MonoBehaviour
     // 🔽 SAVE / LOAD SYSTEM
     // ==========================================
 
-    public void SaveEventsToJSON()
-    {
-
-        List<ScheduledEventData> scheduledEventDataList = new List<ScheduledEventData>();
-        
-        foreach (var act in listScheduledAction)
-        {
-            if (act.meta != null) scheduledEventDataList.Add(act.meta);
-        }
-        GameSaveManager.Save(scheduledEventDataList, DataType.ScheduledEventData);
-    }
-
     public void LoadEventsFromJSON()
     {
-        List<ScheduledEventData> scheduledEventDataList = GameSaveManager.Load<List<ScheduledEventData>>(DataType.ScheduledEventData);
-
-        if (scheduledEventDataList == null) return;
         listScheduledAction.Clear();
-        foreach (ScheduledEventData scheduledEvent in scheduledEventDataList)
+        foreach (ScheduledEventData scheduledEvent in GC.GET_SCHEDULED_EVENT_LIST)
         {
             if (scheduledEvent.ExecuteAtHour <= 0){
                 ExecuteScheduledEventNow(scheduledEvent);

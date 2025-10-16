@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 
-public class InstructorData
+[Serializable]
+public class InstructorData : IElementDB
 {
+    public Guid id { get; set; } = Guid.NewGuid();
     public string instructorName;
     public Gender gender;
     public UnitType trainableUnit;
@@ -31,10 +34,10 @@ public class InstructorData
     {
         string info =
             $"Rarity: {rarity}\n" +
-            $"Training Cost: {trainingCost} gold\n" + 
+            $"Training Cost: {trainingCost} gold\n" +
             $"Training Time: {Utils.BeautifyTime(trainingTime)}\n" +
             $"Trainable Unit: {trainableUnit}\n" +
-            $"Masteries:\n{MasteriesToText()}\n"; 
+            $"Masteries:\n{MasteriesToText()}\n";
         return info;
     }
 
@@ -46,5 +49,5 @@ public class InstructorData
             effectsText += $" - {mastery}\n";
         }
         return effectsText;
-    } 
+    }
 }

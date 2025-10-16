@@ -62,6 +62,7 @@ public class ArmoryManager : MonoBehaviour
         }
 
         Dictionary<Item, int> itemQuantityDict = GameSaveManager.Load<Dictionary<Item, int>>(DataType.ArmoryData);
+        //var dicti = GC.GET_ARMORY_DICT;
         Dictionary<Item, int> filteredDict = FilterItemsBySelection(itemQuantityDict);
 
         foreach (var item in filteredDict)

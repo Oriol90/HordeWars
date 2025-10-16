@@ -9,14 +9,7 @@ public class ArmyPanelManager : MonoBehaviour
     public GameObject unitIconPrefab; 
     public Transform armyPanel; // Panel donde se mostrarán las unidades
     public Transform bottomPanel;
-    public static List<UnitPO> army = new List<UnitPO>();
-    public UnitFactory unitFactory = new UnitFactory();
     public UnitType newUnitType;
-    
-    private void Start()
-    {
-        army = unitFactory.LoadArmy();
-    }
 
     private void Update()
     {
@@ -27,7 +20,7 @@ public class ArmyPanelManager : MonoBehaviour
     {
         bool unitExist = false;
         //Convierto la lista de unidades a un diccionario que contiene cuantas unidades hay de cada tipo de unidad
-        Dictionary<UnitType, int> numUnitsArmy = unitFactory.CountUnitsArmy(army);
+        Dictionary<UnitType, int> numUnitsArmy = UnitFactory.CountUnitsArmy();
         foreach (var numUnit in numUnitsArmy)
         {
             foreach (Transform child in armyPanel)
@@ -69,16 +62,16 @@ public class ArmyPanelManager : MonoBehaviour
         }
 
         // 2. Crear iconos para cada unidad del tipo seleccionado
-        foreach (var unit in army)
+        foreach (var unit in GC.GET_ARMY_LIST)
         {
-            if (unit.UnitType == unitType)
+            if (unit.unitType == unitType)
             {
                 CreateUnitIcon(unit);
             }
         }
     }
 
-    public void CreateUnitIcon(UnitPO unit)
+    public void CreateUnitIcon(UnitData unit)
     {
         GameObject icon = Instantiate(unitIconPrefab, bottomPanel);
         UnitIcon unitIcon = icon.GetComponent<UnitIcon>();
@@ -92,14 +85,14 @@ public class ArmyPanelManager : MonoBehaviour
         Image iconImage = icon.GetComponent<Image>();
         if (iconImage != null)
         {
-            iconImage.sprite = AsignUnitSprite(unit.UnitType);
+            iconImage.sprite = AsignUnitSprite(unit.unitType);
         }
 
         // Configurar el borde
         Image borderImage = icon.transform.GetChild(0).GetComponent<Image>();
         if (borderImage != null)
         {
-            borderImage.sprite = AsignUnitSprite(unit.UnitType);
+            borderImage.sprite = AsignUnitSprite(unit.unitType);
             borderImage.color = Color.black; // Color del borde
             // Hacer la imagen del borde ligeramente más grande
             RectTransform borderRect = borderImage.GetComponent<RectTransform>();
@@ -109,9 +102,8 @@ public class ArmyPanelManager : MonoBehaviour
 
     public void AddNewUnit()
     {
-        army.Add(unitFactory.CreateNewUnitPO(newUnitType));
+        Collections.GetList(DataType.ArmyData).Add(UnitFactory.CreateRandomUnitData());
         OnUnitClicked(newUnitType);
-        GameSaveManager.Save(unitFactory.UnitToUnitData(army), DataType.ArmyData);
     }
 
     private Sprite AsignUnitSprite(UnitType unitType)

@@ -132,4 +132,12 @@ public static class GC
     public static int EXPERIENCE_REQ_LEVEL_4 = 600;
     public static int EXPERIENCE_REQ_LEVEL_5 = 1000;
     public static int EXPERIENCE_REQ_LEVEL_6 = 1500;
+
+    //Actions
+    public static ICollection<UnitData> GET_ARMY_LIST = ((ArmyDataList)Collections.GetList(DataType.ArmyData)).objects;
+    public static ICollection<UnitData> GET_COURTYARD_UNIT_LIST = ((CourtyardUnitDataList)Collections.GetList(DataType.CourtyardUnitsData)).objects;
+    public static ICollection<InstructorData> GET_INSTRUCTOR_LIST = ((InstructorDataList)Collections.GetList(DataType.InstructorData)).objects;
+    public static ICollection<TrainingUnitData> GET_TRAINING_UNIT_LIST = ((TrainingUnitDataList)Collections.GetList(DataType.TrainingUnitData)).objects;
+    public static ICollection<ScheduledEventData> GET_SCHEDULED_EVENT_LIST = ((ScheduledEventDataList)Collections.GetList(DataType.ScheduledEventData)).objects;
+    //public static ICollection<ArmoryData> GET_ARMORY_DICT = ((ArmoryDataDict)Collections.GetList(DataType.ArmoryData)).objects;
 }

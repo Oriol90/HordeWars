@@ -1,9 +1,10 @@
-using UnityEngine;
-
-public class LeafArcherPO : UnitPO
+public class LeafArcherPO : UnitData
 {
-    public LeafArcherPO(string unitName, int experience, BaseStats baseStats, int level, Item item) : base(unitName, experience, baseStats, level, item, Gender.Male){
-        Race = Race.Undead;
-        UnitType = UnitType.LeafArcher; 
+    public LeafArcherPO(int experience, Item item) : base(experience, item)
+    {
+        gender = Gender.Male;
+        unitName = NamesDBStatic.GetRandomNameByGender(gender);
+        race = Race.Human;
+        unitType = UnitType.LeafArcher;
     }
 }

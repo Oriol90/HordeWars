@@ -13,20 +13,20 @@ public class UnitIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public PanelTooltip itemTooltipPanel;
 
     [HideInInspector]
-    public UnitPO unitPO;
+    public UnitData unitData;
     private bool isInCourtyard;
     private bool isPointerOver;
     private TooltipObj tooltipItem;
     private TooltipObj tooltipUnit;
 
-    public void SetUp(UnitPO unitPO, bool isInCourtyard)
+    public void SetUp(UnitData unitData, bool isInCourtyard)
     {
-        this.unitPO = unitPO;
+        this.unitData = unitData;
         this.isInCourtyard = isInCourtyard;
 
-        leftBackground.color = Utils.GetColorByLevel(unitPO.Level);
-        rightBackground.color = Utils.GetColorByRarity(ItemDBStatic.Get(unitPO.EquippedItem).Rarity);
-        unitImage.sprite = ResourcePathDBStatic.Get(unitPO.UnitType);
+        leftBackground.color = Utils.GetColorByLevel(unitData.level);
+        rightBackground.color = Utils.GetColorByRarity(ItemDBStatic.Get(unitData.equippedItem).Rarity);
+        unitImage.sprite = ResourcePathDBStatic.Get(unitData.unitType);
     }
 
     public void ToggleArrow()
@@ -43,12 +43,12 @@ public class UnitIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (unitPO != null && !isPointerOver)
+        if (unitData != null && !isPointerOver)
         {
             isPointerOver = true;
-            ItemData item = ItemDBStatic.Get(unitPO.EquippedItem);
+            ItemData item = ItemDBStatic.Get(unitData.equippedItem);
 
-            tooltipUnit = new TooltipObj(unitPO.UnitName, unitPO.GetInfo(), TooltipType.UnitCourtyard, transform.position);
+            tooltipUnit = new TooltipObj(unitData.unitName, unitData.GetInfo(), TooltipType.UnitCourtyard, transform.position);
             tooltipItem = new TooltipObj(item.Name, item.GetInfo(), TooltipType.ItemCourtyard, transform.position);
 
             unitTooltipPanel.ShowTooltip(tooltipUnit);

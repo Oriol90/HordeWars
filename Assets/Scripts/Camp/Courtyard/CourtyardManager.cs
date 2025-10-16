@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class CourtyardManager : MonoBehaviour
 {
@@ -15,18 +16,9 @@ public class CourtyardManager : MonoBehaviour
     public Transform unitCourtyardGrid;
     public Transform armyGrid;
 
-    private UnitFactory unitFactory = new UnitFactory();
-    private List<UnitPO> courtyardUnits;
-    private List<UnitPO> army;
-
-    private void Awake()
-    {
-        courtyardUnits = unitFactory.CourtYardUnits();
-        army = unitFactory.LoadArmy();
-    }
-
     private void Start()
     {
+        InitJson.Init();
         PopulateDropdowns();
         PopulateUnitList();
     }
@@ -98,18 +90,22 @@ public class CourtyardManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var unit in courtyardUnits)
+        foreach (var unit in GC.GET_COURTYARD_UNIT_LIST.ToList().
+                OrderByDescending(x => x.level).
+                ThenByDescending(x => Utils.RarityToNum(ItemDBStatic.Get(x.equippedItem).Rarity)))
         {
             CreateCourtyardUnitEntry(unit);
         }
 
-        foreach (var unit in army)
+        foreach (var unit in GC.GET_ARMY_LIST.ToList().
+                OrderByDescending(x => x.level).
+                ThenByDescending(x => Utils.RarityToNum(ItemDBStatic.Get(x.equippedItem).Rarity)))
         {
             CreateArmyUnitEntry(unit);
         }
     }
 
-    private void CreateCourtyardUnitEntry(UnitPO unit)
+    private void CreateCourtyardUnitEntry(UnitData unit)
     {
         GameObject unitIconGO = Instantiate(unitIconPrefab, unitCourtyardGrid);
         UnitIcon unitIcon = unitIconGO.GetComponent<UnitIcon>();
@@ -117,7 +113,7 @@ public class CourtyardManager : MonoBehaviour
         unitIcon.SetUp(unit, true);
     }
 
-    private void CreateArmyUnitEntry(UnitPO unit)
+    private void CreateArmyUnitEntry(UnitData unit)
     {
         GameObject unitIconGO = Instantiate(unitIconPrefab, armyGrid);
         UnitIcon unitIcon = unitIconGO.GetComponent<UnitIcon>();
@@ -130,11 +126,11 @@ public class CourtyardManager : MonoBehaviour
 
         foreach (Transform child in grid)
         {
-            UnitPO unit = child.GetComponent<UnitIcon>().unitPO;
-            ItemData itemData = ItemDBStatic.Get(unit.EquippedItem);
+            UnitData unit = child.GetComponent<UnitIcon>().unitData;
+            ItemData itemData = ItemDBStatic.Get(unit.equippedItem);
             if ((GC.COURTYARD_SELECTED_RARITY == 0 || itemData.Rarity == (Rarity)(GC.COURTYARD_SELECTED_RARITY - 1)) &&
-                (GC.COURTYARD_SELECTED_UNIT == 0 || unit.UnitType == (UnitType)(GC.COURTYARD_SELECTED_UNIT - 1)) &&
-                (GC.COURTYARD_SELECTED_LEVEL == 0 || unit.Level == GC.COURTYARD_SELECTED_LEVEL))
+                (GC.COURTYARD_SELECTED_UNIT == 0 || unit.unitType == (UnitType)(GC.COURTYARD_SELECTED_UNIT - 1)) &&
+                (GC.COURTYARD_SELECTED_LEVEL == 0 || unit.level == GC.COURTYARD_SELECTED_LEVEL))
             {
                 child.gameObject.SetActive(true);
             }
@@ -148,41 +144,29 @@ public class CourtyardManager : MonoBehaviour
     public void SwitchUnits()
     {
         bool marked;
-        List<UnitPO> newCourtyardUnits = new List<UnitPO>();
-        List<UnitPO> newArmy = new List<UnitPO>();
 
         foreach (Transform child in unitCourtyardGrid)
         {
+            UnitData unit = child.GetComponent<UnitIcon>().unitData;
             marked = child.GetComponent<UnitIcon>().arrowDownImage.gameObject.activeSelf;
             if (marked)
             {
-                newArmy.Add(child.GetComponent<UnitIcon>().unitPO);
+                Collections.GetList(DataType.CourtyardUnitsData).Delete(unit.id);
+                Collections.GetList(DataType.ArmyData).Add(unit);
             }
-            else
-            {
-                newCourtyardUnits.Add(child.GetComponent<UnitIcon>().unitPO);
-            }
-
         }
 
         foreach (Transform child in armyGrid)
         {
+            UnitData unit = child.GetComponent<UnitIcon>().unitData;
             marked = child.GetComponent<UnitIcon>().arrowUpImage.gameObject.activeSelf;
+
             if (marked)
             {
-                newCourtyardUnits.Add(child.GetComponent<UnitIcon>().unitPO);
-            }
-            else
-            {
-                newArmy.Add(child.GetComponent<UnitIcon>().unitPO);
+                Collections.GetList(DataType.ArmyData).Delete(unit.id);
+                Collections.GetList(DataType.CourtyardUnitsData).Add(unit);
             }
         }
-
-        courtyardUnits = newCourtyardUnits;
-        army = newArmy;
-
-        GameSaveManager.Save(courtyardUnits, DataType.CourtyardUnitsData);
-        GameSaveManager.Save(army, DataType.ArmyData);
 
         PopulateUnitList();
         FilterItemsBySelection(unitCourtyardGrid);

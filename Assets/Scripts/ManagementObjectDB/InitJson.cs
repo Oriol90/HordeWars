@@ -1,9 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
 
-public class InitJson : MonoBehaviour
+public static class InitJson
 {
-    void Awake()
+    public static void Init()
     {
         // InitBaseStats();
         // InitArmy(50);
@@ -11,25 +10,25 @@ public class InitJson : MonoBehaviour
         // InitPlayerData();
         // InitTokenData();
         // InitTalents();
-        InitInstructorData(50);
+        // InitInstructorData(50);
         // InitArmory();
         // InitCourtyardUnits(50);
     }
 
-    private void InitHero()
+    private static void InitHero()
     {
         HeroData heroData = new HeroData()
         {
             heroeName = "Melyn",
             heroeLevel = 1,
             heroeSkills = null,
-            heroPos = new Vector3Int(0, 3, 0)
+            //ARREGLAR heroPos = new Vector2(0, 3, 0)
         };
         GameSaveManager.Save(heroData, DataType.HeroData);
         
     }
 
-    private void InitTokenData() {
+    private static void InitTokenData() {
         Dictionary<Token, int> tokenDict = new Dictionary<Token, int>
         {
             { Token.Bones, 500 },
@@ -40,7 +39,7 @@ public class InitJson : MonoBehaviour
         GameSaveManager.Save(tokenDict, DataType.TokenData);
     }
 
-    private void InitInstructorData(int numInstructors) {
+    private static void InitInstructorData(int numInstructors) {
 
         List<InstructorData> instructorList = new List<InstructorData>();
 
@@ -81,71 +80,7 @@ public class InitJson : MonoBehaviour
         faith = 
     },*/
 
-    private void InitBaseStats()
-    {
-        Dictionary<UnitType, BaseStats> dictBaseStats = new Dictionary<UnitType, BaseStats>
-        {
-            {
-                UnitType.LeafArcher,
-                new BaseStats {
-                    health = new int[6] {300, 400, 500, 600, 700, 800},
-                    attack = new int[6] {150, 160, 170, 180, 200, 220 },
-                    attackSpeed = new float[6] {0.60f, 0.60f, 0.70f, 0.70f, 0.80f, 0.80f},
-                    defense = new int[6] {10, 10, 12, 15, 20, 25},
-                    darkResist = new int[6] {15, 15, 15, 15, 15, 15},
-                    moveSpeed = new float[6] {2f, 2f, 2f, 2f, 2f, 2f},
-                    boneCost = 25,
-                    lightCost = 0,
-                    faith = 5
-                }
-            },
-            {
-                UnitType.Archer,
-                new BaseStats {
-                    health = new int[6] {300, 400, 500, 600, 700, 800},
-                    attack = new int[6] {150, 160, 170, 180, 200, 220},
-                    attackSpeed = new float[6] {0.60f, 0.60f, 0.70f, 0.70f, 0.80f, 0.80f},
-                    defense = new int[6] {10, 10, 12, 15, 20, 25},
-                    darkResist = new int[6] {15, 15, 15, 15, 15, 15},
-                    moveSpeed = new float[6] {2f, 2f, 2f, 2f, 2f, 2f},
-                    boneCost = 25,
-                    lightCost = 0,
-                    faith = 5
-                }
-            },
-            {
-                UnitType.GirlKnight,
-                new BaseStats {
-                    health = new int[6] {700, 750, 800, 850, 900, 950},
-                    attack = new int[6] {130, 130, 135, 140, 150, 160},
-                    attackSpeed = new float[6] {0.50f, 0.50f, 0.50f, 0.50f, 0.50f, 0.50f},
-                    defense = new int[6] {60, 60, 60, 60, 70, 80},
-                    darkResist = new int[6] {25, 25, 25, 25, 25, 25},
-                    moveSpeed = new float[6] {1.8f, 1.8f, 1.8f, 1.85f, 1.9f, 1.95f},
-                    boneCost = 70,
-                    lightCost = 0,
-                    faith = 15
-                }
-            },
-            {
-                UnitType.Felipe,
-                new BaseStats {
-                    health = new int[6] {1000, 1100, 1200, 1300, 1400, 1500},
-                    attack = new int[6] {200, 220, 240, 260, 280, 300},
-                    attackSpeed = new float[6] {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-                    defense = new int[6] {80, 85, 90, 95, 100, 110},
-                    darkResist = new int[6] {30, 30, 30, 30, 30, 30},
-                    moveSpeed = new float[6] {1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f},
-                    boneCost = 150,
-                    lightCost = 0,
-                    faith = 50
-                }
-            }
-        };
-        GameSaveManager.Save(dictBaseStats, DataType.BaseStats);
-    }
-
-    private void InitArmory()
+    private static void InitArmory()
     {
         Dictionary<Item, int> armory = new Dictionary<Item, int>
         {
@@ -154,34 +89,30 @@ public class InitJson : MonoBehaviour
             { Item.MagicWand, 5 },
             { Item.Bow, 7 },
             { Item.Staff, 4 },
-            { Item.Ring, 2 },
+            { Item.Ring, 2 }
         };
         GameSaveManager.Save(armory, DataType.ArmoryData);
     }
 
-     private void InitCourtyardUnits(int numUnits)
+     private static void InitCourtyardUnits(int numUnits)
     {
-        List<UnitData> courtyardUnits = new List<UnitData>();
-
+        List<object> courtyardUnits = new List<object>();
         for(int i = 0; i < numUnits; i++){
-            UnitType unitType = Utils.GetRandomEnumValue<UnitType>();
-            courtyardUnits.Add(new UnitData(NamesDBStatic.GetRandomNameByUnitType(unitType), Race.Human, Utils.CreateRandomNumber(0, 2000), unitType, Utils.GetRandomEnumValue<Item>()));           
+            courtyardUnits.Add(UnitFactory.CreateRandomUnitData());           
         };
-        GameSaveManager.Save(courtyardUnits, DataType.CourtyardUnitsData);
+        Collections.GetList(DataType.CourtyardUnitsData).AddList(courtyardUnits);
     }
 
-    private void InitArmy(int numUnits)
+    private static void InitArmy(int numUnits)
     {
-        List<UnitData> army = new List<UnitData>();
-
+        List<object> army = new List<object>();
         for(int i = 0; i < numUnits; i++){
-            UnitType unitType = Utils.GetRandomEnumValue<UnitType>();
-            army.Add(new UnitData(NamesDBStatic.GetRandomNameByUnitType(unitType), Race.Human, Utils.CreateRandomNumber(0, 2000), unitType, Utils.GetRandomEnumValue<Item>()));           
+            army.Add(UnitFactory.CreateRandomUnitData());
         };
-        GameSaveManager.Save(army, DataType.ArmyData);
+        Collections.GetList(DataType.ArmyData).AddList(army);
     }
 
-    private void InitTalents() {
+    private static void InitTalents() {
         List<TalentData> talentList = new List<TalentData>
         {
             new TalentData {

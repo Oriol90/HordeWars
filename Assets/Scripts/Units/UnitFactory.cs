@@ -2,117 +2,50 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitFactory
+public static class UnitFactory
 {
-    public List<UnitPO> LoadArmy()
+    public static UnitData CreateRandomUnitData()
     {
-        List<UnitData> listUnitData = GameSaveManager.Load<List<UnitData>>(DataType.ArmyData);
-        Dictionary<UnitType, BaseStats> dictBaseStats = GameSaveManager.Load<Dictionary<UnitType, BaseStats>>(DataType.BaseStats);
-        return UnitDataToUnit(listUnitData, dictBaseStats);
-    }
-
-    public List<UnitPO> CourtYardUnits()
-    {
-        List<UnitData> listUnitData = GameSaveManager.Load<List<UnitData>>(DataType.CourtyardUnitsData);
-        Dictionary<UnitType, BaseStats> dictBaseStats = GameSaveManager.Load<Dictionary<UnitType, BaseStats>>(DataType.BaseStats);
-        return UnitDataToUnit(listUnitData, dictBaseStats);
-    }
-
-    public List<UnitPO> UnitDataToUnit(List<UnitData> listUnitData, Dictionary<UnitType, BaseStats> dictBaseStats)
-    {
-        List<UnitPO> listUnits = new List<UnitPO>();
-        if (listUnitData == null) return listUnits;
-
-        foreach (var unitData in listUnitData)
+        UnitType unitType = (UnitType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(UnitType)).Length);
+        switch (unitType)
         {
-            UnitPO unit = null;
-            switch (unitData.unitType)
-            {
-                case UnitType.Archer:
-                    unit = new ArcherPO(unitData.unitName, unitData.experience, dictBaseStats[UnitType.Archer], ExperienceToLevel(unitData.experience), unitData.item);
-                    break;
-                case UnitType.GirlKnight:
-                    unit = new GirlKnightPO(unitData.unitName, unitData.experience, dictBaseStats[UnitType.GirlKnight], ExperienceToLevel(unitData.experience), unitData.item);
-                    break;
-                case UnitType.LeafArcher:
-                    unit = new LeafArcherPO(unitData.unitName, unitData.experience, dictBaseStats[UnitType.LeafArcher], ExperienceToLevel(unitData.experience), unitData.item);
-                    break;
-                case UnitType.Felipe:
-                    unit = new FelipePO(unitData.unitName, unitData.experience, dictBaseStats[UnitType.Felipe], ExperienceToLevel(unitData.experience), unitData.item);
-                    break;
-            }
-            listUnits.Add(unit);
-        }
-        return listUnits;
-    }
-
-    private int ExperienceToLevel(int exp)
-    {
-        switch (exp)
-        {
-            case int n when n < 100: return 1;
-            case int n when n < 300: return 2;
-            case int n when n < 600: return 3;
-            case int n when n < 1000: return 4;
-            case int n when n < 1500: return 5;
-            case int n when n >= 1500: return 6;
-            default: return 0;
+            case UnitType.Archer:
+                return new ArcherPO(Utils.CreateRandomNumber(0, 1600), Utils.GetRandomEnumValue<Item>());
+            case UnitType.GirlKnight:
+                return new GirlKnightPO(Utils.CreateRandomNumber(0, 1600), Utils.GetRandomEnumValue<Item>());
+            case UnitType.LeafArcher:
+                return new LeafArcherPO(Utils.CreateRandomNumber(0, 1600), Utils.GetRandomEnumValue<Item>());
+            case UnitType.Felipe:
+                return new FelipePO(Utils.CreateRandomNumber(0, 1600), Utils.GetRandomEnumValue<Item>());
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
-    public List<UnitData> UnitToUnitData(List<UnitPO> listUnitPO)
-    {
-        List<UnitData> listUnitData = new List<UnitData>();
-        foreach (var unitPO in listUnitPO)
-        {
-            UnitData unitData = new UnitData(unitPO.UnitName, unitPO.Race, unitPO.Experience, unitPO.UnitType);
-            listUnitData.Add(unitData);
-        }
-        return listUnitData;
-    }
-
-    public GameObject SetUnitGO(GameObject unitGO, UnitData unitData, Dictionary<UnitType, BaseStats> dictBaseStats)
+    public static GameObject SetUnitGO(GameObject unitGO, UnitData unitData, Dictionary<UnitType, BaseStats> dictBaseStats)
     {
         Unit unit = unitGO.GetComponent<Unit>();
         unit.Race = unitData.race;
         unit.UnitType = unitData.unitType;
         unit.Experience = unitData.experience;
-        unit.Level = ExperienceToLevel(unitData.experience);
+        unit.Level = Utils.ExperienceToLevel(unitData.experience);
         unit.BaseStats = dictBaseStats[unitData.unitType];
-        unit.Stats = new UnitStats(unit.BaseStats, unit.Level);
+        //unit.Stats = new UnitStats(unit.BaseStats, unit.Level);
         return unitGO;
     }
 
-    public UnitPO CreateNewUnitPO(UnitType unitType)
-    {
-        Dictionary<UnitType, BaseStats> dictBaseStats = GameSaveManager.Load<Dictionary<UnitType, BaseStats>>(DataType.BaseStats);
-
-        switch (unitType)
-        {
-            case UnitType.Archer:
-                return new ArcherPO(NamesDBStatic.GetRandomNameByGender(Gender.Female), 0, dictBaseStats[UnitType.Archer], 1, Item.Bow);
-            case UnitType.GirlKnight:
-                return new GirlKnightPO(NamesDBStatic.GetRandomNameByGender(Gender.Female), 0, dictBaseStats[UnitType.GirlKnight], 1, Item.IronShield);
-            case UnitType.LeafArcher:
-                return new LeafArcherPO(NamesDBStatic.GetRandomNameByGender(Gender.Male), 0, dictBaseStats[UnitType.LeafArcher], 1, Item.Bow);
-            case UnitType.Felipe:
-                return new FelipePO(NamesDBStatic.GetRandomNameByGender(Gender.Male), 0, dictBaseStats[UnitType.Felipe], 1, Item.Staff);
-            default:
-                return null;
-        }
-    }
-
-    public Dictionary<UnitType, int> CountUnitsArmy(List<UnitPO> army)
+    public static Dictionary<UnitType, int> CountUnitsArmy()
     {
         Dictionary<UnitType, int> numUnitsArmy = new Dictionary<UnitType, int>
          {
             {UnitType.Archer, 0},
             {UnitType.LeafArcher, 0},
             {UnitType.GirlKnight, 0},
+            {UnitType.Felipe, 0}
          };
 
 
-        foreach (var unitData in army)
+        foreach (var unitData in GC.GET_ARMY_LIST)
         {
             switch (unitData)
             {
@@ -124,6 +57,9 @@ public class UnitFactory
                     break;
                 case GirlKnightPO:
                     numUnitsArmy[UnitType.GirlKnight]++;
+                    break;
+                case FelipePO:
+                    numUnitsArmy[UnitType.Felipe]++;
                     break;
             }
         }

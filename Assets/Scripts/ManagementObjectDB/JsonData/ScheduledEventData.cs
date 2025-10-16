@@ -1,8 +1,9 @@
-using UnityEngine;
+using System;
 
-[System.Serializable]
-public class ScheduledEventData
+[Serializable]
+public class ScheduledEventData : IElementDB
 {
+    public Guid id { get; set; } = Guid.NewGuid();
     public EventType EventType { get; set; }
     public int ExecuteAtHour { get; set; }
     public TrainingUnitData TrainingUnitData { get; set; }

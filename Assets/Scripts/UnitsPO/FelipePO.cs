@@ -1,10 +1,10 @@
-using UnityEngine;
-
-public class FelipePO : UnitPO
+public class FelipePO : UnitData
 {
-    public FelipePO(string unitName, int experience, BaseStats baseStats, int level, Item item) : base(unitName, experience, baseStats, level, item, Gender.Male)
+    public FelipePO(int experience, Item item) : base(experience, item)
     {
-        Race = Race.Human;
-        UnitType = UnitType.Felipe; 
+        gender = Gender.Male;
+        unitName = NamesDBStatic.GetRandomNameByGender(gender);
+        race = Race.Human;
+        unitType = UnitType.Felipe;
     }
 }

@@ -6,10 +6,9 @@ public class InitSpawner : Spawner
     void Start()
     {
 
-        List<UnitData> listUnitData = GameSaveManager.Load<List<UnitData>>(DataType.ArmyData);
         Dictionary<UnitType, BaseStats> dictBaseStats = GameSaveManager.Load<Dictionary<UnitType, BaseStats>>(DataType.BaseStats);
 
-        foreach (var unit in listUnitData)
+        foreach (var unit in GC.GET_ARMY_LIST)
         {
             Spawn(unit, dictBaseStats);
         }

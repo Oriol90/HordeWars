@@ -9,7 +9,6 @@ public class Spawner : MonoBehaviour
     public GameObject GirlKnightPrefab;
     private HashSet<Vector2> usedPositions = new HashSet<Vector2>(); // Para rastrear las posiciones ya ocupadas
     private Rect spawnArea;
-    protected UnitFactory unitFactory = new UnitFactory();
 
     public void Spawn(UnitData unitData, Dictionary<UnitType, BaseStats> dictBaseStats)
     {
@@ -27,7 +26,7 @@ public class Spawner : MonoBehaviour
             // Instanciar la unidad en la posición calculada
             GameObject unit = Instantiate(prefabUnit, randomPosition, Quaternion.identity);
 
-            unit = unitFactory.SetUnitGO(unit, unitData, dictBaseStats);
+            unit = UnitFactory.SetUnitGO(unit, unitData, dictBaseStats);
 
             // Marcar la posición como ocupada
             usedPositions.Add(randomPosition);

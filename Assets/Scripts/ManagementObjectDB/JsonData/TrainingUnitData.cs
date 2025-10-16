@@ -1,8 +1,9 @@
 using System;
 
+[Serializable]
 public class TrainingUnitData : IElementDB
 {
-    public Guid id { get; set; }
+    public Guid id { get; set; } = Guid.NewGuid();
     public int totalCost;
     public InstructorData instructorData;
     public int numUnitsToTrain;
@@ -11,12 +12,11 @@ public class TrainingUnitData : IElementDB
     public int finishAT;
     public int timeLeft;
 
-    public TrainingUnitData(){}
+    public TrainingUnitData() { }
 
     public TrainingUnitData(InstructorData instructorData, int numUnitsToTrain, int trainingCost, int trainingTime)
     {
         int currentTime = GameTimeManager.GTM.CurrentTimeInHours;
-        id = Guid.NewGuid();
         this.instructorData = instructorData;
         this.numUnitsToTrain = numUnitsToTrain;
 
@@ -37,6 +37,6 @@ public class TrainingUnitData : IElementDB
     {
         return
             $"Unit Type: {instructorData.trainableUnit}          Number of Units: {numUnitsToTrain}\n" +
-            $"Total Cost: {totalCost} Gold          Time Left: {Utils.BeautifyTime(timeLeft)}";            
+            $"Total Cost: {totalCost} Gold          Time Left: {Utils.BeautifyTime(timeLeft)}";
     }
 }

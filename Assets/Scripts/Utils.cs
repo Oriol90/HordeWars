@@ -213,13 +213,43 @@ public static class Utils
         int day = timeInHours / 24;
         int hour = timeInHours % 24;
         StringBuilder sb = new StringBuilder();
-        
+
         if (day > 0) sb.Append($"{day} day{(day > 1 ? "s" : "")}");
-        if (hour > 0)   
+        if (hour > 0)
         {
             if (sb.Length > 0) sb.Append(" and ");
             sb.Append($"{hour} hour{(hour > 1 ? "s" : "")}");
-        }   
+        }
         return sb.ToString();
+    }
+
+    public static int ExperienceToLevel(int exp)
+    {
+        switch (exp)
+        {
+            case int n when n < 100: return 1;
+            case int n when n < 300: return 2;
+            case int n when n < 600: return 3;
+            case int n when n < 1000: return 4;
+            case int n when n < 1500: return 5;
+            case int n when n >= 1500: return 6;
+            default: return 0;
+        }
+    }
+    
+    public static int RarityToNum(Rarity rarity)
+    {
+        int num = 1;
+        switch (rarity)
+        {
+            case Rarity.Common: num = 1; break;
+            case Rarity.Uncommon: num = 2; break;
+            case Rarity.Rare: num = 3; break;
+            case Rarity.Epic: num = 4; break;
+            case Rarity.Mythic: num = 5; break;
+            case Rarity.Celestial: num = 6; break;
+            default: num = 0; break;
+        }
+        return num;
     }
 }

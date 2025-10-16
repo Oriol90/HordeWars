@@ -1,9 +1,10 @@
-using UnityEngine;
-
-public class GirlKnightPO : UnitPO
+public class GirlKnightPO : UnitData
 {
-    public GirlKnightPO(string unitName, int experience, BaseStats baseStats, int level, Item item) : base(unitName, experience, baseStats, level, item, Gender.Female){
-        Race = Race.Human;
-        UnitType = UnitType.GirlKnight; 
+    public GirlKnightPO(int experience, Item item) : base(experience, item)
+    {
+        gender = Gender.Female;
+        unitName = NamesDBStatic.GetRandomNameByGender(gender);
+        race = Race.Human;
+        unitType = UnitType.GirlKnight;
     }
 }

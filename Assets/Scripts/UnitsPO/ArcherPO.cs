@@ -1,10 +1,10 @@
-using UnityEngine;
-
-public class ArcherPO : UnitPO
+public class ArcherPO : UnitData
 {
-    public ArcherPO(string unitName, int experience, BaseStats baseStats, int level, Item item) : base(unitName, experience, baseStats, level, item, Gender.Female)
+    public ArcherPO(int experience, Item item) : base(experience, item)
     {
-        Race = Race.Human;
-        UnitType = UnitType.Archer;
+        unitName = NamesDBStatic.GetRandomNameByGender(gender);
+        gender = Gender.Female;
+        race = Race.Human;
+        unitType = UnitType.Archer;
     }
 }

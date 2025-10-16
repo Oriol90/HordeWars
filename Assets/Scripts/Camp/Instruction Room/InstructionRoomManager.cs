@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
-using System;
+using System.Linq;
 
 public class InstructionRoomManager : MonoBehaviour
 {
@@ -19,14 +19,8 @@ public class InstructionRoomManager : MonoBehaviour
     private TrainingUnitData trainingUnitData;
     private InstructorData instructorData;
 
-    List<InstructorData> instructorDataList = new List<InstructorData>();
-    List<TrainingUnitData> trainingUnitDataList = new List<TrainingUnitData>();
-
     private void Start()
     {
-        instructorDataList = GameSaveManager.Load<List<InstructorData>>(DataType.InstructorData);
-        trainingUnitDataList ??= new List<TrainingUnitData>();
-
         PopulateInstructors();
         PopulateTrainingUnits();
         numUnitsToTrainSlider.onValueChanged.AddListener(OnValueNumUnitsChanged);
@@ -44,11 +38,11 @@ public class InstructionRoomManager : MonoBehaviour
     {
 
         foreach (Transform child in instructorGrid)
-        {
+        { 
             Destroy(child.gameObject);
         }
 
-        foreach (var instructor in instructorDataList)
+        foreach (var instructor in GC.GET_INSTRUCTOR_LIST.ToList().OrderByDescending(x => Utils.RarityToNum(x.rarity)))
         {
             CreateInstructorEntry(instructor);
         }
@@ -56,15 +50,13 @@ public class InstructionRoomManager : MonoBehaviour
     
     private void PopulateTrainingUnits()
     {
-        trainingUnitDataList = GameSaveManager.Load<List<TrainingUnitData>>(DataType.TrainingUnitData);
-        trainingUnitDataList ??= new List<TrainingUnitData>();
 
         foreach (Transform child in trainingUnitsGrid)
         {
             Destroy(child.gameObject);
         }
 
-        foreach (var trainingUnitData in trainingUnitDataList)
+        foreach (var trainingUnitData in GC.GET_TRAINING_UNIT_LIST)
         {
             CreateTrainingUnitEntry(trainingUnitData, trainingUnitData.instructorData);
         }
@@ -120,11 +112,10 @@ public class InstructionRoomManager : MonoBehaviour
         instructorData = instructorSelected.GetComponent<InstructorIcon>().GetInstructorData();
         trainingUnitData = new TrainingUnitData(instructorData, Mathf.RoundToInt(numUnitsToTrainSlider.value), instructorData.trainingCost, instructorData.trainingTime);
         CreateTrainingUnitEntry(trainingUnitData, instructorData);
-        trainingUnitDataList.Add(trainingUnitData);
+        Collections.GetList(DataType.TrainingUnitData).Add(trainingUnitData);
         Clear();
         
         GameTimeManager.GTM.ScheduleFinishTraining(() => EventExecutor.FinishTraining(trainingUnitData), trainingUnitData, trainingUnitData.finishAT);
-        GameSaveManager.Save(trainingUnitDataList, DataType.TrainingUnitData);
         PopulateTrainingUnits();
     }
 }

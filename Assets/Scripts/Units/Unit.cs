@@ -8,7 +8,7 @@ public class Unit : MonoBehaviour
     public float Experience { get; set; }
     public int Level { get; set; }
     public BaseStats BaseStats { get; set; }
-    public UnitStats Stats { get; set; }
+    //public UnitStats Stats { get; set; }
     public Item EquippedItem { get; set; }
 
     public float attackRange = 1f;
@@ -25,14 +25,14 @@ public class Unit : MonoBehaviour
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
-        currentHealth = Stats.Health;
+        currentHealth = BaseStats.health[Level - 1];
 
         // Instanciar el Canvas con la barra de salud como hijo de la unidad
         if (healthBarCanvasPrefab != null)
         {
             GameObject healthBarCanvasObject = Instantiate(healthBarCanvasPrefab, transform);
             healthBarInstance = healthBarCanvasObject.GetComponentInChildren<HealthBar>();
-            healthBarInstance.SetMaxHealth(Stats.Health);
+            healthBarInstance.SetMaxHealth(BaseStats.health[Level - 1]);
 
             // Ajustar la posición del Canvas
             RectTransform healthBarCanvasRect = healthBarCanvasObject.GetComponent<RectTransform>();
@@ -64,7 +64,7 @@ public class Unit : MonoBehaviour
         Debug.Log("Moviendo hacia el enemigo: " + targetEnemy.name);
 
         Vector2 direction = (targetEnemy.transform.position - transform.position).normalized;
-        transform.position = Vector2.MoveTowards(transform.position, targetEnemy.transform.position, Stats.MoveSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, targetEnemy.transform.position, BaseStats.moveSpeed[Level - 1] * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, targetEnemy.transform.position) <= attackRange)
         {
@@ -76,10 +76,10 @@ public class Unit : MonoBehaviour
     {
         isAttacking = true;
         animator.SetBool(GC.ANIM_ATTACK, true);
-        yield return new WaitForSeconds(Stats.AttackSpeed);
+        yield return new WaitForSeconds(BaseStats.attackSpeed[Level - 1]);
         if (targetEnemy != null)
         {
-            targetEnemy.GetComponent<Unit>().TakeDamage(Stats.Attack);
+            targetEnemy.GetComponent<Unit>().TakeDamage(BaseStats.attack[Level - 1]);
         }
         animator.SetBool(GC.ANIM_ATTACK, false);
         isAttacking = false;

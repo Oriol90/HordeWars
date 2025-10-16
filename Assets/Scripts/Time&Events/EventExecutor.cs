@@ -1,29 +1,16 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public static class EventExecutor
 {
     
     public static void FinishTraining(TrainingUnitData trainingUnitData)
     {
-        List<TrainingUnitData> trainingUnitDataList = GameSaveManager.Load<List<TrainingUnitData>>(DataType.TrainingUnitData);
-        UnitFactory unitFactory = new UnitFactory();
-
-        List<UnitPO> courtyardUnits = unitFactory.CourtYardUnits();
+        List<object> courtyardUnits = new List<object>();
         for (int i = 0; i < trainingUnitData.numUnitsToTrain; i++)
         {
-            courtyardUnits.Add(unitFactory.CreateNewUnitPO(trainingUnitData.instructorData.trainableUnit));
+            courtyardUnits.Add(UnitFactory.CreateRandomUnitData(/*trainingUnitData.instructorData.trainableUnit ARREGLAR*/));
         }
-
-        //TrainingUnitDataList trainingUnitDataListInstance = new TrainingUnitDataList();
-        ListsAndDictsStatic.GetList(DataType.TrainingUnitData).Delete(trainingUnitData.id);
-        //var A = trainingUnitDataListInstance.objects.Where(t => t.id == trainingUnitData.id).ToList();
-
-        //trainingUnitDataList.RemoveAll(t => t.id == trainingUnitData.id);
-
-        GameSaveManager.Save(courtyardUnits, DataType.CourtyardUnitsData);
-        GameSaveManager.Save(trainingUnitDataList, DataType.TrainingUnitData);
+        Collections.GetList(DataType.CourtyardUnitsData).AddList(courtyardUnits);
+        Collections.GetList(DataType.TrainingUnitData).Delete(trainingUnitData.id);
     }
-
 }
