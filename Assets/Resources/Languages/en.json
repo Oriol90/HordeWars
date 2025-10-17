@@ -1,0 +1,25 @@
+{
+	"PLAY": "Play",
+	"TALENT_TREE": "Talents tree",
+	"EXIT": "Exit",
+	"OPTIONS": "Options",
+	"LANGUAGE": "Language",
+	"BACK": "Back",
+	"NEXT": "Next",
+	"ARMORY": "Armory",
+	"COURTYARD": "Courtyard",
+	"TRAINING_ROOM": "Training room",
+	"SWITCH_UNITS": "Switch units",
+	"AUTO_SWITCH": "Auto switch",
+	"ALL": "All",
+	
+	"RARITY_COMMON": "Common",
+	"RARITY_UNCOMMON": "Uncommon",
+	"RARITY_RARE": "Rare",
+	"RARITY_EPIC": "Epic",
+	"RARITY_MYTHIC": "Mythic",
+	"RARITY_CELESTIAL": "Celestial",
+	
+	"UNITDATA_INFO": "Class: {0}\nLevel: {1}\nExperience: {2}\nHealth: {3}\nAttack: {4}\nAttack speed: {5}\nDefense: {6}\nDark Resist.: {7}\nMove speed: {8}\nFaith: {9}",
+	"ITEM_INFO": "item"
+}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -19,7 +20,6 @@ public class GameTimeManager : MonoBehaviour
 
     // Acciones programadas
     private List<ScheduledAction> listScheduledAction = new List<ScheduledAction>();
-    Dictionary<Token, int> tokenDict = new Dictionary<Token, int>();
 
     private void Awake()
     {
@@ -30,8 +30,8 @@ public class GameTimeManager : MonoBehaviour
         }
         GTM = this;
         DontDestroyOnLoad(gameObject);
-        tokenDict = GameSaveManager.Load<Dictionary<Token, int>>(DataType.TokenData);
-        CurrentTimeInHours = tokenDict[Token.CurrentTime];
+
+        CurrentTimeInHours = GC.GET_TOKEN_DATA_LIST.ToList().Find(t => t.token == Token.CurrentTime).value;
     }
 
     // --- MÉTODOS PRINCIPALES ---
@@ -44,8 +44,9 @@ public class GameTimeManager : MonoBehaviour
             ProcessScheduledActions();
             CheckHourAndDayEvents();
         }
-        tokenDict[Token.CurrentTime] = CurrentTimeInHours;
-        GameSaveManager.Save(tokenDict, DataType.TokenData);
+        TokenData tokenUpdated = GC.GET_TOKEN_DATA_LIST.Find(t => t.token == Token.CurrentTime);
+        tokenUpdated.value = CurrentTimeInHours;
+        Collections.GetList(DataType.TokenData).Update(tokenUpdated);
     }
 
     public void AdvanceDays(int days)

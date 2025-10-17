@@ -7,5 +7,8 @@ public interface IObjectManagementDB
 
     void Add(object obj);
     void AddList(List<object> objList);
+    void Update(object obj);
+    void ReplaceList(List<object> objList);
     void Delete(Guid id);
+    void DeleteAll();
 }

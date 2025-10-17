@@ -5,7 +5,7 @@ public static class InitJson
     public static void Init()
     {
         // InitBaseStats();
-        // InitArmy(50);
+         InitArmy(500);
         // InitHero();
         // InitPlayerData();
         // InitTokenData();
@@ -29,19 +29,18 @@ public static class InitJson
     }
 
     private static void InitTokenData() {
-        Dictionary<Token, int> tokenDict = new Dictionary<Token, int>
+        List<object> tokenList = new List<object>
         {
-            { Token.Bones, 500 },
-            { Token.CurrentTime, 0 },
-            { Token.Gold, 1000 }
-            
+            new TokenData(Token.Bones, 500),
+            new TokenData(Token.CurrentTime, 0),
+            new TokenData(Token.Gold, 1000)
         };
-        GameSaveManager.Save(tokenDict, DataType.TokenData);
+        Collections.GetList(DataType.TokenData).ReplaceList(tokenList);
     }
 
     private static void InitInstructorData(int numInstructors) {
 
-        List<InstructorData> instructorList = new List<InstructorData>();
+        List<object> instructorList = new List<object>();
 
         for(int i = 0; i < numInstructors; i++)
         {
@@ -56,42 +55,25 @@ public static class InitJson
                     masteries.Add(mastery);
                 }
             }
-
             int trainingCost = Utils.CreateRandomNumber(15, 90);
             int trainingTime = Utils.CreateRandomNumber(8, 72);
-
             instructorList.Add(new InstructorData(NamesDBStatic.GetRandomNameByGender(gender), gender, trainableUnit, rarity, masteries, trainingCost, trainingTime, ResourcePathDBStatic.GetRandomInstructorPath(gender)));
         };
-
-        GameSaveManager.Save(instructorList, DataType.InstructorData);
+        Collections.GetList(DataType.InstructorData).ReplaceList(instructorList);
     }
-
-    /*PLANTILLA
-    UnitType.LeafArcher,
-    new BaseStats{
-        life = new int[5] {, , , , },
-        attack = new int[5] {, , , ,  },
-        attackSpeed = new float[5] {f, f, f, f, f},
-        defense = new int[5] {, , , , },
-        darkResist = new int[5] {, , , , },
-        moveSpeed = new int[5] {, , , , },
-        boneCost = ,
-        lightCost = ,
-        faith = 
-    },*/
 
     private static void InitArmory()
     {
-        Dictionary<Item, int> armory = new Dictionary<Item, int>
+        List<object> armory = new List<object>
         {
-            { Item.WoodenSword, 50 },
-            { Item.IronShield, 30 },
-            { Item.MagicWand, 5 },
-            { Item.Bow, 7 },
-            { Item.Staff, 4 },
-            { Item.Ring, 2 }
+            new ArmoryData( Item.WoodenSword, 50 ),
+            new ArmoryData( Item.IronShield, 30 ),
+            new ArmoryData( Item.MagicWand, 5 ),
+            new ArmoryData( Item.Bow, 7 ),
+            new ArmoryData( Item.Staff, 4 ),
+            new ArmoryData( Item.Ring, 2 )
         };
-        GameSaveManager.Save(armory, DataType.ArmoryData);
+        Collections.GetList(DataType.ArmoryData).ReplaceList(armory);
     }
 
      private static void InitCourtyardUnits(int numUnits)
@@ -100,7 +82,7 @@ public static class InitJson
         for(int i = 0; i < numUnits; i++){
             courtyardUnits.Add(UnitFactory.CreateRandomUnitData());           
         };
-        Collections.GetList(DataType.CourtyardUnitsData).AddList(courtyardUnits);
+        Collections.GetList(DataType.CourtyardUnitsData).ReplaceList(courtyardUnits);
     }
 
     private static void InitArmy(int numUnits)
@@ -109,7 +91,7 @@ public static class InitJson
         for(int i = 0; i < numUnits; i++){
             army.Add(UnitFactory.CreateRandomUnitData());
         };
-        Collections.GetList(DataType.ArmyData).AddList(army);
+        Collections.GetList(DataType.ArmyData).ReplaceList(army);
     }
 
     private static void InitTalents() {

@@ -1,0 +1,25 @@
+{
+	"PLAY": "Jugar",
+	"TALENT_TREE": "Árbol de talentos",
+	"EXIT": "Salir",
+	"OPTIONS": "Opciones",
+	"LANGUAGE": "Idioma",
+	"BACK": "Atrás",
+	"NEXT": "Siguiente",
+	"ARMORY": "Armería",
+	"COURTYARD": "Patio de armas",
+	"TRAINING_ROOM": "Sala de entrenamiento",
+	"SWITCH_UNITS": "Intercambiar unidades",
+	"AUTO_SWITCH": "Cambio automático",
+	"ALL": "Todo",
+	
+	"RARITY_COMMON": "Común",
+	"RARITY_UNCOMMON": "Poco común",
+	"RARITY_RARE": "Raro",
+	"RARITY_EPIC": "Épico",
+	"RARITY_MYTHIC": "Mítico",
+	"RARITY_CELESTIAL": "Celestial",
+	
+	"UNITDATA_INFO": "Clase: {0}\nNivel: {1}\nExperiencia: {2}\nSalud: {3}\nAtaque: {4}\nVel. ataque: {5}\nDefensa: {6}\nResist. oscura: {7}\nVel. movimiento: {8}\nFe: {9}",
+	"ITEM_INFO": "item"
+}

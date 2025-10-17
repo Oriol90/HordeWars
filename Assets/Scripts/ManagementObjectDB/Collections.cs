@@ -7,14 +7,10 @@ public static class Collections
         new CourtyardUnitDataList(),
         new InstructorDataList(),
         new ScheduledEventDataList(),
-        new ArmyDataList()
-        //new ArmoryDataDict()
+        new ArmyDataList(),
+        new ArmoryDataList(),
+        new TokenDataList()
     };
-
-    // public static Dictionary<IObjectManagementDB> dataTypeToFileNameDict = new Dictionary<IObjectManagementDB>()
-    // {
-    //     new ArmoryDataDict()
-    // };
     
 
     public static IObjectManagementDB GetList(DataType dataType)

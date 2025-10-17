@@ -61,10 +61,7 @@ public class ArmoryManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        Dictionary<Item, int> itemQuantityDict = GameSaveManager.Load<Dictionary<Item, int>>(DataType.ArmoryData);
-        //var dicti = GC.GET_ARMORY_DICT;
-        Dictionary<Item, int> filteredDict = FilterItemsBySelection(itemQuantityDict);
-
+        Dictionary<Item, int> filteredDict = FilterItemsBySelection();
         foreach (var item in filteredDict)
         {
             CreateUnitEntry(item.Key, item.Value);
@@ -79,16 +76,16 @@ public class ArmoryManager : MonoBehaviour
         itemIcon.SetUp(ItemDBStatic.Get(item), quantity);
     }
 
-    private Dictionary<Item, int> FilterItemsBySelection(Dictionary<Item, int> itemQuantityDict)
+    private Dictionary<Item, int> FilterItemsBySelection()
     {
         Dictionary<Item, int> filteredDict = new();
 
-        foreach (var item in itemQuantityDict)
+        foreach (var armoryData in GC.GET_ARMORY_DATA_LIST)
         {
-            if ((GC.ARMORY_SELECTED_RARITY == 0 || ItemDBStatic.Get(item.Key).Rarity == (Rarity)(GC.ARMORY_SELECTED_RARITY - 1)) &&
-                (GC.ARMORY_SELECTED_UNIT == 0 || ItemDBStatic.Get(item.Key).UnitType == (UnitType)(GC.ARMORY_SELECTED_UNIT - 1)))
+            if ((GC.ARMORY_SELECTED_RARITY == 0 || ItemDBStatic.Get(armoryData.item).Rarity == (Rarity)(GC.ARMORY_SELECTED_RARITY - 1)) &&
+                (GC.ARMORY_SELECTED_UNIT == 0 || ItemDBStatic.Get(armoryData.item).UnitType == (UnitType)(GC.ARMORY_SELECTED_UNIT - 1)))
             {
-                filteredDict[item.Key] = item.Value;
+                filteredDict[armoryData.item] = armoryData.quantity;
             }
         }
         return filteredDict;

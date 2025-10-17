@@ -5,7 +5,7 @@ using System; // Necesario para usar listas
 public class Spawner : MonoBehaviour
 {
     public GameObject LeafArcherPrefab;
-    public GameObject ArcherPrefab;
+    public GameObject FelipePrefab;
     public GameObject GirlKnightPrefab;
     private HashSet<Vector2> usedPositions = new HashSet<Vector2>(); // Para rastrear las posiciones ya ocupadas
     private Rect spawnArea;
@@ -72,6 +72,9 @@ public class Spawner : MonoBehaviour
             case UnitType.Archer:
                 spawnArea = new Rect(GC.LEAF_ARCHER_INITIAL_ZONE_X, GC.MAP_BOT, GC.LEAF_ARCHER_INITIAL_WIDTH, GC.MAP_HEIGHT);
                 break;
+            case UnitType.Felipe:
+                spawnArea = new Rect(GC.GIRL_KNIGHT_INITIAL_ZONE_X, GC.MAP_BOT, GC.GIRL_KNIGHT_INITIAL_WIDTH, GC.MAP_HEIGHT);
+                break;
         }
     }
     
@@ -81,13 +84,16 @@ public class Spawner : MonoBehaviour
         switch (unitType)
         {
             case UnitType.Archer:
-                prefab = ArcherPrefab;
+                prefab = LeafArcherPrefab;
                 break;
             case UnitType.GirlKnight:
                 prefab = GirlKnightPrefab;
                 break;
             case UnitType.LeafArcher:
                 prefab = LeafArcherPrefab;
+                break;
+            case UnitType.Felipe:
+                prefab = GirlKnightPrefab;
                 break;
         }
         return prefab;

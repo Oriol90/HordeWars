@@ -172,3 +172,10 @@ public enum EventType
     FinishTraining,
     RandomEvent
 }
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum Language
+{
+    Español,
+    English
+}

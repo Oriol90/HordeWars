@@ -22,6 +22,23 @@ public static class UnitFactory
         }
     }
 
+        public static UnitData CreateUnitDataFromInstructor(InstructorData instructorData)
+    {
+        switch (instructorData.trainableUnit)
+        {
+            case UnitType.Archer:
+                return new ArcherPO(0, Utils.GetRandomEnumValue<Item>());
+            case UnitType.GirlKnight:
+                return new GirlKnightPO(0, Utils.GetRandomEnumValue<Item>());
+            case UnitType.LeafArcher:
+                return new LeafArcherPO(0, Utils.GetRandomEnumValue<Item>());
+            case UnitType.Felipe:
+                return new FelipePO(0, Utils.GetRandomEnumValue<Item>());
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
     public static GameObject SetUnitGO(GameObject unitGO, UnitData unitData, Dictionary<UnitType, BaseStats> dictBaseStats)
     {
         Unit unit = unitGO.GetComponent<Unit>();
@@ -43,7 +60,6 @@ public static class UnitFactory
             {UnitType.GirlKnight, 0},
             {UnitType.Felipe, 0}
          };
-
 
         foreach (var unitData in GC.GET_ARMY_LIST)
         {

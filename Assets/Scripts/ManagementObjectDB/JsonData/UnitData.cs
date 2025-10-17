@@ -12,6 +12,7 @@ public class UnitData :IElementDB
     public BaseStats baseStats { get; set; }
     //public UnitStats stats { get; set; }
     public Item equippedItem { get; set; }
+    public Rarity avgRarity { get; set; }
 
     public UnitData() {}
 
@@ -22,21 +23,13 @@ public class UnitData :IElementDB
         baseStats = BaseStatsDBStatic.GetBaseStatsByUnitType(unitType);
         //stats = new UnitStats(baseStats, level);
         this.equippedItem = equippedItem;
-
+        avgRarity = Utils.CalculateAverageRarityUnit(level, ItemDBStatic.Get(equippedItem).Rarity);
     }
 
     public string GetInfo()
     {
-        return
-            $"Class: {unitType}\n" +
-            $"Level: {level}\n" +
-            $"Experience: {experience}\n" +
-            $"Health: {baseStats.health[level - 1]}\n" +
-            $"Attack: {baseStats.attack[level - 1]}\n" +
-            $"Attack Speed: {baseStats.attackSpeed[level - 1]}\n" +
-            $"Defense: {baseStats.defense[level - 1]}\n" +
-            $"Dark Resist: {baseStats.darkResist[level - 1]}\n" +
-            $"Move Speed: {baseStats.moveSpeed[level - 1]}\n" +
-            $"Faith: {baseStats.faith}\n";
+        return LocalizationManager.GetText(TextKeys.UNITDATA_INFO, unitType, level, experience,
+            baseStats.health[level - 1], baseStats.attack[level - 1], baseStats.attackSpeed[level - 1],
+            baseStats.defense[level - 1], baseStats.darkResist[level - 1], baseStats.moveSpeed[level - 1], baseStats.faith);
     }
 }

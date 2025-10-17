@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-public class ArmoryDataDict : ObjectManagementDBBase<ArmoryData>
+public class ArmoryDataList : ObjectManagementDBBase<ArmoryData>
 {
-    public ArmoryDataDict()
+    public ArmoryDataList()
     {
         dataType = DataType.ArmoryData;
         objects = GameSaveManager.Load<ICollection<ArmoryData>>(dataType);

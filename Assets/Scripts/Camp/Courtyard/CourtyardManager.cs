@@ -3,6 +3,8 @@ using TMPro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
+using System.Collections.ObjectModel;
 
 public class CourtyardManager : MonoBehaviour
 {
@@ -16,11 +18,25 @@ public class CourtyardManager : MonoBehaviour
     public Transform unitCourtyardGrid;
     public Transform armyGrid;
 
+    [Header("Buttons")]
+    public Button switchUnitsButton;
+    public Button autoSwitchButton;
+
     private void Start()
     {
         InitJson.Init();
         PopulateDropdowns();
         PopulateUnitList();
+        SetUpButtons();
+    }
+
+    private void SetUpButtons()
+    {
+        switchUnitsButton.onClick.AddListener(() => SwitchUnits());
+        autoSwitchButton.onClick.AddListener(() => AutoSwitchUnits());
+
+        switchUnitsButton.GetComponentInChildren<TextMeshProUGUI>().text = LocalizationManager.GetText(TextKeys.SWITCH_UNITS);
+        autoSwitchButton.GetComponentInChildren<TextMeshProUGUI>().text = LocalizationManager.GetText(TextKeys.AUTO_SWITCH);
     }
 
     private void PopulateDropdowns()
@@ -168,6 +184,32 @@ public class CourtyardManager : MonoBehaviour
             }
         }
 
+        PopulateUnitList();
+        FilterItemsBySelection(unitCourtyardGrid);
+        FilterItemsBySelection(armyGrid);
+    }
+
+    private void AutoSwitchUnits()
+    {
+        List<UnitData> allUnits = GC.GET_COURTYARD_UNIT_LIST.Concat(GC.GET_ARMY_LIST).ToList();
+        allUnits = allUnits. OrderByDescending(x => x.avgRarity).ThenBy(x => x.id).ToList();
+
+        List<object> listCourtyardUnits = new List<object>();
+        List<object> listArmyUnits = new List<object>();
+
+        for (int i = 0; i < GC.HERO_UNIT_LIMIT; i++)
+        {
+            listArmyUnits.Add(allUnits[i]);
+        }
+        for (int i = GC.HERO_UNIT_LIMIT; i < allUnits.Count; i++)
+        {
+            listCourtyardUnits.Add(allUnits[i]);
+        }
+
+        allUnits.Clear();
+        Collections.GetList(DataType.CourtyardUnitsData).ReplaceList(listCourtyardUnits);
+        Collections.GetList(DataType.ArmyData).ReplaceList(listArmyUnits);
+        
         PopulateUnitList();
         FilterItemsBySelection(unitCourtyardGrid);
         FilterItemsBySelection(armyGrid);

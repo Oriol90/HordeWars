@@ -7,7 +7,6 @@ public abstract class ObjectManagementDBBase<T> : IObjectManagementDB where T : 
 {
     public DataType dataType { get; set; }
     public ICollection<T> objects { get; set; }
-    //public Dictionary<T, int> dictObject { get; set; }
 
     private void Save()
     {
@@ -19,9 +18,30 @@ public abstract class ObjectManagementDBBase<T> : IObjectManagementDB where T : 
         objects.Add((T)obj);
         Save();
     }
-    
+
     public void AddList(List<object> objList)
     {
+        foreach (var obj in objList)
+        {
+            objects.Add((T)obj);
+        }
+        Save();
+    }
+    
+    public void Update(object obj)
+    {
+        var toUpdate = objects.Where(o => o.id == ((T)obj).id).First();
+        if (toUpdate != null)
+        {
+            objects.Remove(toUpdate);
+            objects.Add((T)obj);
+            Save();
+        }
+    }
+
+    public void ReplaceList(List<object> objList)
+    {
+        objects.Clear();
         foreach (var obj in objList)
         {
             objects.Add((T)obj);
@@ -36,6 +56,12 @@ public abstract class ObjectManagementDBBase<T> : IObjectManagementDB where T : 
         {
             objects.Remove(obj);
         }
+        Save();
+    }
+
+    public void DeleteAll()
+    {
+        objects.Clear();
         Save();
     }
 }

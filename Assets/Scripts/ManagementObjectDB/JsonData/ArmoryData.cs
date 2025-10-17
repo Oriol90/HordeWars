@@ -6,6 +6,8 @@ public class ArmoryData : IElementDB
     public Item item;
     public int quantity;
 
+    public ArmoryData() {}
+
     public ArmoryData(Item item, int quantity)
     {
         this.item = item;

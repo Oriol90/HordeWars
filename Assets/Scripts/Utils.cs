@@ -236,7 +236,7 @@ public static class Utils
             default: return 0;
         }
     }
-    
+
     public static int RarityToNum(Rarity rarity)
     {
         int num = 1;
@@ -251,5 +251,11 @@ public static class Utils
             default: num = 0; break;
         }
         return num;
+    }
+    
+    public static Rarity CalculateAverageRarityUnit(int level, Rarity itemRarity)
+    {
+        int avg = (level + RarityToNum(itemRarity)) / 2;
+        return (Rarity)Enum.Parse(typeof(Rarity), Enum.GetNames(typeof(Rarity))[avg - 1]);
     }
 }

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 
 public static class GC
 {
@@ -31,6 +33,9 @@ public static class GC
 
     //Velocidad del juego
     public const float TIME_SPEED = 0.2f;
+
+    //Limite de unidades del heroe
+    public const int HERO_UNIT_LIMIT = 50;
 
     // Valores del mapa (73,41)
     public const int MapWidth = 73;
@@ -134,10 +139,11 @@ public static class GC
     public static int EXPERIENCE_REQ_LEVEL_6 = 1500;
 
     //Actions
-    public static ICollection<UnitData> GET_ARMY_LIST = ((ArmyDataList)Collections.GetList(DataType.ArmyData)).objects;
-    public static ICollection<UnitData> GET_COURTYARD_UNIT_LIST = ((CourtyardUnitDataList)Collections.GetList(DataType.CourtyardUnitsData)).objects;
-    public static ICollection<InstructorData> GET_INSTRUCTOR_LIST = ((InstructorDataList)Collections.GetList(DataType.InstructorData)).objects;
-    public static ICollection<TrainingUnitData> GET_TRAINING_UNIT_LIST = ((TrainingUnitDataList)Collections.GetList(DataType.TrainingUnitData)).objects;
-    public static ICollection<ScheduledEventData> GET_SCHEDULED_EVENT_LIST = ((ScheduledEventDataList)Collections.GetList(DataType.ScheduledEventData)).objects;
-    //public static ICollection<ArmoryData> GET_ARMORY_DICT = ((ArmoryDataDict)Collections.GetList(DataType.ArmoryData)).objects;
+    public static List<TokenData> GET_TOKEN_DATA_LIST { get { return ((TokenDataList)Collections.GetList(DataType.TokenData)).objects.ToList(); }}
+    public static List<UnitData> GET_ARMY_LIST { get { return ((ArmyDataList)Collections.GetList(DataType.ArmyData)).objects.ToList(); }}
+    public static List<UnitData> GET_COURTYARD_UNIT_LIST { get { return ((CourtyardUnitDataList)Collections.GetList(DataType.CourtyardUnitsData)).objects.ToList(); }}
+    public static List<InstructorData> GET_INSTRUCTOR_LIST { get { return ((InstructorDataList)Collections.GetList(DataType.InstructorData)).objects.ToList(); }}
+    public static List<TrainingUnitData> GET_TRAINING_UNIT_LIST { get { return ((TrainingUnitDataList)Collections.GetList(DataType.TrainingUnitData)).objects.ToList(); }}
+    public static List<ScheduledEventData> GET_SCHEDULED_EVENT_LIST { get { return ((ScheduledEventDataList)Collections.GetList(DataType.ScheduledEventData)).objects.ToList(); }}
+    public static List<ArmoryData> GET_ARMORY_DATA_LIST { get { return ((ArmoryDataList)Collections.GetList(DataType.ArmoryData)).objects.ToList(); }}
 }
